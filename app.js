@@ -30,5 +30,5 @@ var server = app.listen(3000, function () {
 
 // Live reload --
 var livereload = require('livereload');
-serverLr = livereload.createServer();
+var serverLr = livereload.createServer();
 serverLr.watch(__dirname + '/dist');
