@@ -2,8 +2,9 @@
   "name": "genetracker",
   "version": "0.1.0",
   "description": "Web application storing data about genetic strain for laboratories",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -15,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/GeneTracker/GeneTracker/issues"
   },
-  "homepage": "https://github.com/GeneTracker/GeneTracker#readme"
+  "homepage": "https://github.com/GeneTracker/GeneTracker#readme",
+  "dependencies": {
+    "express": "^4.13.3"
+  }
 }
