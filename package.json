@@ -5,8 +5,8 @@
   "main": "app.js",
   "scripts": {
     "start": "npm run start:dev",
-    "start:dev" : "node app.js",
-    "start:prod" : "node app.js",
+    "start:dev": "node app.js",
+    "start:prod": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -22,5 +22,9 @@
   "dependencies": {
     "express": "^4.13.3",
     "jade": "^1.11.0"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-less": "^3.0.5"
   }
 }
