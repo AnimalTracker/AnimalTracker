@@ -5,7 +5,7 @@ var path = require('path');
 gulp.task('less', function() {
   return gulp.src('./public/less/**/*.less')
     .pipe(less({
-      // paths: [ path.join(__dirname, 'less', 'includes') ]
+       paths: [ path.join(__dirname, 'dist', 'vendors') ]
     }))
     .pipe(gulp.dest('./dist/css'));
 });
