@@ -16,9 +16,8 @@ app.use('/', routes);
 app.use('/users', users);
 
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+  console.error('404: ' + req.url);
+  res.status(404).send('Not Found');
 });
 
 // Start server --
