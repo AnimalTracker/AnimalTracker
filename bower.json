@@ -1,0 +1,23 @@
+{
+  "name": "genetracker",
+  "description": "Web application storing data about genetic strain for laboratories",
+  "main": "app.js",
+  "authors": [
+    "Fanaen <contact@fanaen.fr>"
+  ],
+  "license": "GPL-3.0",
+  "moduleType": [
+    "node"
+  ],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "startbootstrap-sb-admin-2": "~1.0.8"
+  }
+}

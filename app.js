@@ -9,6 +9,7 @@ var users = require('./src/routes/users');
 // Setup views --
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
+app.use(express.static(path.join(__dirname, 'dist')));
 
 // Setup routes --
 app.use('/', routes);
