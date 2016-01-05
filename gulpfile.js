@@ -5,14 +5,18 @@ var watch = require('gulp-watch');
 var eslint = require('gulp-eslint');
 
 // Options --
+// ESlint configuration : eslint.org/docs/user-guide/configuring
+// Rules : http://eslint.org/docs/rules/
+// How to use rules : http://eslint.org/docs/user-guide/configuring#configuring-rules
+
 eslintOptionsBrowser = {
   extends: 'eslint:recommended',
   ecmaFeatures: {
     'modules': false
   },
   rules: {
-    'no-unused-vars': 1, // Warning
-    'no-console': 1     // Warning
+    'no-unused-vars': 1,  // Warning
+    'no-console': 1       // Warning
   },
   globals: {
     'jQuery':false,
