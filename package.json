@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "npm run start:dev",
-    "start:dev": "nodemon app.js -e js -w src/ -w app.js",
+    "start:dev": "nodemon app.js -e js yml -w src/ -w app.js -w config/",
     "start:prod": "node app.js",
     "watch": "gulp watch",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -21,8 +21,10 @@
   },
   "homepage": "https://github.com/GeneTracker/GeneTracker#readme",
   "dependencies": {
+    "config": "^1.17.1",
     "express": "^4.13.3",
-    "jade": "^1.11.0"
+    "jade": "^1.11.0",
+    "js-yaml": "^3.4.6"
   },
   "devDependencies": {
     "bower": "^1.7.2",

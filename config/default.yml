@@ -1,0 +1,7 @@
+# Configuration file : default --
+# Based on config : https://github.com/lorenwest/node-config/wiki/Configuration-Files
+
+server:
+  port: 3000
+  static: true
+  liveReload: true

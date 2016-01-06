@@ -1,34 +1,30 @@
 
 var express = require('express');
-var app = express();
 var path = require('path');
 
-var routes = require('./src/routes/index');
-var users = require('./src/routes/users');
+var config = require('./src/config/controller');
+var app = express();
 
 // Setup views --
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
-app.use(express.static(path.join(__dirname, 'public')));
 
 // Setup routes --
-app.use('/', routes);
-app.use('/users', users);
+app.use('/',      require('./src/routes/index'));
+app.use('/users', require('./src/routes/users'));
 
 app.use(function(req, res, next) {
   console.error('404: ' + req.url);
   res.status(404).send('Not Found');
 });
 
+// Apply config (src/config/controller.js) --
+config.apply(app);
+
 // Start server --
-var server = app.listen(3000, function () {
+var server = app.listen(config.getPort(), function () {
   var host = server.address().address;
   var port = server.address().port;
 
-  console.log('Example app listening at http://%s:%s', host, port);
+  console.log('[app] GeneTracker listening at http://%s:%s', host, port);
 });
-
-// Live reload --
-var livereload = require('livereload');
-var serverLr = livereload.createServer();
-serverLr.watch(__dirname + '/public');
