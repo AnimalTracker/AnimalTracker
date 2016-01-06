@@ -9,7 +9,7 @@ var users = require('./src/routes/users');
 // Setup views --
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
-app.use(express.static(path.join(__dirname, 'dist')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Setup routes --
 app.use('/', routes);
@@ -31,4 +31,4 @@ var server = app.listen(3000, function () {
 // Live reload --
 var livereload = require('livereload');
 var serverLr = livereload.createServer();
-serverLr.watch(__dirname + '/dist');
+serverLr.watch(__dirname + '/public');

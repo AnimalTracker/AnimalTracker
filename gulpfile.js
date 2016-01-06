@@ -46,29 +46,29 @@ eslintOptionsServer = {
 // Process style --
 
 gulp.task('less:build', function() {
-  return gulp.src('./public/less/*.less')                               // Take all stylesheets as Less
-    .pipe(less({ paths: [ path.join(__dirname, 'dist', 'vendors') ]}))  // Convert into CSS
-    .pipe(gulp.dest('./dist/css'));                                     // Store the result in dist
+  return gulp.src('./assets/less/*.less')                                 // Take all stylesheets as Less
+    .pipe(less({ paths: [ path.join(__dirname, 'public', 'vendors') ]}))  // Convert into CSS
+    .pipe(gulp.dest('./public/css'));                                     // Store the result in public
 });
 
 gulp.task('less:watch', ['less:build'], function() {
   // Watch all the .less files, then run the less task
-  gulp.watch('./public/less/**/*.less', ['less:build']);
+  gulp.watch('./assets/less/**/*.less', ['less:build']);
 });
 
 // Process scripts --
 
 gulp.task('scripts:build', function() {
-  return gulp.src('./public/js/*.js')   // Take all browser sources files
-    .pipe(eslint(eslintOptionsBrowser)) // Check
-    .pipe(eslint.format())              // Display
-    .pipe(eslint.failAfterError())      // Cut the flow if a mistake has been found
-    .pipe(gulp.dest('./dist/js'));      // Store the result in dist
+  return gulp.src('./assets/js/*.js')     // Take all browser sources files
+    .pipe(eslint(eslintOptionsBrowser))   // Check
+    .pipe(eslint.format())                // Display
+    .pipe(eslint.failAfterError())        // Cut the flow if a mistake has been found
+    .pipe(gulp.dest('./public/js'));      // Store the result in public
 });
 
 gulp.task('scripts:watch', ['scripts:build'], function() {
   // Watch all the browser.js files, then run the build task
-  gulp.watch('./public/js/**/*.js', ['script:build']);
+  gulp.watch('./assets/js/**/*.js', ['script:build']);
 });
 
 // Process source --

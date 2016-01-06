@@ -13,7 +13,7 @@ git clone https://github.com/GeneTracker/GeneTracker
 cd GeneTracker
 
 # Setup NodeJS dependencies
-sudo npm install -g gulp
+sudo npm install -g gulp bower
 npm install
 
 # Start the app
