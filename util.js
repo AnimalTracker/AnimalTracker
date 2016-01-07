@@ -74,6 +74,21 @@ var listDatabase = function() {
     });
 };
 
+var createClassUser = function(db) {
+  return db.class.create('User', 'OUser')
+    .then(function (User) {
+      console.log('[util] Class "' + User.name + '" created.');
+
+      return User.property.create({
+          name: 'password_alt',
+          type: 'String'
+        })
+        .then(function (property) {
+          console.log('[util] Property "' + property.name + '" created.')
+        });
+    });
+}
+
 var createDatabase = function() {
   var server = getServer();
   console.info('[util] Access to server: OK.');
@@ -85,6 +100,8 @@ var createDatabase = function() {
     })
     .then(function(db) {
       console.info('[util] Database "' + db.name + '" created.');
+
+      return createClassUser(db);
     })
     .then(function() {
       server.close();

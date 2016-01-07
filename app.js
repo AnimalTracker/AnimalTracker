@@ -9,13 +9,19 @@ var route = {
 };
 var module = {
   server:   require('./src/modules/server'),
-  database: require('./src/modules/database')
+  database: require('./src/modules/database'),
+  auth: require('./src/modules/auth')
 };
 
 // -- Views --
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
+
+// -- Early modules --
+
+module.database.init(app);
+module.auth.init(app);
 
 // -- Routes --
 
@@ -24,7 +30,6 @@ app.use('/users', route.users);
 
 // -- Modules --
 
-module.database.init(app);
 module.server.init(app);
 
 // -- System events --

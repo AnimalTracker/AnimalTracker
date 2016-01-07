@@ -4,7 +4,7 @@
 server:
   port: 3000
   static: true
-  liveReload: true
+  live_reload: true
 
 database:
   host: 'localhost'
@@ -12,3 +12,6 @@ database:
   username: 'root'
   password: 'yourpassword'
   dbname: 'genetracker'
+
+# Override this !
+secret_token: 'P3RoJCBuof44T2tZm7O9'

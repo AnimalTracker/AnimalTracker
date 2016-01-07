@@ -20,10 +20,12 @@ var server = OrientDB({
   host:     getParam('host',      'localhost'),
   port:     getParam('port',      2424),
   username: getParam('username',  'root'),
-  password: getParam('password',  'yourpassword')
+  password: getParam('password',  'yourpassword'),
+  enableRIDBags: false
 });
 
-var db = server.use(getParam('dbname',  'genetracker'));
+var dbname = getParam('dbname',  'genetracker');
+var db = server.use(dbname);
 
 // -- Module requirements --
 

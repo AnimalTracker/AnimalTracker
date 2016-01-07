@@ -1,0 +1,43 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    meta(name='description', content='')
+    meta(name='author', content='')
+    
+    title= title
+    link(rel='stylesheet', href='css/app.css')
+
+    // Custom Fonts
+    link(href='vendors/font-awesome/css/font-awesome.min.css', rel='stylesheet', type='text/css')
+
+    script(type='text/javascript').
+      document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] +
+              ':35729/livereload.js?snipver=1"></' + 'script>')
+
+    // HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
+    // WARNING: Respond.js doesn't work if you view the page via file://
+    //if lt IE 9
+      script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
+      script(src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js')
+  body
+    block content
+    // jQuery
+    script(src='vendors/jquery/dist/jquery.min.js')
+    // Bootstrap Core JavaScript
+    script(src='vendors/bootstrap/dist/js/bootstrap.min.js')
+    // Metis Menu Plugin JavaScript
+    script(src='vendors/metisMenu/dist/metisMenu.min.js')
+    // Morris Charts JavaScript
+    script(src='vendors/raphael/raphael-min.js')
+    script(src='vendors/morrisjs/morris.min.js')
+    script(src='js/morris-data.js')
+    // Custom Theme JavaScript
+    script(src='vendors/startbootstrap-sb-admin-2/dist/js/sb-admin-2.js')
+    script(src='js/script.js')
+
+
+    
+

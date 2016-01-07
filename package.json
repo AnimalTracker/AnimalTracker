@@ -22,12 +22,18 @@
   "homepage": "https://github.com/GeneTracker/GeneTracker#readme",
   "dependencies": {
     "bluebird": "^3.1.1",
+    "body-parser": "^1.14.2",
     "command-line-commands": "^0.1.1",
     "config": "^1.17.1",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.0",
     "express": "^4.13.3",
+    "express-session": "^1.12.1",
     "jade": "^1.11.0",
     "js-yaml": "^3.4.6",
-    "orientjs": "^2.1.0"
+    "orientjs": "^2.1.0",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0"
   },
   "devDependencies": {
     "bower": "^1.7.2",
