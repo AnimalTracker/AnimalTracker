@@ -1,4 +1,4 @@
-// Configuration controller --
+// Server initialisation --
 // Based on config : https://github.com/lorenwest/node-config/wiki/Configuration-Files
 
 var config  = require('config');
@@ -8,7 +8,7 @@ var path = require('path');
 var DEFAULT_PORT = 3000;
 
 // Optional parameters --
-exports.apply = function(app) {
+exports.init = function(app) {
 
   if(config.has('server')) {
     var server = config.get('server');
@@ -25,6 +25,14 @@ exports.apply = function(app) {
       serverLr.watch(__dirname + '/public');
     }
   }
+
+  // Start server --
+  var server = app.listen(config.getPort(), function () {
+    var host = server.address().address;
+    var port = server.address().port;
+
+    console.log('[app] GeneTracker listening at http://%s:%s', host, port);
+  });
 };
 
 // Safely get the port number --

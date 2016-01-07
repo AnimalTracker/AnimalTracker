@@ -24,7 +24,8 @@
     "config": "^1.17.1",
     "express": "^4.13.3",
     "jade": "^1.11.0",
-    "js-yaml": "^3.4.6"
+    "js-yaml": "^3.4.6",
+    "orientjs": "^2.1.0"
   },
   "devDependencies": {
     "bower": "^1.7.2",
