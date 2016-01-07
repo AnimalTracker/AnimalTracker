@@ -22,12 +22,6 @@ app.set('view engine', 'jade');
 app.use('/', route.index);
 app.use('/users', route.users);
 
-// 404 Error --
-app.use(function(req, res, next) {
-  console.error('404: ' + req.url);
-  res.status(404).send('Not Found');
-});
-
 // -- Modules --
 
 module.database.init(app);
@@ -38,4 +32,3 @@ module.server.init(app);
 process.on('exit', function(code) {
   module.database.close();
 });
-

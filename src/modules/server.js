@@ -34,7 +34,7 @@ var getPort = function() {
 };
 
 var startStaticServer = function(app) {
-  app.use(express.static(path.join(__dirname, 'public')));
+  app.use(express.static('public'));
 
   console.log('[app] Static server ready');
 };
@@ -42,12 +42,19 @@ var startStaticServer = function(app) {
 var startLiveReloadServer = function() {
   var livereload = require('livereload');
   var serverLr = livereload.createServer();
-  serverLr.watch(__dirname + '/public');
+  serverLr.watch(path.resolve(__dirname, '../..', 'public'));
 
   console.log('[app] LiveReload server ready');
 };
 
 var startExpressServer = function(app) {
+  // 404 Error --
+  app.use(function(req, res, next) {
+    console.error('404: ' + req.url);
+    res.status(404).send('Not Found');
+  });
+
+  // Start the app --
   var server = app.listen(getPort(), function () {
     var host = server.address().address;
     var port = server.address().port;
