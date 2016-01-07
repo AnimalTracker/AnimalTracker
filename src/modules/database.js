@@ -23,14 +23,18 @@ var server = OrientDB({
   password: getParam('password',  'yourpassword')
 });
 
+var db = server.use(getParam('dbname',  'genetracker'));
+
 // -- Module requirements --
 
-server.init = function(app) {
+db.init = function(app) {
 
 };
 
-server.close = function() {
+db.close = function() {
   server.close();
 };
 
-module.exports = server;
+db.server = server;
+
+module.exports = db;
