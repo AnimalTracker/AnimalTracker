@@ -11,3 +11,4 @@ database:
   port: 2424
   username: 'root'
   password: 'yourpassword'
+  dbname: 'genetracker'
