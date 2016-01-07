@@ -79,12 +79,29 @@ var createClassUser = function(db) {
     .then(function (User) {
       console.log('[util] Class "' + User.name + '" created.');
 
-      return User.property.create({
-          name: 'password_alt',
-          type: 'String'
+      return User.property.create([{
+        name: 'password_alt',
+        type: 'String'
+      }, {
+        name: 'display_name',
+        type: 'String'
+      }])
+        .then(function() {
+          console.log('[util] Properties created.');
         })
-        .then(function (property) {
-          console.log('[util] Property "' + property.name + '" created.')
+        .then(User.create([{
+          name: 'test',
+          password: 'test',
+          password_alt: 'test',
+          status: 'ACTIVE'
+        },{
+          name: 'test2',
+          password: 'azerty',
+          password_alt: 'azerty',
+          status: 'ACTIVE'
+        }]))
+        .then(function() {
+          console.log('[util] Records created.');
         });
     });
 }

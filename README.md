@@ -18,6 +18,12 @@ npm install
 
 # Start the app
 npm start
+
+# Create the database
+node util create-database
+
+# (optional) Remove the database
+node util delete-database --db genetracker [--exec]
 ```
 
 ### Production
