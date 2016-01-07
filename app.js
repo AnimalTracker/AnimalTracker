@@ -12,11 +12,13 @@ var module = {
   database: require('./src/modules/database')
 };
 
-// Setup views --
+// -- Views --
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-// Setup routes --
+// -- Routes --
+
 app.use('/', route.index);
 app.use('/users', route.users);
 
@@ -26,7 +28,14 @@ app.use(function(req, res, next) {
   res.status(404).send('Not Found');
 });
 
-// Setup modules --
+// -- Modules --
+
 module.database.init(app);
 module.server.init(app);
+
+// -- System events --
+
+process.on('exit', function(code) {
+  module.database.close();
+});
 

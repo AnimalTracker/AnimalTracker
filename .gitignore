@@ -6,3 +6,6 @@ node_modules/
 
 # Generated contents
 public
+
+# Local configuration
+config/local*

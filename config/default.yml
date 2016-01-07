@@ -5,3 +5,9 @@ server:
   port: 3000
   static: true
   liveReload: true
+
+database:
+  host: 'localhost'
+  port: 2424
+  username: 'root'
+  password: 'yourpassword'
