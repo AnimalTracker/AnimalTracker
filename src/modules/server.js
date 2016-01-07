@@ -35,12 +35,16 @@ var getPort = function() {
 
 var startStaticServer = function(app) {
   app.use(express.static(path.join(__dirname, 'public')));
+
+  console.log('[app] Static server ready');
 };
 
 var startLiveReloadServer = function() {
   var livereload = require('livereload');
   var serverLr = livereload.createServer();
   serverLr.watch(__dirname + '/public');
+
+  console.log('[app] LiveReload server ready');
 };
 
 var startExpressServer = function(app) {
