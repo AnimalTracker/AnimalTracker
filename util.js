@@ -11,7 +11,10 @@ const cli = commandLineCommands([
   { name: 'check-server'},
   { name: 'list-database'},
   { name: 'create-database'},
-  { name: 'delete-database', definitions: [ { name: 'db', type: String } ] }
+  { name: 'delete-database', definitions: [
+    { name: 'db', type: String },
+    { name: 'exec', type: Boolean }
+  ]}
 ]);
 
 var displayHelp = function() {
@@ -89,16 +92,46 @@ var createDatabase = function() {
     });
 };
 
+var deleteDatabase = function(command) {
+  var arg = {
+    dbname: command.options.db || '<dbname>',
+    password: getParam('password', '<password>')
+  };
+  var cmd = 'node_modules/orientjs/bin/orientjs -s ' + arg.password + ' db drop ' + arg.dbname;
+
+  if(command.options.exec) {
+    if(arg.dbname == '<dbname>') {
+      console.error('[util] Database name is missing (--db DatabaseName)');
+      return;
+    }
+
+    if(arg.password == '<password>') {
+      console.error('[util] Password is missing (in config/)');
+      return;
+    }
+
+    console.info('[util] ' + cmd);
+    require('child_process').exec(cmd, (error, out, err) => {
+      if(error)
+        console.error(err);
+      else
+        console.log(out);
+    });
+  }
+  else {
+    console.info('[util] The command there is the way to go:');
+    console.info(cmd);
+  }
+};
+
 // Apply commands --
 const command = cli.parse();
 switch (command.name) {
-  case 'check-server':    checkServer();    break;
-  case 'list-database':   listDatabase();   break;
-  case 'create-database': createDatabase(); break;
-  case 'delete-database':
-    var dbname = command.options.db || '<dbname>'
-    console.info('[util] The command there is the way to go:');
-    console.info('node_modules/orientjs/bin/orientjs -s ' + getParam('password', '<password>') + ' db drop ' + dbname);
+  case 'check-server':    checkServer();            break;
+  case 'list-database':   listDatabase();           break;
+  case 'create-database': createDatabase();         break;
+  case 'delete-database': deleteDatabase(command);  break;
+
     break;
   default: displayHelp();
 }
