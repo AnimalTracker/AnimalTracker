@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/GeneTracker/GeneTracker#readme",
   "dependencies": {
+    "bluebird": "^3.1.1",
     "config": "^1.17.1",
     "express": "^4.13.3",
     "jade": "^1.11.0",

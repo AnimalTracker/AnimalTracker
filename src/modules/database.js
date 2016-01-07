@@ -4,10 +4,6 @@
 var config  = require('config');
 var OrientDB = require('orientjs');
 
-// -- Fields --
-
-var server = undefined;
-
 // -- Methods --
 
 var getParam = function(id, defaultValue) {
@@ -18,22 +14,23 @@ var getParam = function(id, defaultValue) {
   return defaultValue;
 };
 
+// -- Fields --
+
+var server = OrientDB({
+  host:     getParam('host',      'localhost'),
+  port:     getParam('port',      2424),
+  username: getParam('username',  'root'),
+  password: getParam('password',  'yourpassword')
+});
+
 // -- Module requirements --
 
-exports.init = function(app) {
-  server = OrientDB({
-    host:     getParam('host',      'localhost'),
-    port:     getParam('port',      2424),
-    username: getParam('username',  'root'),
-    password: getParam('password',  'yourpassword')
-  });
+server.init = function(app) {
 
-  server.list()
-    .then(function (dbs) {
-      console.log('[orientdb] There are ' + dbs.length + ' databases on the server.');
-    });
 };
 
-exports.close = function() {
+server.close = function() {
   server.close();
 };
+
+module.exports = server;
