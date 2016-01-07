@@ -15,72 +15,65 @@ var db = require('../modules/database.js');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
-// -- Constants --
-
-var DEFAULT_PORT = 3000;
-
 // -- Strategy --
 
-var loadStrategy = function() {
-  passport.use(new LocalStrategy(
-    function(username, password, done) {
+passport.use(new LocalStrategy(
+  function(username, password, done) {
 
-      console.log('Try');
+    console.log('Try');
 
-      // Find OUser in OrientDB --
-      db.query('select from User where name=:name', {
-        params: {
-          name: username
-        },
-        limit: 1
-      }).then(function (results){
-
-        // User found --
-        if(results.length == 1) {
-          var user = results[0];
-
-          var hash = '{SHA-256}' + crypto
-              .createHash('sha256')
-              .update(password)
-              .digest('base64');
-
-          console.log(password);
-          console.log(user.password_alt);
-
-          // Check password --
-          if(password == user.password_alt) {
-            // Success --
-            return done(null, user);
-          }
-          else {
-            // Not matching --
-            return done(null, false, { message: 'Incorrect password.' });
-          }
-        }
-        else {
-          // No user found --
-          return done(null, false, { message: 'Incorrect username.' });
-        }
-      });
-    }
-  ));
-
-  passport.serializeUser(function(user, done) {
-    console.log('RID: ' + user['@rid']);
-    done(null, '' + user['@rid']);
-  });
-
-  passport.deserializeUser(function(id, done) {
-    db.query('select from OUser where @rid=:id', {
+    // Find OUser in OrientDB --
+    db.query('select from User where name=:name', {
       params: {
-        id: id
+        name: username
       },
       limit: 1
     }).then(function (results){
-      done(results.length == 0, results[0]);
+
+      // User found --
+      if(results.length == 1) {
+        var user = results[0];
+
+        var hash = '{SHA-256}' + crypto
+            .createHash('sha256')
+            .update(password)
+            .digest('base64');
+
+        console.log(password);
+        console.log(user.password_alt);
+
+        // Check password --
+        if(password == user.password_alt) {
+          // Success --
+          return done(null, user);
+        }
+        else {
+          // Not matching --
+          return done(null, false, { message: 'Incorrect password.' });
+        }
+      }
+      else {
+        // No user found --
+        return done(null, false, { message: 'Incorrect username.' });
+      }
     });
+  }
+));
+
+passport.serializeUser(function(user, done) {
+  done(null, '' + user['@rid']);
+});
+
+passport.deserializeUser(function(id, done) {
+  db.query('select from OUser where @rid=:id', {
+    params: {
+      id: id
+    },
+    limit: 1
+  }).then(function (results){
+    done(results.length == 0, results[0]);
   });
-};
+});
 
 // -- Module requirements --
 
@@ -101,6 +94,4 @@ exports.init = function(app) {
   app.use(passport.session());
 
   app.use(flash());
-
-  loadStrategy();
 };
