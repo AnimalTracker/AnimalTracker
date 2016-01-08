@@ -75,7 +75,7 @@ exports.init = function(app) {
       startStaticServer(app);
 
     // Live reload --
-    if(server.has('liveReload') && server.get('liveReload'))
+    if(server.has('live_reload') && server.get('live_reload'))
       startLiveReloadServer();
   }
 
