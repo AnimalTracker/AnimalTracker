@@ -40,7 +40,8 @@ eslintOptionsServer = {
   globals: {
   },
   envs: [
-    'node'
+    'node',
+    'es6'
   ]
 };
 
