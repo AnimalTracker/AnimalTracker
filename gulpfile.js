@@ -3,6 +3,7 @@ var less = require('gulp-less');
 var path = require('path');
 var watch = require('gulp-watch');
 var eslint = require('gulp-eslint');
+var plumber = require('gulp-plumber');
 
 // Options --
 // ESlint configuration : eslint.org/docs/user-guide/configuring
@@ -60,15 +61,16 @@ gulp.task('less:watch', ['less:build'], function() {
 
 gulp.task('scripts:build', function() {
   return gulp.src('./assets/js/*.js')     // Take all browser sources files
+  //.pipe(plumber())                      // Security
     .pipe(eslint(eslintOptionsBrowser))   // Check
     .pipe(eslint.format())                // Display
-    .pipe(eslint.failAfterError())        // Cut the flow if a mistake has been found
+  //.pipe(eslint.failAfterError())        // Cut the flow if a mistake has been found
     .pipe(gulp.dest('./public/js'));      // Store the result in public
 });
 
 gulp.task('scripts:watch', ['scripts:build'], function() {
   // Watch all the browser.js files, then run the build task
-  gulp.watch('./assets/js/**/*.js', ['script:build']);
+  gulp.watch('./assets/js/**/*.js', ['scripts:build']);
 });
 
 // Process source --
