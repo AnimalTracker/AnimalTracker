@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "npm run start:dev",
-    "start:dev": "nodemon app.js -e js yml -w src/ -w app.js -w config/",
+    "start:dev": "nodemon app.js -e js yml json -w src/ -w app.js -w config/",
     "start:prod": "node app.js",
     "watch": "gulp watch",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -29,6 +29,7 @@
     "cookie-parser": "^1.4.0",
     "express": "^4.13.3",
     "express-session": "^1.12.1",
+    "i18n": "^0.5.0",
     "jade": "^1.11.0",
     "js-yaml": "^3.4.6",
     "orientjs": "^2.1.0",
