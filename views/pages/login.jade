@@ -10,7 +10,7 @@ block content
             h3.panel-title= __("Sign In")
           .panel-body
             each error in errors
-                +alert(danger)= error
+                +alert('info')= error
 
             form(role='form', method='POST', target='/login')
               fieldset

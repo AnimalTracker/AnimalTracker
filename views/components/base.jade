@@ -2,7 +2,7 @@
 //- Based on mixins : http://jade-lang.com/reference/mixins/
 
 mixin alert(type)
-    .alert.alert-danger(role='alert') #{error}
+    .alert(class='alert-' + type, role='alert')
         if block
             block
         else
