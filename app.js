@@ -4,14 +4,15 @@ var path = require('path');
 
 var app = express();
 var route = {
-  index: require('./src/routes/index'),
-  users: require('./src/routes/users')
+  index:    require('./src/routes/index'),
+  users:    require('./src/routes/users'),
+  api:      require('./src/routes/api')
 };
 var module = {
   server:   require('./src/modules/server'),
   database: require('./src/modules/database'),
-  auth: require('./src/modules/auth'),
-  i18n: require('./src/modules/i18n')
+  auth:     require('./src/modules/auth'),
+  i18n:     require('./src/modules/i18n')
 };
 
 // -- Views --
@@ -28,7 +29,8 @@ module.i18n.init(app);
 // -- Routes --
 
 app.use('/', route.index);
-app.use('/users', route.users);
+app.use('/user', route.users);
+app.use('/api/v1', route.api);
 
 // -- Modules --
 
