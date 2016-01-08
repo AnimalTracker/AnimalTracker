@@ -20,8 +20,6 @@ var LocalStrategy = require('passport-local').Strategy;
 passport.use(new LocalStrategy(
   function(username, password, done) {
 
-    console.log('Try');
-
     // Find OUser in OrientDB --
     db.query('select from User where name=:name', {
       params: {
@@ -39,8 +37,8 @@ passport.use(new LocalStrategy(
             .update(password)
             .digest('base64');
 
-        console.log(password);
-        console.log(user.password_alt);
+        console.log('Password: ' + password);
+        console.log(user);
 
         // Check password --
         if(password == user.password_alt) {
@@ -65,7 +63,7 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(id, done) {
-  db.query('select from OUser where @rid=:id', {
+  db.query('select from User where @rid=:id', {
     params: {
       id: id
     },

@@ -10,11 +10,12 @@ router.get('/', function(req, res, next) {
     return res.redirect('/login');
   }
 
+  // Demo Query --
   return db.query('select from OUser', {
       limit: 10
     })
     .then(function (results){
-      console.log(results);
+      //console.log(results);
     })
     .then(function() {
       res.render('pages/index', { title: 'Express' });
@@ -36,10 +37,9 @@ router.get('/login', function(req, res, next) {
 
 router.post('/login', function(req, res, next) {
   // Authenticate the user --
-  console.log('user');
 
   passport.authenticate('local', function(err, user, info) {
-    console.log(err,user, info);
+
     if (err) {
       return next(err);
     }
