@@ -4,6 +4,8 @@ var db = require('../modules/database');
 var passport = require('passport');
 var flash = require ('connect-flash');
 
+var User = require('../models/user');
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   if (!req.isAuthenticated()) {
@@ -11,11 +13,12 @@ router.get('/', function(req, res, next) {
   }
 
   // Demo Query --
-  return db.query('select from OUser', {
-      limit: 10
-    })
-    .then(function (results){
-      //console.log(results);
+  return db.ready
+    .then(function(){
+
+      //var user = new User.class('test3','test');
+      //console.log(user);
+      //return user.save();
     })
     .then(function() {
       res.render('pages/index', { title: 'Express' });
