@@ -1,4 +1,5 @@
 extends ../layouts/root
+include ../components/base
 
 block content
   .container
@@ -9,7 +10,7 @@ block content
             h3.panel-title= __("Sign In")
           .panel-body
             each error in errors
-                .alert.alert-danger(role='alert') #{error}
+                +alert(danger)= error
 
             form(role='form', method='POST', target='/login')
               fieldset

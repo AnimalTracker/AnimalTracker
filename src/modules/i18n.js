@@ -11,8 +11,6 @@ i18n.configure({
   directory: path.resolve('./locales')
 });
 
-
-console.log(path.resolve('./locales'));
 // -- Module requirements --
 
 exports.init = function(app) {

@@ -1,0 +1,9 @@
+//- Components file : base --
+//- Based on mixins : http://jade-lang.com/reference/mixins/
+
+mixin alert(type)
+    .alert.alert-danger(role='alert') #{error}
+        if block
+            block
+        else
+            p No content provided
