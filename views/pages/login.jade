@@ -12,7 +12,7 @@ block content
             each error in errors
                 +alert('info')= error
 
-            form(role='form', method='POST', target='/login')
+            form(role='form', method='POST', action='/login')
               fieldset
                 .form-group
                   input.form-control(placeholder='Username', name='username', type='text', autofocus='')
