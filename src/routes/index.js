@@ -25,7 +25,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/login', function(req, res, next) {
   if (req.isAuthenticated()) {
-    res.redirect('/');
+    return res.redirect('/');
   }
 
   return res.render("pages/login", {
