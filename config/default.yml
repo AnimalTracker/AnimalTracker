@@ -15,3 +15,182 @@ database:
 
 # Override this !
 secret_token: 'P3RoJCBuof44T2tZm7O9'
+
+# -- Data Schema --
+# Don't touch unless you know what you're doing !
+
+rat: &rat
+  metadata:
+    display_name: Rat
+
+  property:
+
+    strain:
+      display_name: Souche
+      type: list
+      list:
+        - { id: 1, text: Long Evans }
+        - { id: 2, text: Wistar }
+        - { id: 3, text: Sprague Dawley }
+      allow_other: true
+
+    date_enter:
+      display_name: Date d'arrivée
+      type: date
+
+    date_birth:
+      display_name: Date de naissance
+      type: date
+
+    sex:
+      display_name: Sexe
+      type: list
+      list:
+        - { id: 1, text: Mâle }
+        - { id: 2, text: Femelle }
+      allow_other: false
+
+    id:
+      display_name: Numéro
+      type: string
+
+    age:
+      display_name: Age
+      type: age
+      display_as: week
+
+    origin:
+      display_name: Provenance
+      type: list
+      list:
+        - { id: 1, text: Janvier Labs }
+        - { id: 2, text: Charles River }
+      allow_other: true
+
+    project:
+      display_name: Référence APAFIS
+      type: reference
+      class: project
+
+    death:
+      display_name: Mise à mort
+      type: list
+      list:
+        - { id: 1, text: Injection létale de Pentobarbital (fin de projet) }
+        - { id: 2, text: Injection létale de Pentobarbital (prélèvements tissus) }
+        - { id: 3, text: Injection létale de Pentobarbital (animal en souffrance) }
+        - { id: 4, text: Mort pré-chirurgie }
+        - { id: 5, text: Mort per-chirurgie }
+        - { id: 6, text: Mort post-chirurgie }
+        - { id: 7, text: Décapitation (biologie moléculaire) }
+        - { id: 8, text: Animal retrouvé mort }
+      allow_other: true
+
+    date_death:
+      display_name: Date de mort
+      type: date
+
+    date_exit:
+      display_name: Date de sortie
+      type: date
+
+    addressee:
+      display_name: Destinataire
+      type: string
+
+mus: &mus
+  metadata:
+    display_name: Souris
+
+  property:
+
+    strain:
+      display_name: Souche
+      type: string
+
+    lineage:
+      display_name: Lignée
+      type: string
+
+    genotype:
+      display_name: Génotype
+      type: string
+
+    date_enter:
+      display_name: Date d'arrivée
+      type: date
+
+    date_birth:
+      display_name: Date de naissance
+      type: date
+
+    sex:
+      display_name: Sexe
+      type: list
+      list:
+        - { id: 1, text: Mâle }
+        - { id: 2, text: Femelle }
+      allow_other: false
+
+    id:
+      display_name: Numéro de la souris
+      type: string
+
+    chip:
+      display_name: Numéro de puce
+      type: string
+
+    age:
+      display_name: Age
+      type: age
+      display_as: week
+
+    origin:
+      display_name: Provenance
+      type: list
+      list:
+        - { id: 1, text: Janvier Labs }
+        - { id: 2, text: Charles River }
+        - { id: 3, text: Jax Mice }
+      allow_other: true
+
+    project:
+      display_name: Référence APAFIS
+      type: reference
+      class: project
+
+    death:
+      display_name: Mise à mort
+      type: list
+      list:
+        - { id: 1, text: Dislocation cervicale (fin de projet) }
+        - { id: 2, text: Dislocation cervicale (prélèvement tissus) }
+        - { id: 3, text: Dislocation cervicale (animal en souffrance) }
+        - { id: 4, text: Dislocation cervicale (animal non utilisable) }
+        - { id: 5, text: Injection létale de Pentobarbital (fin de projet) }
+        - { id: 6, text: Injection létale de Pentobarbital (prélèvements tissus) }
+        - { id: 7, text: Injection létale Pentobarbital (animal en souffrance) }
+        - { id: 8, text: Mort pré-chirurgie }
+        - { id: 9, text: Mort per-chirurgie }
+        - { id: 10, text: Mort post-chirurgie }
+        - { id: 11, text: Décapitation (biologie moléculaire) }
+        - { id: 12, text: Animal retrouvé mort }
+      allow_other: true
+
+    date_death:
+      display_name: Date de mort
+      type: date
+
+    date_exit:
+      display_name: Date de sortie
+      type: date
+
+    addressee:
+      display_name: Destinataire
+      type: string
+
+data_schema:
+  animal:
+    - *rat
+    - *mus
+
