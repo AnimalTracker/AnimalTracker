@@ -1,0 +1,21 @@
+//- Components file : for the layout --
+//- Based on mixins : http://jade-lang.com/reference/mixins/
+
+mixin menu-item(title, url, icon)
+  if block
+    li
+      a(href='#')
+        i.fa.fa-fw(class=icon)
+        |  #{title}
+        span.fa.arrow
+      ul.nav.nav-second-level
+        block
+  else
+    li
+      a(href=url)
+        i.fa.fa-fw(class=icon)
+        |  #{title}
+
+mixin menu-subitem(title, url)
+  li
+    a(href=url)= title

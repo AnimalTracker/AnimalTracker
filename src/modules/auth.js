@@ -58,6 +58,48 @@ passport.use(new LocalStrategy(
   }
 ));
 
+
+passport.use(new LocalStrategy(
+  function(username, password, done) {
+
+    // Find OUser in OrientDB --
+    db.query('select from User where name=:name', {
+      params: {
+        name: username
+      },
+      limit: 1
+    }).then(function (results){
+
+      // User found --
+      if(results.length == 1) {
+        var user = results[0];
+
+        var hash = '{SHA-256}' + crypto
+            .createHash('sha256')
+            .update(password)
+            .digest('base64');
+
+        console.log('Password: ' + password);
+        console.log(user);
+
+        // Check password --
+        if(password == user.password_alt) {
+          // Success --
+          return done(null, user);
+        }
+        else {
+          // Not matching --
+          return done(null, false, { message: 'Incorrect password.' });
+        }
+      }
+      else {
+        // No user found --
+        return done(null, false, { message: 'Incorrect username.' });
+      }
+    });
+  }
+));
+
 passport.serializeUser(function(user, done) {
   done(null, '' + user['@rid']);
 });
