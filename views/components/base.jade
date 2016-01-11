@@ -7,3 +7,19 @@ mixin alert(type)
       block
     else
       p No content provided
+
+mixin panel-heading(title, icon)
+  .panel-heading
+    i.fa.fa-fw(class=icon)
+    |  #{title}
+
+mixin panel(type)
+  .panel(class='panel-' + type)
+    block
+
+mixin panel-simple(title, type, icon)
+  +panel(type)
+    +panel-heading(title, icon)
+    .panel-body
+      block
+
