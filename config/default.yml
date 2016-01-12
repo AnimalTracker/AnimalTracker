@@ -70,7 +70,7 @@ rat: &rat
     project:
       display_name: Référence APAFIS
       type: reference
-      class: project
+      class: Project
 
     death:
       display_name: Mise à mort
@@ -140,10 +140,10 @@ mus: &mus
       display_name: Numéro de puce
       type: string
 
-    age:
-      display_name: Age
-      type: age
-      display_as: week
+    #age:
+    #  display_name: Age
+    #  type: age
+    #  display_as: week
 
     origin:
       display_name: Provenance
@@ -157,7 +157,7 @@ mus: &mus
     project:
       display_name: Référence APAFIS
       type: reference
-      class: project
+      class: Project
 
     death:
       display_name: Mise à mort
@@ -211,9 +211,26 @@ user: &user
       display_name: Nom de famille
       type: string
 
+project: &project
+  metadata:
+    display_name: Projet
+
+  property:
+
+    id_apafis:
+      display_name: Référence APAFIS
+      type: string
+
+    creator:
+      display_name: Concepteur du projet
+      type: reference
+      class: User
+
 data_schema:
-  animal:
-    rat: *rat
-    mus: *mus
-  user: *user
+  Animal:
+    Rat: *rat
+    Mus: *mus
+  User: *user
+  Other:
+    Project: *project
 

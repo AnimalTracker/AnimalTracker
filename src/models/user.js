@@ -32,20 +32,6 @@ var Class = function(name, password) {
 
 exports.class = Class;
 
-exports.createClass = function() {
-  return db.helper.createClass('User', 'OUser');
-};
-
-exports.createProperties = function() {
-  return db.helper.createProperty('User', [{
-    name: 'password_alt',
-    type: 'String'
-  }, {
-    name: 'display_name',
-    type: 'String'
-  }]);
-};
-
 exports.createRecords = function(records) {
   if(Array.isArray(records))
     records.forEach(transformObject);
@@ -54,8 +40,3 @@ exports.createRecords = function(records) {
 
   return db.helper.createRecord('User', records);
 };
-
-
-
-
-

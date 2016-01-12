@@ -84,20 +84,19 @@ var createDatabase = function() {
     var User = require('./src/models/user');
 
     db.ready
-      // Users --
-      .then(User.createClass)
-      .then(User.createProperties)
+      .then(function(){
+        return require('./src/modules/schema').populateDatabase();
+      })
       .then(function() {
         return User.createRecords([
           { name: 'test',  password: 'test' },
           { name: 'test2', password: 'azerty'}
         ]);
       })
-
-      .then(function() {
-        db.close();
-        process.exit(0);
-      });
+    .then(function() {
+      db.close();
+      process.exit(0);
+    });
   });
 };
 

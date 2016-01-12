@@ -15,13 +15,25 @@ var hash = function(value) {
 // -- Methods --
 
 schema.getClassList = function() {
-  var result = schema.animal;
+  // Join schema.Animal with schema.Other and schema.User
+  var result = schema.Animal;
+  result.User = schema.User;
+
+  var other = schema.Other;
+  for(var m in other) {
+
+    if (!other.hasOwnProperty(m))
+      continue;
+
+    result[m] = other[m];
+  }
+
   return result;
 };
 
 var isNotValid = function() {
-  if(!schema.has('animal')) {
-    console.error('[schema] Missing "animal" class list.');
+  if(!schema.has('Animal')) {
+    console.error('[schema] Missing "Animal" class list.');
     return true;
   }
 
@@ -55,11 +67,65 @@ var init = function() {
   }
 };
 
-// -- Module requirements --
+// -- Database creation
+
+var getPropertyFromType = function(property) {
+  switch (property.type) {
+    case 'date':
+      return 'Date';
+    case 'reference':
+      return 'Link';
+    case 'string':
+    case 'password':
+    case 'list':
+    default:
+      return 'String';
+  }
+};
+
+var createClass = function(model, name) {
+  return db.helper.createClass(name)
+    .then(function() {
+      var properties = model.property,
+          toCreate = [];
+
+      for(var p in properties) {
+        if(!properties.hasOwnProperty(p))
+          continue;
+
+        var prop = properties[p];
+        toCreate.push({name: p, type: getPropertyFromType(prop)});
+      }
+      return db.helper.createProperty(name, toCreate);
+    });
+};
+
+// -- Module exports --
 
 schema.init  = function(app) {
   init();
 };
 
-module.exports = schema;
+schema.listClass = function(fn) {
+  var list = schema.getClassList();
+  for(var m in list) {
 
+    if(!list.hasOwnProperty(m))
+      continue;
+
+    fn(list[m], m);
+  }
+};
+
+schema.populateDatabase = function() {
+  var promise = db.ready;
+  schema.listClass(function(model, name) {
+    promise = promise.then(function(){
+      return createClass(model, name);
+    });
+  });
+
+  return promise;
+};
+
+module.exports = schema;
