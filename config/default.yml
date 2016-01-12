@@ -189,8 +189,31 @@ mus: &mus
       display_name: Destinataire
       type: string
 
+user: &user
+  metadata:
+    display_name: Utilisateur
+
+  property:
+
+    username:
+      display_name: Pseudo
+      type: string
+
+    password:
+      display_name: Mot de passe
+      type: password
+
+    first_name:
+      display_name: Prénom
+      type: string
+
+    last_name:
+      display_name: Nom de famille
+      type: string
+
 data_schema:
   animal:
     rat: *rat
     mus: *mus
+  user: *user
 
