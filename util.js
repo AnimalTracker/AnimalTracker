@@ -84,8 +84,13 @@ var createDatabase = function() {
     var User = require('./src/models/user');
 
     db.ready
-      .then(function(){
-        return require('./src/modules/schema').populateDatabase();
+      .then(function() {
+        var schema = require('./src/modules/schema');
+        schema.init();
+        return schema;
+      })
+      .then(function(schema){
+        return schema.populateDatabase();;
       })
       .then(function() {
         return User.createRecords([

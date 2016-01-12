@@ -52,7 +52,7 @@ helpers.createClass = function() {
   return db.class.create.apply(this, arguments).then(helpers.notifyClassCreation);
 };
 
-helpers.createProperty = function(className, arg) {
+helpers.createDbProperty = function(className, arg) {
   return db.class.get(className).then(function(Class) {
     return Class.property.create(arg).then(helpers.notifyPropertiesCreation);
   });

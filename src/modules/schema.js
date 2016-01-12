@@ -4,6 +4,7 @@
 
 var config = require('config');
 var crypto = require('crypto');
+var merge = require('merge')
 
 var db = require('../modules/database.js');
 var schema = config.get('data_schema');
@@ -14,30 +15,34 @@ var hash = function(value) {
 
 // -- Methods --
 
-schema.getClassList = function() {
-  // Join schema.Animal with schema.Other and schema.User
-  var result = schema.Animal;
-  result.User = schema.User;
-
-  var other = schema.Other;
-  for(var m in other) {
-
-    if (!other.hasOwnProperty(m))
-      continue;
-
-    result[m] = other[m];
-  }
-
-  return result;
-};
-
 var isNotValid = function() {
   if(!schema.has('Animal')) {
-    console.error('[schema] Missing "Animal" class list.');
+    console.error('[schema] Missing "Animal" class list in config.');
     return true;
   }
 
   return false;
+};
+
+schema.getConfigClasses = function() {
+  // Join schema.Animal with schema.Other and schema.User
+  return merge(schema.Animal, schema.Other, { User: schema.User });
+};
+
+schema.getConfigClass = function(name) {
+  if(name === 'User')
+    return schema.User;
+  else if(schema.Animal.hasOwnProperty(name))
+    return schema.Animal[name];
+  else if(schema.Other.hasOwnProperty(name))
+    return schema.Other[name];
+}
+
+schema.forEachConfigClass = function(fn) {
+  var list = schema.getConfigClasses();
+  for(var m in list)
+    if(list.hasOwnProperty(m))
+      fn(list[m], m);
 };
 
 var init = function() {
@@ -46,28 +51,32 @@ var init = function() {
   if(isNotValid())
     return;
 
-  // Generate hash on property name --
-  var list = schema.getClassList();
-  for(var m in list) {
+  // Prepare the schema --
+  schema.forEachConfigClass(function(configClass, configClassName) {
 
-    if(!list.hasOwnProperty(m))
-      continue;
+    // Set the name --
+    configClass.name = configClassName;
 
-    var model = list[m];
-    var properties = model.property;
+    // Add new methods --
+    configClass.forEachProperty = function(fn) {
+      var list = schema.getConfigClasses();
+      for(var m in list)
+        if(list.hasOwnProperty(m))
+          fn(list[m], m);
+    };
 
-    for(var p in properties) {
+    configClass.forEachProperty(function(property, propertyName) {
 
-      if(!properties.hasOwnProperty(p))
-        continue;
+      // Set the name --
+      property.name = propertyName;
 
-      var prop = properties[p];
-      prop.hash = hash(p);
-    }
-  }
+      // Generate hash on property name --
+      property.hash = hash(propertyName);
+    });
+  });
 };
 
-// -- Database creation
+// -- Database creation --
 
 var getPropertyFromType = function(property) {
   switch (property.type) {
@@ -83,20 +92,16 @@ var getPropertyFromType = function(property) {
   }
 };
 
-var createClass = function(model, name) {
+var createDbClass = function(configClass, name) {
   return db.helper.createClass(name)
     .then(function() {
-      var properties = model.property,
-          toCreate = [];
+      var toCreate = [];
 
-      for(var p in properties) {
-        if(!properties.hasOwnProperty(p))
-          continue;
+      configClass.forEachProperty(function(property) {
+        toCreate.push({name: property.name, type: getPropertyFromType(property)});
+      });
 
-        var prop = properties[p];
-        toCreate.push({name: p, type: getPropertyFromType(prop)});
-      }
-      return db.helper.createProperty(name, toCreate);
+      return db.helper.createDbProperty(name, toCreate);
     });
 };
 
@@ -106,22 +111,11 @@ schema.init  = function(app) {
   init();
 };
 
-schema.listClass = function(fn) {
-  var list = schema.getClassList();
-  for(var m in list) {
-
-    if(!list.hasOwnProperty(m))
-      continue;
-
-    fn(list[m], m);
-  }
-};
-
 schema.populateDatabase = function() {
   var promise = db.ready;
-  schema.listClass(function(model, name) {
+  schema.forEachConfigClass(function(configClass) {
     promise = promise.then(function(){
-      return createClass(model, name);
+      return createDbClass(configClass, configClass.name);
     });
   });
 
