@@ -191,6 +191,6 @@ mus: &mus
 
 data_schema:
   animal:
-    - *rat
-    - *mus
+    rat: *rat
+    mus: *mus
 

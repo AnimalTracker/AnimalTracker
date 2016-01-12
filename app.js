@@ -11,6 +11,7 @@ var route = {
 var module = {
   server:   require('./src/modules/server'),
   database: require('./src/modules/database'),
+  schema:   require('./src/modules/schema'),
   auth:     require('./src/modules/auth'),
   i18n:     require('./src/modules/i18n')
 };
@@ -23,6 +24,7 @@ app.set('view engine', 'jade');
 // -- Early modules --
 
 module.database.init(app);
+module.schema.init(app);
 module.auth.init(app);
 module.i18n.init(app);
 
