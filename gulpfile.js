@@ -61,7 +61,7 @@ gulp.task('less:watch', ['less:build'], function() {
 // Process scripts --
 
 gulp.task('scripts:build', function() {
-  return gulp.src('./assets/js/*.js')     // Take all browser sources files
+  return gulp.src('./assets/js/**/*.js')     // Take all browser sources files
   //.pipe(plumber())                      // Security
     .pipe(eslint(eslintOptionsBrowser))   // Check
     .pipe(eslint.format())                // Display

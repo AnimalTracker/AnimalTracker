@@ -31,7 +31,7 @@ module.i18n.init(app);
 // -- Routes --
 
 app.use('/', route.index);
-app.use('/user', route.users);
+app.use('/users', route.users);
 app.use('/api/v1', route.api);
 
 // -- Modules --

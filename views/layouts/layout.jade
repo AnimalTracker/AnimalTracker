@@ -11,7 +11,7 @@ block content
           span.icon-bar
           span.icon-bar
           span.icon-bar
-        a.navbar-brand(href='index.html') GeneTracker
+        a.navbar-brand(href='/') GeneTracker
       // /.navbar-header
       ul.nav.navbar-top-links.navbar-right
         li.dropdown
@@ -43,13 +43,13 @@ block content
                   button.btn.btn-default(type='button')
                     i.fa.fa-search
               // /input-group
-            +menu-item('Dashboard', 'index.html', 'fa-dashboard')
+            +menu-item('Dashboard', '/', 'fa-dashboard')
             +menu-item('Animaux', '', 'fa-table')
               +menu-subitem('Tout', '')
               +menu-subitem('Rat', '')
               +menu-subitem('Souris', '')
-            +menu-item('Projets', 'index.html', 'fa-bar-chart-o')
-            +menu-item('Utilisateurs', 'index.html', 'fa-sitemap')
+            +menu-item('Projets', '/projects', 'fa-bar-chart-o')
+            +menu-item('Utilisateurs', '/users', 'fa-sitemap')
 
     #page-wrapper
       block wrapper
