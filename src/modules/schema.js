@@ -76,6 +76,7 @@ var init = function() {
   });
 };
 
+
 // -- Database creation --
 
 var getPropertyFromType = function(property) {
@@ -105,12 +106,6 @@ var createDbClass = function(configClass, name) {
     });
 };
 
-// -- Module exports --
-
-schema.init  = function(app) {
-  init();
-};
-
 schema.populateDatabase = function() {
   var promise = db.ready;
   schema.forEachConfigClass(function(configClass) {
@@ -120,6 +115,44 @@ schema.populateDatabase = function() {
   });
 
   return promise;
+};
+
+// -- Form Generation --
+
+schema.generateFormInputs = function(configClassName) {
+  var inputs = [];
+
+  schema.getConfigClass(configClassName).forEachProperty(function(property) {
+    var input = {
+      type: 'text',
+      label: property.display_name
+    };
+
+    switch(property.type)
+    {
+      case 'list':
+        input.type = 'select';
+        input.options = [];
+        property.list.forEach(function(option) {
+          input.options.push({
+            text: option.text
+          })
+        });
+      case 'string':
+      default:
+        break;
+    }
+
+    inputs.push(input);
+  });
+
+  return inputs;
+};
+
+// -- Module exports --
+
+schema.init  = function(app) {
+  init();
 };
 
 module.exports = schema;
