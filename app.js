@@ -6,6 +6,7 @@ var app = express();
 var route = {
   index:    require('./src/routes/index'),
   users:    require('./src/routes/users'),
+  animals:    require('./src/routes/animals'),
   api:      require('./src/routes/api')
 };
 var module = {
@@ -32,6 +33,7 @@ module.i18n.init(app);
 
 app.use('/', route.index);
 app.use('/users', route.users);
+app.use('/animals', route.animals);
 app.use('/api/v1', route.api);
 
 // -- Modules --
