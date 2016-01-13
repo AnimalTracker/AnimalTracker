@@ -76,6 +76,12 @@ helper.populateRecord = function(record, obj, configClassName) {
     }
   });
 
+  if(obj.hasOwnProperty('active')) {
+    record.active = obj.active;
+  } else {
+    record.active = true;
+  }
+
   return record;
 };
 

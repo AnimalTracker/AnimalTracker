@@ -94,8 +94,8 @@ var createDatabase = function() {
       })
       .then(function() {
         return User.createRecords([
-          { username: 'test',  password: 'test' },
-          { username: 'test2', password: 'azerty'}
+          { username: 'test',  password: 'test', first_name: 'prenom', last_name: 'nom'},
+          { username: 'test2', password: 'azerty', first_name: 'prenom2', last_name: 'nom2'}
         ]);
       })
     .then(function() {

@@ -101,6 +101,8 @@ var createDbClass = function(configClass, name) {
         toCreate.push({name: property.name, type: getPropertyFromType(property)});
       });
 
+      toCreate.push({name: 'active', type: 'Boolean'});
+
       return db.helper.createDbProperty(name, toCreate);
     });
 };

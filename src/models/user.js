@@ -47,11 +47,16 @@ exports.createRecords = function(objects) {
 // Find User in OrientDB --
 
 exports.getByUsername = function(username) {
-  return db.select().from('User').where({username: username}).one()
+  return db.select().from('User').where({active: true, username: username}).one()
     .then(transform);
 };
 
 exports.getByRid = function(rid) {
   return db.select().from('User').where({'@rid': rid}).one()
     .then(transform);
+};
+
+exports.getUsers = function() {
+  return db.select().from('User').where({active: true}).all()
+      .then(transform);
 };
