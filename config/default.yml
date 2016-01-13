@@ -19,180 +19,140 @@ secret_token: 'P3RoJCBuof44T2tZm7O9'
 # -- Data Schema --
 # Don't touch unless you know what you're doing !
 
-rat: &rat
-  metadata:
-
-  property:
-
-    strain:
-      type: list
-      list:
-        - { id: 1, text: Long Evans }
-        - { id: 2, text: Wistar }
-        - { id: 3, text: Sprague Dawley }
-      allow_other: true
-
-    date_enter:
-      type: date
-
-    date_birth:
-      type: date
-
-    sex:
-      type: list
-      list:
-        - { id: 1, text: Mâle }
-        - { id: 2, text: Femelle }
-      allow_other: false
-
-    id:
-      type: string
-
-    age:
-      type: age
-      display_as: week
-
-    origin:
-      type: list
-      list:
-        - { id: 1, text: Janvier Labs }
-        - { id: 2, text: Charles River }
-      allow_other: true
-
-    project:
-      type: reference
-      class: Project
-
-    death:
-      type: list
-      list:
-        - { id: 1, text: Injection létale de Pentobarbital (fin de projet) }
-        - { id: 2, text: Injection létale de Pentobarbital (prélèvements tissus) }
-        - { id: 3, text: Injection létale de Pentobarbital (animal en souffrance) }
-        - { id: 4, text: Mort pré-chirurgie }
-        - { id: 5, text: Mort per-chirurgie }
-        - { id: 6, text: Mort post-chirurgie }
-        - { id: 7, text: Décapitation (biologie moléculaire) }
-        - { id: 8, text: Animal retrouvé mort }
-      allow_other: true
-
-    date_death:
-      display_name:
-      type: date
-
-    date_exit:
-      type: date
-
-    addressee:
-      type: string
-
-mus: &mus
-  metadata:
-
-  property:
-
-    strain:
-      type: string
-
-    lineage:
-      type: string
-
-    genotype:
-      type: string
-
-    date_enter:
-      type: date
-
-    date_birth:
-      type: date
-
-    sex:
-      type: list
-      list:
-        - { id: 1, text: Mâle }
-        - { id: 2, text: Femelle }
-      allow_other: false
-
-    id:
-      type: string
-
-    chip:
-      type: string
-
-    #age:
-    #  type: age
-    #  display_as: week
-
-    origin:
-      type: list
-      list:
-        - { id: 1, text: Janvier Labs }
-        - { id: 2, text: Charles River }
-        - { id: 3, text: Jax Mice }
-      allow_other: true
-
-    project:
-      type: reference
-      class: Project
-
-    death:
-      type: list
-      list:
-        - { id: 1, text: Dislocation cervicale (fin de projet) }
-        - { id: 2, text: Dislocation cervicale (prélèvement tissus) }
-        - { id: 3, text: Dislocation cervicale (animal en souffrance) }
-        - { id: 4, text: Dislocation cervicale (animal non utilisable) }
-        - { id: 5, text: Injection létale de Pentobarbital (fin de projet) }
-        - { id: 6, text: Injection létale de Pentobarbital (prélèvements tissus) }
-        - { id: 7, text: Injection létale Pentobarbital (animal en souffrance) }
-        - { id: 8, text: Mort pré-chirurgie }
-        - { id: 9, text: Mort per-chirurgie }
-        - { id: 10, text: Mort post-chirurgie }
-        - { id: 11, text: Décapitation (biologie moléculaire) }
-        - { id: 12, text: Animal retrouvé mort }
-      allow_other: true
-
-    date_death:
-      type: date
-
-    date_exit:
-      type: date
-
-    addressee:
-      type: string
-
-user: &user
-  metadata:
-
-  property:
-
-    username:
-      type: string
-
-    password:
-      type: password
-
-    first_name:
-      type: string
-
-    last_name:
-      type: string
-
-project: &project
-  property:
-
-    id_apafis:
-      type: string
-
-    creator:
-      type: reference
-      class: User
 
 data_schema:
   Animal:
-    Rat: *rat
-    Mus: *mus
-  User: *user
+    - name: Rat
+      path: rats
+      property:
+        - name: strain
+          type: list
+          list:
+            - { id: 1, text: Long Evans }
+            - { id: 2, text: Wistar }
+            - { id: 3, text: Sprague Dawley }
+          allow_other: true
+        - name: date_enter
+          type: date
+        - name: date_birth
+          type: date
+        - name: sex
+          type: list
+          list:
+            - { id: 1, text: Mâle }
+            - { id: 2, text: Femelle }
+          allow_other: false
+        - name: id
+          type: string
+        - name: age
+          type: age
+          display_as: week
+        - name: origin
+          type: list
+          list:
+            - { id: 1, text: Janvier Labs }
+            - { id: 2, text: Charles River }
+          allow_other: true
+        - name: project
+          type: reference
+          class: Project
+        - name: death
+          type: list
+          list:
+            - { id: 1, text: Injection létale de Pentobarbital (fin de projet) }
+            - { id: 2, text: Injection létale de Pentobarbital (prélèvements tissus) }
+            - { id: 3, text: Injection létale de Pentobarbital (animal en souffrance) }
+            - { id: 4, text: Mort pré-chirurgie }
+            - { id: 5, text: Mort per-chirurgie }
+            - { id: 6, text: Mort post-chirurgie }
+            - { id: 7, text: Décapitation (biologie moléculaire) }
+            - { id: 8, text: Animal retrouvé mort }
+          allow_other: true
+        - name: date_death
+          type: date
+        - name: date_exit
+          type: date
+        - name: addressee
+          type: string
+
+    - name: Mus
+      path: mice
+      property:
+        - name: strain
+          type: string
+        - name: lineage
+          type: string
+        - name: genotype
+          type: string
+        - name: date_enter
+          type: date
+        - name: date_birth
+          type: date
+        - name: sex
+          type: list
+          list:
+            - { id: 1, text: Mâle }
+            - { id: 2, text: Femelle }
+          allow_other: false
+        - name: id
+          type: string
+        - name: chip
+          type: string
+        - name: age
+          type: age
+          display_as: week
+        - name: origin
+          type: list
+          list:
+            - { id: 1, text: Janvier Labs }
+            - { id: 2, text: Charles River }
+            - { id: 3, text: Jax Mice }
+          allow_other: true
+        - name: project
+          type: reference
+          class: Project
+        - name: death
+          type: list
+          list:
+            - { id: 1, text: Dislocation cervicale (fin de projet) }
+            - { id: 2, text: Dislocation cervicale (prélèvement tissus) }
+            - { id: 3, text: Dislocation cervicale (animal en souffrance) }
+            - { id: 4, text: Dislocation cervicale (animal non utilisable) }
+            - { id: 5, text: Injection létale de Pentobarbital (fin de projet) }
+            - { id: 6, text: Injection létale de Pentobarbital (prélèvements tissus) }
+            - { id: 7, text: Injection létale Pentobarbital (animal en souffrance) }
+            - { id: 8, text: Mort pré-chirurgie }
+            - { id: 9, text: Mort per-chirurgie }
+            - { id: 10, text: Mort post-chirurgie }
+            - { id: 11, text: Décapitation (biologie moléculaire) }
+            - { id: 12, text: Animal retrouvé mort }
+          allow_other: true
+        - name: date_death
+          type: date
+        - name: date_exit
+          type: date
+        - name: addressee
+          type: string
+
+  User:
+    name: User
+    path: users
+    property:
+      - name: username
+        type: string
+      - name: password
+        type: password
+      - name: first_name
+        type: string
+      - name: last_name
+        type: string
   Other:
-    Project: *project
+    - name: Project
+      path: projects
+      property:
+      - name: id_apafis
+        type: string
+      - name: creator
+        type: reference
+        class: User
 

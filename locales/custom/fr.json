@@ -32,7 +32,8 @@
       "death": "Mise à mort",
       "date_death": "Date de mort",
       "date_exit": "Date de sortie",
-      "addressee": "Destinataire"
+      "addressee": "Destinataire",
+      "age": "Mus.property.age"
     }
   },
   "Project": {

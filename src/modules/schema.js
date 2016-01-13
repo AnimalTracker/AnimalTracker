@@ -4,7 +4,6 @@
 
 var config = require('config');
 var crypto = require('crypto');
-var merge = require('merge');
 var i18n = require('i18next');
 
 var db = require('../modules/database.js');
@@ -27,23 +26,21 @@ var isNotValid = function() {
 
 schema.getConfigClasses = function() {
   // Join schema.Animal with schema.Other and schema.User
-  return merge(schema.Animal, schema.Other, { User: schema.User });
+  return schema.Animal.concat(schema.Other).concat([ schema.User ]);
 };
 
 schema.getConfigClass = function(name) {
-  if(name === 'User')
-    return schema.User;
-  else if(schema.Animal.hasOwnProperty(name))
-    return schema.Animal[name];
-  else if(schema.Other.hasOwnProperty(name))
-    return schema.Other[name];
+  if(schema.ConfigClassAlias && schema.ConfigClassAlias.hasOwnProperty(name))
+    return schema.ConfigClassAlias[name];
+  else if(!schema.ConfigClassAlias)
+    console.error('[schema] getConfigClass used before initialisation');
+  else
+    console.error('[schema] There is no '+ name +' config class');
 }
 
 schema.forEachConfigClass = function(fn) {
-  var list = schema.getConfigClasses();
-  for(var m in list)
-    if(list.hasOwnProperty(m))
-      fn(list[m], m);
+  for(var item of schema.getConfigClasses())
+    fn(item);
 };
 
 var init = function() {
@@ -53,28 +50,34 @@ var init = function() {
     return;
 
   // Prepare the schema --
-  schema.forEachConfigClass(function(configClass, configClassName) {
+  schema.ConfigClass = [];
+  schema.ConfigClassAlias = {};
 
-    // Set the name --
-    configClass.name = configClassName;
+  schema.forEachConfigClass(function(configClass) {
+
+    // Set the alias --
+    console.log(configClass.name);
+    schema.ConfigClassAlias[configClass.name] = configClass;
+    schema.ConfigClass.push(configClass);
 
     // Add new methods --
     configClass.forEachProperty = function(fn) {
-      var list = configClass.property;
-      for(var m in list)
-        if(list.hasOwnProperty(m))
-          fn(list[m], m);
+      for(var m of configClass.property)
+        fn(m);
     };
+    configClass.propertyAlias = {};
 
-    configClass.forEachProperty(function(property, propertyName) {
+    configClass.forEachProperty(function(property) {
 
-      // Set the name --
-      property.name = propertyName;
+      // Set the alias --
+      configClass.propertyAlias[property.name] = property;
 
       // Generate hash on property name --
-      property.hash = hash(propertyName);
+      property.hash = hash(property.name);
     });
   });
+
+  console.log(schema);
 };
 
 
