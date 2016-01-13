@@ -21,4 +21,13 @@ router.get('/users', function(req, res, next) {
     });
 });
 
+router.get('/users/:username', function (req, res) {
+    db.select().from('User').where({active: true, 'username': req.param('username')}).all()
+      .then(function (user) {
+        res.json({
+          user
+        });
+      });
+});
+
 module.exports = router;
