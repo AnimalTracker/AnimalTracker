@@ -44,14 +44,14 @@ exports.createRecords = function(objects) {
   return db.helper.createRecord('User', records);
 };
 
+// Find User in OrientDB --
+
 exports.getByUsername = function(username) {
-  // Find OUser in OrientDB --
   return db.select().from('User').where({username: username}).one()
     .then(transform);
 };
 
-exports.getByRid = function(username) {
-  // Find OUser in OrientDB --
-  return db.select().from('User').where({'@rid': username}).one()
+exports.getByRid = function(rid) {
+  return db.select().from('User').where({'@rid': rid}).one()
     .then(transform);
 };
