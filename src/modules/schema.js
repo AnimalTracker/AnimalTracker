@@ -138,6 +138,7 @@ schema.generateFormInputs = function(configClassName) {
             text: option.text
           })
         });
+        break;
       case 'string':
       default:
         break;

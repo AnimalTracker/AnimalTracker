@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "npm run start:dev",
-    "start:dev": "nodemon -L -e js,yml,json --watch src --watch app.js --watch config app.js ",
+    "start:dev": "nodemon -L -e js,yml,json -w src -w locales -w config app.js ",
     "start:prod": "node app.js",
     "watch": "gulp watch",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -30,6 +30,9 @@
     "express": "^4.13.3",
     "express-session": "^1.12.1",
     "i18n": "^0.5.0",
+    "i18next": "^2.0.20",
+    "i18next-express-middleware": "^0.1.2",
+    "i18next-node-fs-backend": "0.0.6",
     "jade": "^1.11.0",
     "js-yaml": "^3.4.6",
     "merge": "^1.2.0",
