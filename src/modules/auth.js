@@ -10,7 +10,7 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 var flash = require('connect-flash');
 
-var db = require('../modules/database.js');
+var User = require('../models/user.js');
 
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
@@ -20,98 +20,33 @@ var LocalStrategy = require('passport-local').Strategy;
 passport.use(new LocalStrategy(
   function(username, password, done) {
 
-    // Find OUser in OrientDB --
-    db.query('select from User where name=:name', {
-      params: {
-        name: username
-      },
-      limit: 1
-    }).then(function (results){
+    User.getByUsername(username).then(function (user){
 
-      // User found --
-      if(results.length == 1) {
-        var user = results[0];
-
-        var hash = '{SHA-256}' + crypto
-            .createHash('sha256')
-            .update(password)
-            .digest('base64');
-
-        console.log('Password: ' + password);
-        console.log(user);
-
-        // Check password --
-        if(password == user.password_alt) {
-          // Success --
-          return done(null, user);
-        }
-        else {
-          // Not matching --
-          return done(null, false, { message: 'Incorrect password.' });
-        }
-      }
-      else {
-        // No user found --
+      // Check if user exists --
+      if(!user) {
         return done(null, false, { message: 'Incorrect username.' });
       }
-    });
-  }
-));
 
-
-passport.use(new LocalStrategy(
-  function(username, password, done) {
-
-    // Find OUser in OrientDB --
-    db.query('select from User where name=:name', {
-      params: {
-        name: username
-      },
-      limit: 1
-    }).then(function (results){
-
-      // User found --
-      if(results.length == 1) {
-        var user = results[0];
-
-        var hash = '{SHA-256}' + crypto
-            .createHash('sha256')
-            .update(password)
-            .digest('base64');
-
-        console.log('Password: ' + password);
-        console.log(user);
-
-        // Check password --
-        if(password == user.password_alt) {
-          // Success --
-          return done(null, user);
-        }
-        else {
-          // Not matching --
-          return done(null, false, { message: 'Incorrect password.' });
-        }
+      // Check password --
+      if(user.test(password)) {
+        // Success --
+        return done(null, user);
       }
       else {
-        // No user found --
-        return done(null, false, { message: 'Incorrect username.' });
+        // Not matching --
+        return done(null, false, { message: 'Incorrect password.' });
       }
     });
   }
 ));
 
 passport.serializeUser(function(user, done) {
-  done(null, '' + user['@rid']);
+  done(null, user.rid);
 });
 
 passport.deserializeUser(function(id, done) {
-  db.query('select from User where @rid=:id', {
-    params: {
-      id: id
-    },
-    limit: 1
-  }).then(function (results){
-    done(results.length == 0, results[0]);
+  return User.getByRid(id).then(function (user){
+    done(user ? null : 'User not found', user);
   });
 });
 

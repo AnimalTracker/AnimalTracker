@@ -4,14 +4,14 @@
 
 var config = require('config');
 var crypto = require('crypto');
-var merge = require('merge')
+var merge = require('merge');
 
 var db = require('../modules/database.js');
 var schema = config.get('data_schema');
 
 var hash = function(value) {
   return crypto.createHash('sha256').update(value).digest('base64');
-}
+};
 
 // -- Methods --
 
@@ -59,7 +59,7 @@ var init = function() {
 
     // Add new methods --
     configClass.forEachProperty = function(fn) {
-      var list = schema.getConfigClasses();
+      var list = configClass.property;
       for(var m in list)
         if(list.hasOwnProperty(m))
           fn(list[m], m);
