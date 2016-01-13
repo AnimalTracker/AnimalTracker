@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "npm run start:dev",
-    "start:dev": "nodemon app.js -e js -e yml -e json -w src/ -w app.js -w config/",
+    "start:dev": "nodemon -L -e js,yml,json --watch src --watch app.js --watch config app.js ",
     "start:prod": "node app.js",
     "watch": "gulp watch",
     "test": "echo \"Error: no test specified\" && exit 1"
