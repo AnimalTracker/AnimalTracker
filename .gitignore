@@ -3,6 +3,7 @@
 
 # Package managers
 node_modules/
+npm-debug.log
 
 # Generated contents
 public
