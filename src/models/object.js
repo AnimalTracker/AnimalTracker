@@ -79,7 +79,7 @@ helper.populateRecord = function(record, obj, configClassName) {
   return record;
 };
 
-helper.addMethodsToObject = function(obj, configClasrecordsName) {
+helper.addMethodsToObject = function(obj, configClassName) {
 
   obj.save = function() {
     var record = {};
