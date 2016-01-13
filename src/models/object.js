@@ -106,8 +106,11 @@ helper.transformRecordsIntoObjects = function(records, configClassName) {
 
     return list;
   }
-  else {
+  else if(records) {
     return helper.constructObjectFromRecord({}, records, configClassName);
+  }
+  else {
+    return null;
   }
 };
 
@@ -122,8 +125,11 @@ helper.transformObjectsIntoRecords = function(objects, configClassName) {
 
     return list;
   }
-  else {
+  else if(objects) {
     return helper.populateRecord({}, objects, configClassName);
+  }
+  else {
+    return null;
   }
 };
 
@@ -135,8 +141,11 @@ helper.apply = function(objects, fn) {
 
     return objects;
   }
-  else {
+  else if(objects) {
     return fn(objects);
+  }
+  else {
+    return null;
   }
 };
 

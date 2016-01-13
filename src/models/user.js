@@ -28,10 +28,7 @@ var Class = function(username, password) {
   addMethods(this);
 };
 
-var transformOne = function(user) {
-  if(!user)
-    return null;
-
+var transform = function(user) {
   var objects = object.helper.transformRecordsIntoObjects(user, 'User');
   object.helper.apply(objects, addMethods);
   return objects;
@@ -50,11 +47,11 @@ exports.createRecords = function(objects) {
 exports.getByUsername = function(username) {
   // Find OUser in OrientDB --
   return db.select().from('User').where({username: username}).one()
-    .then(transformOne);
+    .then(transform);
 };
 
 exports.getByRid = function(username) {
   // Find OUser in OrientDB --
   return db.select().from('User').where({'@rid': username}).one()
-    .then(transformOne);
+    .then(transform);
 };
