@@ -1,2 +1,54 @@
 {
+  "Rat": {
+    "name": "Rat",
+    "property": {
+      "strain": "Souche",
+      "date_enter": "Date d'arrivée",
+      "date_birth": "Date de naissance",
+      "sex": "Sexe",
+      "id": "Numéro",
+      "age": "Age",
+      "origin": "Provenance",
+      "project": "Référence APAFIS",
+      "death": "Mise à mort",
+      "date_death": "Date de mort",
+      "date_exit": "Date de sortie",
+      "addressee": "Destinataire"
+    }
+  },
+  "Mus": {
+    "name": "Souris",
+    "property": {
+      "strain": "Souche",
+      "lineage": "Lignée",
+      "genotype": "Génotype",
+      "date_enter": "Date d'arrivée",
+      "date_birth": "Date de naissance",
+      "sex": "Sexe",
+      "id": "Numéro de la souris",
+      "chip": "Numéro de puce",
+      "origin": "Provenance",
+      "project": "Référence APAFIS",
+      "death": "Mise à mort",
+      "date_death": "Date de mort",
+      "date_exit": "Date de sortie",
+      "addressee": "Destinataire"
+    }
+  },
+  "Project": {
+    "name": "Projet",
+    "property": {
+      "id_apafis": "Référence APAFIS",
+      "creator": "Concepteur du projet"
+    }
+  },
+  "User": {
+    "name": "User.name",
+    "property": {
+      "username": "Pseudo",
+      "password": "Mot de passe",
+      "first_name": "Prénom",
+      "last_name": "Nom de famille"
+    }
+  }
 }

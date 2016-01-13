@@ -5,6 +5,7 @@
 var config = require('config');
 var crypto = require('crypto');
 var merge = require('merge');
+var i18n = require('i18next');
 
 var db = require('../modules/database.js');
 var schema = config.get('data_schema');
@@ -125,7 +126,7 @@ schema.generateFormInputs = function(configClassName) {
   schema.getConfigClass(configClassName).forEachProperty(function(property) {
     var input = {
       type: 'text',
-      label: property.display_name
+      label: i18n.t('custom:' + configClassName + '.property.' + property.name)
     };
 
     switch(property.type)
