@@ -90,7 +90,7 @@ var createDatabase = function() {
         return schema;
       })
       .then(function(schema){
-        return schema.populateDatabase();;
+        return db.helper.populateDatabase();;
       })
       .then(function() {
         return User.createRecords([

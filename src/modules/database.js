@@ -4,6 +4,9 @@
 var config  = require('config');
 var OrientDB = require('orientjs');
 
+var schema = require('../modules/schema');
+var helper = {};
+
 // -- Methods --
 
 var getParam = function(id, defaultValue) {
@@ -27,40 +30,83 @@ var server = OrientDB({
 var dbname = getParam('dbname',  'genetracker');
 var db = server.use(dbname);
 
-// -- Helpers --
+// -- Notify methods --
 
-var helpers = {};
-
-helpers.notifyClassCreation = function (Class) {
+helper.notifyClassCreation = function (Class) {
   console.log('[orientjs] Class "' + Class.name + '" created.');
   return Class;
 };
 
-helpers.notifyPropertiesCreation = function() {
+helper.notifyPropertiesCreation = function() {
   console.log('[orientjs] Properties created.');
 };
 
-helpers.notifyRecordsCreation = function() {
+helper.notifyRecordsCreation = function() {
   console.log('[orientjs] Records created.');
 };
 
-helpers.error = function(err) {
+helper.error = function(err) {
   console.log('[orientjs] ' + err);
 };
 
-helpers.createClass = function() {
-  return db.class.create.apply(this, arguments).then(helpers.notifyClassCreation);
+// -- Database creation methods --
+
+var getPropertyFromType = function(property) {
+  switch (property.type) {
+    case 'date':
+      return 'Date';
+    case 'reference':
+      return 'Link';
+    case 'text':
+    case 'password':
+    case 'list':
+    default:
+      return 'String';
+  }
 };
 
-helpers.createDbProperty = function(className, arg) {
+
+helper.createDbClass = function() {
+  return db.class.create.apply(this, arguments).then(helper.notifyClassCreation);
+};
+
+helper.createDbClassAndProperties = function(configClass, name) {
+  return db.helper.createDbClass(name)
+    .then(function() {
+      var toCreate = [];
+
+      configClass.forEachProperty(function(property) {
+        toCreate.push({name: property.name, type: getPropertyFromType(property)});
+      });
+
+      toCreate.push({name: 'active', type: 'Boolean'});
+
+      return db.helper.createDbProperty(name, toCreate);
+    });
+};
+
+helper.createDbProperty = function(className, arg) {
   return db.class.get(className).then(function(Class) {
-    return Class.property.create(arg).then(helpers.notifyPropertiesCreation);
+    return Class.property.create(arg).then(helper.notifyPropertiesCreation);
   });
 };
 
-helpers.createRecord = function(className, arg) {
+helper.populateDatabase = function() {
+  var promise = db.ready;
+  schema.forEachConfigClass(function(configClass) {
+    promise = promise.then(function(){
+      return helper.createDbClassAndProperties(configClass, configClass.name);
+    });
+  });
+
+  return promise;
+};
+
+// -- Records methods --
+
+helper.createRecord = function(className, arg) {
   return db.class.get(className).then(function(Class) {
-    return Class.create(arg).then(helpers.notifyRecordsCreation);
+    return Class.create(arg).then(helper.notifyRecordsCreation);
   });
 };
 
@@ -95,6 +141,6 @@ db.close = function() {
 };
 
 db.srv = server;
-db.helper = helpers;
+db.helper = helper;
 
 module.exports = db;

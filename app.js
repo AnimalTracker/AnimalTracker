@@ -13,6 +13,7 @@ var module = {
   server:   require('./src/modules/server'),
   database: require('./src/modules/database'),
   schema:   require('./src/modules/schema'),
+  view:     require('./src/modules/view'),
   auth:     require('./src/modules/auth'),
   i18n:     require('./src/modules/i18n')
 };
@@ -28,6 +29,7 @@ app.locals.resPath = '/'; // For resources href
 module.i18n.init(app);
 module.database.init(app);
 module.schema.init(app);
+module.view.init(app);
 module.auth.init(app);
 
 // -- Routes --
