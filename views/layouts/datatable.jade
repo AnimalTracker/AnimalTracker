@@ -3,6 +3,7 @@ extends layout
 block wrapper
   h1= page.header
 
+  a.btn.btn-primary(href=page.newHref)= t('New element')
   .row
     table#datatable.table.table-striped.table-hover
       thead

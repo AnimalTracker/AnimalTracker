@@ -52,7 +52,7 @@ view.populateDatatableLocals = function(locals, configClass, req) {
 
 // -- Form Generation --
 
-view.generateFormInputs = function(configClass, req) {
+view.generateFormInputLocals = function(configClass, req) {
   var inputs = [];
 
   configClass.forEachProperty(function(property) {

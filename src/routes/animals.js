@@ -28,7 +28,10 @@ router.get('/:animals', function(req, res, next) {
 
   res.render('layouts/datatable', {
     title: title,
-    page: { header: title },
+    page: {
+      header: title,
+      newHref: '/animals/' + configClass.path +'/new'
+    },
     datatable: datatable
   });
 });

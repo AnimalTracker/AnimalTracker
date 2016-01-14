@@ -28,7 +28,10 @@ router.get('/:others', function(req, res, next) {
 
   res.render('layouts/datatable', {
     title: title,
-    page: { header: title },
+    page: {
+      header: title,
+      newHref: '/others/' + configClass.path +'/new'
+    },
     datatable: datatable
   });
 });
