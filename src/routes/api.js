@@ -3,17 +3,19 @@
 
 var express = require('express'),
     router = express.Router(),
-    db = require('../modules/database');
+    db = require('../modules/database'),
+    User = require('../models/user');
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
+/* Check if API is up */
+router.get('/', function(req, res) {
   res.json({
-    message: 'Hello world!'
+    message: 'Server is running'
   });
 });
 
-router.get('/users', function(req, res, next) {
-  db.select('first_name', 'last_name', 'username').from('User').where({active: true}).all()
+/* GET users listing. */
+router.get('/users', function(req, res) {
+  User.getUsers()
     .then(function (users) {
       res.json({
         users
@@ -22,12 +24,16 @@ router.get('/users', function(req, res, next) {
 });
 
 router.get('/users/:username', function (req, res) {
-    db.select().from('User').where({active: true, 'username': req.param('username')}).all()
-      .then(function (user) {
-        res.json({
-          user
-        });
+  User.getByUsername(req.param('username'))
+    .then(function (user) {
+      res.json({
+        user
       });
+    });
+});
+
+router.post('/users', function(req, res) {
+
 });
 
 module.exports = router;
