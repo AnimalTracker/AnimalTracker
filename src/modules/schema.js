@@ -54,6 +54,11 @@ schema.forEachAnimalClass = function(fn) {
     fn(item);
 };
 
+schema.forEachOtherClass = function(fn) {
+  for(var item of schema.Other)
+    fn(item);
+};
+
 var init = function() {
 
   // Check for inconsistencies --
@@ -169,6 +174,42 @@ schema.generateFormInputs = function(configClassName) {
 
 schema.init  = function(app) {
   init();
+
+  if(app) {
+    // Add locals for views --
+    var locals = {
+      animals: [],
+      others: []
+    };
+
+    // Methods --
+    var createLocal = function (configClass) {
+      return {
+        name: configClass.name,
+        path: configClass.path
+      };
+    };
+
+    var pushClass = function (array, configClass) {
+      var localClass = createLocal(configClass);
+      array.push(localClass);
+      return localClass;
+    };
+
+    // Inserts --
+    schema.forEachAnimalClass(function (animal) {
+      pushClass(locals.animals, animal);
+    });
+
+    schema.forEachOtherClass(function (other) {
+      pushClass(locals.others, other);
+    });
+
+    locals.user = createLocal(schema.User);
+
+    // Add to locals --
+    app.locals.schema = locals;
+  }
 };
 
 module.exports = schema;

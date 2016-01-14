@@ -46,15 +46,16 @@ block content
             +menu-item('Dashboard', '/', 'fa-dashboard')
             +menu-item('Animaux', '', 'fa-table')
               +menu-subitem('Tout', '')
-              +menu-subitem('Rat', '')
-              +menu-subitem('Souris', '')
-            +menu-item('Projets', '/projects', 'fa-bar-chart-o')
-            +menu-item('Utilisateurs', '/users', 'fa-sitemap')
+              each animal in schema.animals
+                +menu-subitem(animal.name, '/animals/'+ animal.path)
+
+            each others in schema.others
+              +menu-item(others.name, '/others/' + others.path, 'fa-bar-chart-o')
+
+            +menu-item(schema.user.name, '/users', 'fa-sitemap')
 
     #page-wrapper
       block wrapper
-    // /#page-wrapper
-  // /#wrapper
 
 
 
