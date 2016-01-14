@@ -20,9 +20,9 @@ router.get('/', function(req, res) {
 router.get('/users', function(req, res) {
   User.getUsers()
     .then(function (users) {
-      res.json({
-        users
-      });
+      var result = {};
+      result[req.params.users.path] = users ? users : []
+      res.json(result);
     });
 });
 
@@ -51,9 +51,9 @@ router.param('animals', function (req, res, next, animals) {
 router.get('/animals/:animals', function(req, res) {
   Animal.getAnimals(req.params.animals.name)
     .then(function (animals) {
-      res.json({
-        animals
-      });
+      var result = {};
+      result[req.params.animals.path] = animals ? animals : []
+      res.json(result);
     });
 });
 
@@ -74,9 +74,9 @@ router.param('others', function (req, res, next, others) {
 router.get('/others/:others', function(req, res) {
   Other.getOthers(req.params.others.name)
     .then(function (others) {
-      res.json({
-        others
-      });
+      var result = {};
+      result[req.params.others.path] = others ? others : []
+      res.json(result);
     });
 });
 
