@@ -139,8 +139,8 @@ schema.generateFormInputs = function(configClassName) {
         input.options = [];
         property.list.forEach(function(option) {
           input.options.push({
-            text: option.text
-          })
+            text: i18n.t('custom:' + configClassName + '.option.' + property.name + '.' + option.id)
+          });
         });
         break;
       case 'string':

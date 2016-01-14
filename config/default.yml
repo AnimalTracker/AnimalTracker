@@ -28,9 +28,9 @@ data_schema:
         - name: strain
           type: list
           list:
-            - { id: 1, text: Long Evans }
-            - { id: 2, text: Wistar }
-            - { id: 3, text: Sprague Dawley }
+            - id: long_evans
+            - id: wistar
+            - id: sprague_dawley
           allow_other: true
         - name: date_enter
           type: date
@@ -39,8 +39,8 @@ data_schema:
         - name: sex
           type: list
           list:
-            - { id: 1, text: Mâle }
-            - { id: 2, text: Femelle }
+            - id: male
+            - id: female
           allow_other: false
         - name: id
           type: string
@@ -50,8 +50,8 @@ data_schema:
         - name: origin
           type: list
           list:
-            - { id: 1, text: Janvier Labs }
-            - { id: 2, text: Charles River }
+            - id: janvier_labs
+            - id: charles_river
           allow_other: true
         - name: project
           type: reference
@@ -59,14 +59,14 @@ data_schema:
         - name: death
           type: list
           list:
-            - { id: 1, text: Injection létale de Pentobarbital (fin de projet) }
-            - { id: 2, text: Injection létale de Pentobarbital (prélèvements tissus) }
-            - { id: 3, text: Injection létale de Pentobarbital (animal en souffrance) }
-            - { id: 4, text: Mort pré-chirurgie }
-            - { id: 5, text: Mort per-chirurgie }
-            - { id: 6, text: Mort post-chirurgie }
-            - { id: 7, text: Décapitation (biologie moléculaire) }
-            - { id: 8, text: Animal retrouvé mort }
+            - id: pentobarbital_end_project
+            - id: pentobarbital_tissue_sample
+            - id: pentobarbital_suffering
+            - id: pre_surgery
+            - id: per_surgery
+            - id: post_surgery
+            - id: beheaded_bio_mol
+            - id: found_dead
           allow_other: true
         - name: date_death
           type: date
@@ -91,8 +91,8 @@ data_schema:
         - name: sex
           type: list
           list:
-            - { id: 1, text: Mâle }
-            - { id: 2, text: Femelle }
+            - id: male
+            - id: female
           allow_other: false
         - name: id
           type: string
@@ -100,13 +100,13 @@ data_schema:
           type: string
         - name: age
           type: age
-          display_as: week
+          display_as: wee k
         - name: origin
           type: list
           list:
-            - { id: 1, text: Janvier Labs }
-            - { id: 2, text: Charles River }
-            - { id: 3, text: Jax Mice }
+            - id: janvier_labs
+            - id: charles_river
+            - id: jax_mice
           allow_other: true
         - name: project
           type: reference
@@ -114,18 +114,18 @@ data_schema:
         - name: death
           type: list
           list:
-            - { id: 1, text: Dislocation cervicale (fin de projet) }
-            - { id: 2, text: Dislocation cervicale (prélèvement tissus) }
-            - { id: 3, text: Dislocation cervicale (animal en souffrance) }
-            - { id: 4, text: Dislocation cervicale (animal non utilisable) }
-            - { id: 5, text: Injection létale de Pentobarbital (fin de projet) }
-            - { id: 6, text: Injection létale de Pentobarbital (prélèvements tissus) }
-            - { id: 7, text: Injection létale Pentobarbital (animal en souffrance) }
-            - { id: 8, text: Mort pré-chirurgie }
-            - { id: 9, text: Mort per-chirurgie }
-            - { id: 10, text: Mort post-chirurgie }
-            - { id: 11, text: Décapitation (biologie moléculaire) }
-            - { id: 12, text: Animal retrouvé mort }
+            - id: dislocation_end_project
+            - id: dislocation_tissue_sample
+            - id: dislocation_suffering
+            - id: dislocation_unusable
+            - id: pentobarbital_end_project
+            - id: pentobarbital_tissue_sample
+            - id: pentobarbital_suffering
+            - id: pre_surgery
+            - id: per_surgery
+            - id: post_surgery
+            - id: beheaded_bio_mol
+            - id: found_dead
           allow_other: true
         - name: date_death
           type: date

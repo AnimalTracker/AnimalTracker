@@ -14,6 +14,31 @@
       "date_death": "Date de mort",
       "date_exit": "Date de sortie",
       "addressee": "Destinataire"
+    },
+    "option": {
+      "strain": {
+        "long_evans": "Long Evans",
+        "wistar": "Wistar",
+        "sprague_dawley": "Sprague Dawley"
+      },
+      "sex": {
+        "male": "Mâle",
+        "female": "Femelle"
+      },
+      "origin": {
+        "janvier_labs": "Janvier Labs",
+        "charles_river": "Charles River"
+      },
+      "death": {
+        "pentobarbital_end_project": "Injection létale de Pentobarbital (fin de projet)",
+        "pentobarbital_tissue_sample": "Injection létale de Pentobarbital (prélèvements tissus)",
+        "pentobarbital_suffering": "Injection létale Pentobarbital (animal en souffrance)",
+        "pre_surgery": "Mort pré-chirurgie",
+        "per_surgery": "Mort per-chirurgie",
+        "post_surgery": "Mort post-chirurgie",
+        "beheaded_bio_mol": "Décapitation (biologie moléculaire)",
+        "found_dead": "Animal retrouvé mort"
+      }
     }
   },
   "Mus": {
@@ -33,7 +58,32 @@
       "date_death": "Date de mort",
       "date_exit": "Date de sortie",
       "addressee": "Destinataire",
-      "age": "Mus.property.age"
+      "age": "Age"
+    },
+    "option": {
+      "sex": {
+        "male": "Mâle",
+        "female": "Femelle"
+      },
+      "origin": {
+        "janvier_labs": "Janvier Labs",
+        "charles_river": "Charles River",
+        "jax_mice": "Jax Mice"
+      },
+      "death": {
+        "dislocation_end_project": "Dislocation cervicale (fin de projet)",
+        "dislocation_tissue_sample": "Dislocation cervicale (prélèvement tissus)",
+        "dislocation_suffering": "Dislocation cervicale (animal en souffrance)",
+        "dislocation_unusable": "Dislocation cervicale (animal non utilisable)",
+        "pentobarbital_end_project": "Injection létale de Pentobarbital (fin de projet)",
+        "pentobarbital_tissue_sample": "Injection létale de Pentobarbital (prélèvements tissus)",
+        "pentobarbital_suffering": "Injection létale Pentobarbital (animal en souffrance)",
+        "pre_surgery": "Mort pré-chirurgie",
+        "per_surgery": "Mort per-chirurgie",
+        "post_surgery": "Mort post-chirurgie",
+        "beheaded_bio_mol": "Décapitation (biologie moléculaire)",
+        "found_dead": "Animal retrouvé mort"
+      }
     }
   },
   "Project": {
@@ -44,7 +94,7 @@
     }
   },
   "User": {
-    "name": "User.name",
+    "name": "Utilisateur",
     "property": {
       "username": "Pseudo",
       "password": "Mot de passe",
