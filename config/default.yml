@@ -32,6 +32,7 @@ data_schema:
             - id: wistar
             - id: sprague_dawley
           allow_other: true
+          display_datatable: true
         - name: date_enter
           type: date
         - name: date_birth
@@ -44,6 +45,7 @@ data_schema:
           allow_other: false
         - name: id
           type: text
+          display_datatable: true
         - name: age
           type: age
           display_as: week
@@ -80,8 +82,10 @@ data_schema:
       property:
         - name: strain
           type: text
+          display_datatable: true
         - name: lineage
           type: text
+          display_datatable: true
         - name: genotype
           type: text
         - name: date_enter
@@ -96,8 +100,10 @@ data_schema:
           allow_other: false
         - name: id
           type: text
+          display_datatable: true
         - name: chip
           type: text
+          display_datatable: true
         - name: age
           type: age
           display_as: wee k
@@ -140,19 +146,24 @@ data_schema:
     property:
       - name: username
         type: text
+        display_datatable: true
       - name: password
         type: password
       - name: first_name
         type: text
+        display_datatable: true
       - name: last_name
         type: text
+        display_datatable: true
   Other:
     - name: Project
       path: projects
       property:
       - name: id_apafis
         type: text
+        display_datatable: true
       - name: creator
         type: reference
         class: User
+        display_datatable: true
 

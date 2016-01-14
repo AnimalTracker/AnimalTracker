@@ -5,7 +5,7 @@ $(document).ready(function() {
             url: 'https://cdn.datatables.net/plug-ins/1.10.10/i18n/French.json'
         },
         ajax: {
-            url: 'http://localhost:3000/api/v1/users',
+            url: '/api/v1/users',
             dataSrc: "users"
         },  columnDefs: [ {
             targets: 'first_name',

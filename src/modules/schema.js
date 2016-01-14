@@ -88,6 +88,12 @@ var init = function() {
       // Set the alias --
       configClass.propertyAlias[property.name] = property;
 
+      // Add methods --
+      property.getLabel = function(req) {
+        var ref = req || i18n;
+        return ref.t('custom:' + configClass.name + '.property.' + this.name);
+      };
+
       // Generate hash on property name --
       property.hash = hash(property.name);
     });
@@ -147,7 +153,7 @@ schema.generateFormInputs = function(configClassName) {
   schema.getConfigClass(configClassName).forEachProperty(function(property) {
     var input = {
       type: 'text',
-      label: i18n.t('custom:' + configClassName + '.property.' + property.name)
+      label: property.getLabel()
     };
 
     switch(property.type)

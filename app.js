@@ -25,10 +25,10 @@ app.locals.resPath = '/'; // For resources href
 
 // -- Early modules --
 
+module.i18n.init(app);
 module.database.init(app);
 module.schema.init(app);
 module.auth.init(app);
-module.i18n.init(app);
 
 // -- Routes --
 

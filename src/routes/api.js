@@ -32,8 +32,4 @@ router.get('/users/:username', function (req, res) {
     });
 });
 
-router.post('/users', function(req, res) {
-
-});
-
 module.exports = router;
