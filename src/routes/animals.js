@@ -21,7 +21,10 @@ router.get('/:animals', function(req, res, next) {
 
   var configClass = req.params.animals;
   var title = configClass.getLabel(req);
-  var datatable = view.generateDatatableLocalsJson(configClass, req);
+  var datatable = view.generateDatatableLocalsBase('animals/'+configClass.path, configClass.path);
+
+  view.populateDatatableLocals(datatable, configClass, req)
+  view.stringifyOptions(datatable);
 
   res.render('layouts/datatable', {
     title: title,

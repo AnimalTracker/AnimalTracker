@@ -21,7 +21,10 @@ router.get('/:others', function(req, res, next) {
 
   var configClass = req.params.others;
   var title = configClass.getLabel(req);
-  var datatable = view.generateDatatableLocalsJson(configClass, req);
+  var datatable = view.generateDatatableLocalsBase('others/'+configClass.path, configClass.path);
+
+  view.populateDatatableLocals(datatable, configClass, req)
+  view.stringifyOptions(datatable);
 
   res.render('layouts/datatable', {
     title: title,

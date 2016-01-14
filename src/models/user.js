@@ -34,7 +34,6 @@ var transform = function(user) {
   return objects;
 };
 
-
 // -- Module exports --
 
 exports.class = Class;

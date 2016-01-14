@@ -8,7 +8,7 @@ var view = {};
 
 // -- Datatable Generation --
 
-view.getDatatableLocalsBase = function(path) {
+view.generateDatatableLocalsBase = function(path, dataSrc) {
   return {
     cols: [],
     options: {
@@ -18,7 +18,7 @@ view.getDatatableLocalsBase = function(path) {
       },
       ajax: {
         url: '/api/v1/' + path,
-        dataSrc: path
+        dataSrc: dataSrc
       },
       columnDefs: []}
   }
@@ -29,9 +29,7 @@ view.stringifyOptions = function(locals) {
   return locals;
 };
 
-view.generateDatatableLocals = function(configClass, req) {
-  var locals = view.getDatatableLocalsBase(configClass.path);
-
+view.populateDatatableLocals = function(locals, configClass, req) {
   configClass.forEachProperty(function(property) {
     if(!property.display_datatable)
       return;
@@ -49,12 +47,6 @@ view.generateDatatableLocals = function(configClass, req) {
     });
   });
 
-  return locals;
-};
-
-view.generateDatatableLocalsJson = function(configClass, req) {
-  var locals = view.generateDatatableLocals(configClass, req);
-  view.stringifyOptions(locals);
   return locals;
 };
 
