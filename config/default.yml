@@ -43,7 +43,7 @@ data_schema:
             - id: female
           allow_other: false
         - name: id
-          type: string
+          type: text
         - name: age
           type: age
           display_as: week
@@ -73,17 +73,17 @@ data_schema:
         - name: date_exit
           type: date
         - name: addressee
-          type: string
+          type: text
 
     - name: Mus
       path: mice
       property:
         - name: strain
-          type: string
+          type: text
         - name: lineage
-          type: string
+          type: text
         - name: genotype
-          type: string
+          type: text
         - name: date_enter
           type: date
         - name: date_birth
@@ -95,9 +95,9 @@ data_schema:
             - id: female
           allow_other: false
         - name: id
-          type: string
+          type: text
         - name: chip
-          type: string
+          type: text
         - name: age
           type: age
           display_as: wee k
@@ -132,26 +132,26 @@ data_schema:
         - name: date_exit
           type: date
         - name: addressee
-          type: string
+          type: text
 
   User:
     name: User
     path: users
     property:
       - name: username
-        type: string
+        type: text
       - name: password
         type: password
       - name: first_name
-        type: string
+        type: text
       - name: last_name
-        type: string
+        type: text
   Other:
     - name: Project
       path: projects
       property:
       - name: id_apafis
-        type: string
+        type: text
       - name: creator
         type: reference
         class: User

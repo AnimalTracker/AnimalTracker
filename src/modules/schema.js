@@ -89,7 +89,7 @@ var getPropertyFromType = function(property) {
       return 'Date';
     case 'reference':
       return 'Link';
-    case 'string':
+    case 'text':
     case 'password':
     case 'list':
     default:
@@ -143,7 +143,7 @@ schema.generateFormInputs = function(configClassName) {
           });
         });
         break;
-      case 'string':
+      case 'text':
       default:
         break;
     }

@@ -21,7 +21,7 @@ helper.populateObject = function(obj, record, configClassName) {
   configClass.forEachProperty(function(property) {
     switch(property.type)
     {
-      case 'string':
+      case 'text':
         obj[property.name] = record[property.name];
         break;
       case 'password':
@@ -55,7 +55,7 @@ helper.populateRecord = function(record, obj, configClassName) {
   configClass.forEachProperty(function(property) {
     switch(property.type)
     {
-      case 'string':
+      case 'text':
         record[property.name] = obj[property.name];
         break;
       case 'password':
