@@ -8,10 +8,10 @@ html(lang='en')
     meta(name='author', content='')
     
     title= title
-    link(rel='stylesheet', href='css/app.css')
+    link(rel='stylesheet', href=resPath+'css/app.css')
 
     // Custom Fonts
-    link(href='vendors/font-awesome/css/font-awesome.min.css', rel='stylesheet', type='text/css')
+    link(href=resPath+'vendors/font-awesome/css/font-awesome.min.css', rel='stylesheet', type='text/css')
 
     script(type='text/javascript').
       document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] +
@@ -25,13 +25,13 @@ html(lang='en')
   body
     block content
     // jQuery
-    script(src='vendors/jquery/dist/jquery.min.js')
+    script(src=resPath+'vendors/jquery/dist/jquery.min.js')
     // Bootstrap Core JavaScript
-    script(src='vendors/bootstrap/dist/js/bootstrap.min.js')
+    script(src=resPath+'vendors/bootstrap/dist/js/bootstrap.min.js')
     // Metis Menu Plugin JavaScript
-    script(src='vendors/metisMenu/dist/metisMenu.min.js')
+    script(src=resPath+'vendors/metisMenu/dist/metisMenu.min.js')
     // Custom Theme JavaScript
-    script(src='vendors/startbootstrap-sb-admin-2/dist/js/sb-admin-2.js')
+    script(src=resPath+'vendors/startbootstrap-sb-admin-2/dist/js/sb-admin-2.js')
 
     block scripts
 

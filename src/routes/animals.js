@@ -3,22 +3,19 @@ var router = express.Router();
 
 var schema = require('../modules/schema');
 
-router.get('/', function(req, res, next) {
+router.get('/:animals', function(req, res, next) {
+  var configClass = schema.getConfigClassByPath(req.params.animals);
 
-  req.t('custom:Mus.name');
-  req.t('custom:Project.name');
-  req.t('custom:Rat.name');
-  req.t('custom:User.name');
+  if(!configClass)
+    return res.status(404).send('This animal class does\'n exists.');
 
-  schema.generateFormInputs('Mus');
-  schema.generateFormInputs('Project');
-  schema.generateFormInputs('User');
+  var title = req.t('custom:'+ configClass.name +'.name');
   res.render('layouts/form', {
-    title: 'Animals',
-    page: { header: 'Animals' },
+    title: title,
+    page: { header: title },
     form: {
-      header: 'Rat',
-      inputs: schema.generateFormInputs('Rat')
+      header: 'Edition',
+      inputs: schema.generateFormInputs(configClass.name)
     }
   });
 });

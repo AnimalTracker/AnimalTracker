@@ -36,10 +36,21 @@ schema.getConfigClass = function(name) {
     console.error('[schema] getConfigClass used before initialisation');
   else
     console.error('[schema] There is no '+ name +' config class');
-}
+};
+
+schema.getConfigClassByPath = function(path) {
+  for(var item of schema.getConfigClasses())
+    if(item.path === path)
+      return item;
+};
 
 schema.forEachConfigClass = function(fn) {
   for(var item of schema.getConfigClasses())
+    fn(item);
+};
+
+schema.forEachAnimalClass = function(fn) {
+  for(var item of schema.Animal)
     fn(item);
 };
 
