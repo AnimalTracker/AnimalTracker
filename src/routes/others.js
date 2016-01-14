@@ -6,20 +6,20 @@ var view = require('../modules/view');
 
 // -- Methods --
 
-router.param('animals', function (req, res, next, animals) {
-  var configClass = schema.getAnimalClassByPath(animals);
+router.param('others', function (req, res, next, others) {
+  var configClass = schema.getOtherClassByPath(others);
 
   if(!configClass)
-    return res.status(404).send('This animal class does\'n exists.');
+    return res.status(404).send('This other class does\'n exists.');
   else {
-    req.params.animals = configClass;
+    req.params.others = configClass;
     next();
   }
 });
 
-router.get('/:animals', function(req, res, next) {
+router.get('/:others', function(req, res, next) {
 
-  var configClass = req.params.animals;
+  var configClass = req.params.others;
   var title = configClass.getLabel(req);
   var datatable = view.generateDatatableLocalsJson(configClass, req);
 
@@ -30,9 +30,9 @@ router.get('/:animals', function(req, res, next) {
   });
 });
 
-router.get('/:animals/new', function(req, res, next) {
+router.get('/:others/new', function(req, res, next) {
 
-  var configClass = req.params.animals;
+  var configClass = req.params.others;
   var title = req.t('custom:'+ configClass.name +'.name');
   var inputs = view.generateFormInputLocals(configClass, req);
 

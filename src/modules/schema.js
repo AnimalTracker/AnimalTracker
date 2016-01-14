@@ -74,6 +74,14 @@ var init = function() {
 
 // -- Access Methods --
 
+schema.getAnimalClasses = function() {
+  return schema.Animal;
+};
+
+schema.getOtherClasses = function() {
+  return schema.Other;
+};
+
 schema.getConfigClasses = function() {
   // Join schema.Animal with schema.Other and schema.User
   return schema.Animal.concat(schema.Other).concat([ schema.User ]);
@@ -86,6 +94,21 @@ schema.getConfigClass = function(name) {
     console.error('[schema] getConfigClass used before initialisation');
   else
     console.error('[schema] There is no '+ name +' config class');
+};
+
+// -- Access Methods : Path --
+
+schema.getAnimalClassByPath = function(path) {
+  for(var item of schema.getAnimalClasses())
+    if(item.path === path)
+      return item;
+};
+
+
+schema.getOtherClassByPath = function(path) {
+  for(var item of schema.getOtherClasses())
+    if(item.path === path)
+      return item;
 };
 
 schema.getConfigClassByPath = function(path) {

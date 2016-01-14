@@ -127,6 +127,9 @@ view.init  = function(app) {
 
     // Add to locals --
     app.locals.schema = locals;
+
+    // For local for resources href --
+    app.locals.resPath = '/';
   }
 };
 

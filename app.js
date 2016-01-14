@@ -6,7 +6,8 @@ var app = express();
 var route = {
   index:    require('./src/routes/index'),
   users:    require('./src/routes/users'),
-  animals:    require('./src/routes/animals'),
+  animals:  require('./src/routes/animals'),
+  others:   require('./src/routes/others'),
   api:      require('./src/routes/api')
 };
 var module = {
@@ -22,7 +23,6 @@ var module = {
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
-app.locals.resPath = '/'; // For resources href
 
 // -- Early modules --
 
@@ -34,10 +34,11 @@ module.auth.init(app);
 
 // -- Routes --
 
-app.use('/', route.index);
-app.use('/users', route.users);
+app.use('/',        route.index);
+app.use('/users',   route.users);
 app.use('/animals', route.animals);
-app.use('/api/v1', route.api);
+app.use('/others',  route.others);
+app.use('/api/v1',  route.api);
 
 // -- Modules --
 
