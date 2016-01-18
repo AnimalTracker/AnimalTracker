@@ -104,7 +104,7 @@ helper.populateDatabase = function() {
 
 // -- Records methods --
 
-helper.createRecord = function(className, arg) {
+helper.createRecords = function(className, arg) {
   return db.class.get(className).then(function(Class) {
     return Class.create(arg).then(helper.notifyRecordsCreation);
   });

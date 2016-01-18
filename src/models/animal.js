@@ -4,7 +4,6 @@
 
 var path = require('path');
 var db = require(path.resolve('./src/modules/database'));
-var object = require(path.resolve('./src/models/object'));
 
 // -- Class --
 
@@ -14,9 +13,9 @@ var addMethods = function() {
 var Class = function() {
 };
 
-var transform = function(animal, type) {
-  var objects = object.helper.transformRecordsIntoObjects(animal, type);
-  object.helper.apply(objects, addMethods);
+var transform = function(animal, configClass) {
+  var objects = configClass.transformRecordsIntoObjects(animal);
+  configClass.apply(objects, addMethods);
   return objects;
 };
 
@@ -25,23 +24,28 @@ var transform = function(animal, type) {
 
 exports.class = Class;
 
-exports.createRecords = function(objects, type) {
-  var records = object.helper.transformObjectsIntoRecords(objects, type);
-  return db.helper.createRecord(type, records);
+exports.createRecords = function(objects, configClass) {
+  var records = configClass.transformObjectsIntoRecords(objects);
+  return configClass.createRecordsInDb(records);
+};
+
+exports.createFromReqBody = function(body, configClass) {
+  var records = {};
+  return configClass.createRecordsInDb(records);
 };
 
 // Find animal in OrientDB --
 
-exports.getByRid = function(rid, type) {
-  return db.select().from(type).where({'@rid': rid}).one()
+exports.getByRid = function(rid, configClass) {
+  return db.select().from(configClass.name).where({'@rid': rid}).one()
     .then(function(animal) {
-      return transform(animal, type);
+      return transform(animal, configClass);
     });
 };
 
-exports.getAnimals = function(type) {
-  return db.select().from(type).where({active: true}).all()
+exports.getAnimals = function(configClass) {
+  return db.select().from(configClass.name).where({active: true}).all()
       .then(function(animal) {
-        return transform(animal, type);
+        return transform(animal, configClass);
       });
 };

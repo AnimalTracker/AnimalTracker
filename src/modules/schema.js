@@ -1,10 +1,9 @@
 // Schema initialisation --
 
 var config = require('config');
-var crypto = require('crypto');
-var i18n = require('i18next');
 
 var schema = config.get('data_schema');
+var schemaConstructors = require('./schema-class');
 
 // -- Internal Methods --
 
@@ -15,10 +14,6 @@ var isNotValid = function() {
   }
 
   return false;
-};
-
-var hash = function(value) {
-  return crypto.createHash('sha256').update(value).digest('base64');
 };
 
 // -- Init Methods --
@@ -36,36 +31,22 @@ var init = function() {
   schema.forEachConfigClass(function(configClass) {
 
     // Set the alias --
-    console.log(configClass.name);
     schema.ConfigClassAlias[configClass.name] = configClass;
     schema.ConfigClass.push(configClass);
 
     // Add new members --
     configClass.propertyAlias = {};
 
-    configClass.forEachProperty = function(fn) {
-      for(var m of configClass.property)
-        fn(m);
-    };
+    // Add ConfigClass members/methods --
+    schemaConstructors.populateConfigClass(configClass);
 
-    configClass.getLabel = function(req) {
-      var ref = req || i18n;
-      return ref.t('custom:'+ this.name +'.name');
-    };
-
+    // Add Property members/methods --
     configClass.forEachProperty(function(property) {
 
       // Set the alias --
       configClass.propertyAlias[property.name] = property;
 
-      // Add methods --
-      property.getLabel = function(req) {
-        var ref = req || i18n;
-        return ref.t('custom:' + configClass.name + '.property.' + this.name);
-      };
-
-      // Generate hash on property name --
-      property.hash = hash(property.name);
+      schemaConstructors.populateProperty(property, configClass);
     });
   });
 

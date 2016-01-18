@@ -5,7 +5,8 @@
 var path = require('path');
 var crypto = require('crypto');
 var db = require(path.resolve('./src/modules/database'));
-var object = require(path.resolve('./src/models/object'));
+var schema = require(path.resolve('./src/modules/schema'));
+var User = schema.User;
 
 var hash = function(value) {
   return crypto.createHash('sha256').update(value).digest('base64');
@@ -24,13 +25,13 @@ var Class = function(username, password) {
   this.username = username;
   this.password = password;
 
-  object.helper.addMethodsToObject(this, 'User');
+  User.addMethodsToObject(this);
   addMethods(this);
 };
 
 var transform = function(user) {
-  var objects = object.helper.transformRecordsIntoObjects(user, 'User');
-  object.helper.apply(objects, addMethods);
+  var objects = User.transformRecordsIntoObjects(user);
+  User.apply(objects, addMethods);
   return objects;
 };
 
@@ -39,8 +40,8 @@ var transform = function(user) {
 exports.class = Class;
 
 exports.createRecords = function(objects) {
-  var records = object.helper.transformObjectsIntoRecords(objects, 'User');
-  return db.helper.createRecord('User', records);
+  var records = User.transformObjectsIntoRecords(objects);
+  return User.createRecordsInDb(records);
 };
 
 // Find User in OrientDB --

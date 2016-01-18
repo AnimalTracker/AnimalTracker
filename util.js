@@ -81,19 +81,17 @@ var createDatabase = function() {
     db.close();
   }).then(function() {
     var db = require('./src/modules/database');
-    var User = require('./src/models/user');
 
     db.ready
       .then(function() {
         var schema = require('./src/modules/schema');
-        schema.init();
-        return schema;
+        return schema.init();
       })
-      .then(function(schema){
-        return db.helper.populateDatabase();;
+      .then(function(){
+        return db.helper.populateDatabase();
       })
       .then(function() {
-        return User.createRecords([
+        return require('./src/models/user').createRecords([
           { username: 'test',  password: 'test', first_name: 'prenom', last_name: 'nom'},
           { username: 'test2', password: 'azerty', first_name: 'prenom2', last_name: 'nom2'}
         ]);

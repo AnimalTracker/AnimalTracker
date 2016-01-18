@@ -21,7 +21,7 @@ router.get('/users', function(req, res) {
   User.getUsers()
     .then(function (users) {
       var result = {};
-      result[req.params.users.path] = users ? users : []
+      result[schema.User.path] = users ? users : []
       res.json(result);
     });
 });
@@ -49,14 +49,22 @@ router.param('animals', function (req, res, next, animals) {
 });
 
 router.get('/animals/:animals', function(req, res) {
-  Animal.getAnimals(req.params.animals.name)
+  Animal.getAnimals(req.params.animals)
     .then(function (animals) {
       var result = {};
       result[req.params.animals.path] = animals ? animals : []
-      res.json(result);
+      res.status(200).json(result);
     });
 });
 
+router.post('/animals/:animals', function(req, res) {
+  Animal.createOne(req.body, req.params.animals)
+    .then(function (err) {
+      var result = {};
+      result.message = 'Animal created';
+      res.status(201).json(result);
+    });
+});
 
 /* GET others listing. */
 
@@ -72,7 +80,7 @@ router.param('others', function (req, res, next, others) {
 });
 
 router.get('/others/:others', function(req, res) {
-  Other.getOthers(req.params.others.name)
+  Other.getOthers(req.params.others)
     .then(function (others) {
       var result = {};
       result[req.params.others.path] = others ? others : []

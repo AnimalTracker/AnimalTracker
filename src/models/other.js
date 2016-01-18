@@ -4,7 +4,7 @@
 
 var path = require('path');
 var db = require(path.resolve('./src/modules/database'));
-var object = require(path.resolve('./src/models/object'));
+var schema = require(path.resolve('./src/modules/schema'));
 
 // -- Class --
 
@@ -14,9 +14,9 @@ var addMethods = function() {
 var Class = function() {
 };
 
-var transform = function(other, type) {
-  var objects = object.helper.transformRecordsIntoObjects(other, type);
-  object.helper.apply(objects, addMethods);
+var transform = function(other, configClass) {
+  var objects = configClass.transformRecordsIntoObjects(other);
+  configClass.apply(objects, addMethods);
   return objects;
 };
 
@@ -25,23 +25,23 @@ var transform = function(other, type) {
 
 exports.class = Class;
 
-exports.createRecords = function(objects, type) {
-  var records = object.helper.transformObjectsIntoRecords(objects, type);
-  return db.helper.createRecord(type, records);
+exports.createRecords = function(objects, configClass) {
+  var records = configClass.transformObjectsIntoRecords(objects);
+  return configClass.createRecordsInDb(configClass, records);
 };
 
 // Find other in OrientDB --
 
-exports.getByRid = function(rid, type) {
-  return db.select().from(type).where({'@rid': rid}).one()
+exports.getByRid = function(rid, configClass) {
+  return db.select().from(configClass.name).where({'@rid': rid}).one()
     .then(function(other) {
-      return transform(other, type);
+      return transform(other, configClass);
     });
 };
 
-exports.getOthers = function(type) {
-  return db.select().from(type).where({active: true}).all()
+exports.getOthers = function(configClass) {
+  return db.select().from(configClass.name).where({active: true}).all()
       .then(function(other) {
-        return transform(other, type);
+        return transform(other, configClass);
       });
 };
