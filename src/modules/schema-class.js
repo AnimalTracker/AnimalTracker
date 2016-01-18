@@ -10,20 +10,13 @@ var hash = function(value) {
   return crypto.createHash('sha256').update(value).digest('base64');
 };
 
-var apply = function(objects, fn) {
-  if(Array.isArray(objects)) {
-    objects.forEach(function(object) {
-      fn(object);
-    });
-
-    return objects;
-  }
-  else if(objects) {
-    return fn(objects);
-  }
-  else {
+var arrayifyFunction = function(array, fn) {
+  if(Array.isArray(array))
+    return array.map(fn);
+  else if(array)
+    return fn(array);
+  else
     return null;
-  }
 };
 
 // -- Config Class members --
@@ -36,7 +29,7 @@ exports.populateConfigClass = function(configClass) {
       fn(m);
   };
 
-  configClass.apply = apply;
+  configClass.apply = arrayifyFunction;
 
   configClass.getLabel = function(req) {
     var ref = req || i18n;
@@ -154,33 +147,15 @@ exports.populateConfigClass = function(configClass) {
   };
 
   configClass.transformRecordsIntoObjects = function(records) {
-
-    if(Array.isArray(records)) {
-      var list = [];
-      records.forEach((record) => { list.push(this.constructObjectFromRecord({}, record)); });
-      return list;
-    }
-    else if(records) {
-      return this.constructObjectFromRecord({}, records);
-    }
-    else {
-      return null;
-    }
+    return arrayifyFunction(records, (record) => {
+      return this.constructObjectFromRecord({}, record);
+    });
   };
 
   configClass.transformObjectsIntoRecords = function(objects) {
-
-    if(Array.isArray(objects)) {
-      var list = [];
-      objects.forEach((object) => { list.push(this.populateRecordFromObject({}, object)); });
-      return list;
-    }
-    else if(objects) {
-      return this.populateRecordFromObject({}, objects);
-    }
-    else {
-      return null;
-    }
+    return arrayifyFunction(objects, (object) => {
+      return this.populateRecordFromObject({}, object);
+    });
   };
 
   configClass.createRecordsInDb = function(records) {
