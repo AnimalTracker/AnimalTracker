@@ -78,6 +78,13 @@ router.get('/animals/:animals/:rid', function(req, res) {
     });
 });
 
+router.delete('/animals/:animals/:rid', function(req, res) {
+  Animal.deleteByRid(req.params.rid, req.params.animals)
+    .then(function () {
+      res.status(200).json({message: 'Done'});
+    });
+});
+
 /* GET others listing. */
 
 router.param('others', function (req, res, next, others) {

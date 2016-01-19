@@ -65,6 +65,21 @@ var initForm = function() {
         console.log( "Sample of data:", data );
       });
   });
+
+
+  // Delete button --
+  $('#generated-delete').click(function() {
+    $.ajax({
+        type: 'DELETE',
+        url: options.target,
+        beforeSend: function( xhr ) {
+          // xhr.overrideMimeType( "text/plain; charset=x-user-defined" );
+        }
+      })
+      .done(function( data ) {
+        console.log( "Sample of data:", data );
+      });
+  });
 };
 
 //

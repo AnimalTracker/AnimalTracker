@@ -52,3 +52,7 @@ exports.getAnimals = function(configClass) {
         return transform(animal, configClass);
       });
 };
+
+exports.deleteByRid = function(rid, configClass) {
+  return db.update(configClass.name).set({active: false}).where({'@rid': rid}).one();
+};
