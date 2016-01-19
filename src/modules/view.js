@@ -24,8 +24,12 @@ view.generateDatatableLocalsBase = function(path, dataSrc) {
   }
 };
 
+view.stringify = function(value) {
+  return JSON.stringify(value);
+};
+
 view.stringifyOptions = function(locals) {
-  locals.options = JSON.stringify(locals.options);
+  locals.options = view.stringify(locals.options);
   return locals;
 };
 
@@ -58,7 +62,8 @@ view.generateFormInputLocals = function(configClass, req) {
   configClass.forEachProperty(function(property) {
     var input = {
       type: 'text',
-      label: property.getLabel(req)
+      label: property.getLabel(req),
+      name: property.name
     };
 
     switch(property.type)
@@ -68,6 +73,7 @@ view.generateFormInputLocals = function(configClass, req) {
         input.options = [];
         property.list.forEach(function(option) {
           input.options.push({
+            value: option.id,
             text: i18n.t('custom:' + configClass.name + '.option.' + property.name + '.' + option.id)
           });
         });

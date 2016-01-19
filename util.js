@@ -88,7 +88,7 @@ var createDatabase = function() {
         return schema.init();
       })
       .then(function(){
-        return db.helper.populateDatabase();
+        return require('./src/modules/database-creation').populateDatabase();
       })
       .then(function() {
         return require('./src/models/user').createRecords([

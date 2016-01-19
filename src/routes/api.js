@@ -58,7 +58,7 @@ router.get('/animals/:animals', function(req, res) {
 });
 
 router.post('/animals/:animals', function(req, res) {
-  Animal.createOne(req.body, req.params.animals)
+  Animal.createFromReqBody(req.body, req.params.animals)
     .then(function (err) {
       var result = {};
       result.message = 'Animal created';

@@ -30,7 +30,10 @@ exports.createRecords = function(objects, configClass) {
 };
 
 exports.createFromReqBody = function(body, configClass) {
-  var records = {};
+
+  console.log(body);
+  var records = configClass.populateRecordFromReq({}, body);
+  console.log(records);
   return configClass.createRecordsInDb(records);
 };
 

@@ -5,16 +5,16 @@ mixin input-text(input)
   .form-group
     label= input.label
     if input.placeholder
-      input.form-control(placeholder=input.placeholder)
+      input.form-control(name=input.name, placeholder=input.placeholder)
     else
-      input.form-control
+      input.form-control(name=input.name)
 
 mixin input-select(input)
   .form-group
     label= input.label
-    select.form-control
+    select.form-control(name=input.name)
       each option in input.options
-        option= option.text
+        option(value=option.value)= option.text
 
 mixin input(input)
   case input.type
@@ -23,6 +23,12 @@ mixin input(input)
     when 'select'
       +input-select(input)
 
+block append scripts
+  script(src=resPath + 'js/form.js')
+  script
+    | var pageOptions = !{form.options};
+
+
 block wrapper
   .row
     .col-lg-12
@@ -30,13 +36,14 @@ block wrapper
   .row
     .col-lg-12
       +panel-simple(form.header, 'default')
-        form(role='form')
+        form#generated-form(role='form')
           .row
             each input in form.inputs
               .col-lg-6
                 +input(input)
                 if input.help
                   p.help-block= input.help
+          a.btn.btn-primary#generated-submit= t('Submit')
 
 
 block example

@@ -47,7 +47,11 @@ router.get('/:animals/new', function(req, res, next) {
     page: { header: title },
     form: {
       header: 'Edition',
-      inputs: inputs
+      inputs: inputs,
+      options: view.stringify({
+        action: 'create',
+        target: '/api/v1/animals/' + req.params.animals.path
+      })
     }
   });
 });

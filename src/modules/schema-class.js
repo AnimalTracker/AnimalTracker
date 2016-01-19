@@ -50,7 +50,7 @@ exports.populateConfigClass = function(configClass) {
           obj[property.name] = record[property.name];
           break;
         case 'list':
-          obj[property.name] = '';
+          obj[property.name] = record[property.name];
           break;
         case 'reference':
           obj[property.name] = '';
@@ -81,7 +81,7 @@ exports.populateConfigClass = function(configClass) {
           record[property.name] = obj[property.name];
           break;
         case 'list':
-          record[property.name] = '';
+          record[property.name] = obj[property.name];
           break;
         case 'reference':
           record[property.name] = '';
@@ -115,7 +115,7 @@ exports.populateConfigClass = function(configClass) {
           record[property.name] = body[property.name];
           break;
         case 'list':
-          record[property.name] = '';
+          record[property.name] = body[property.name];
           break;
         case 'reference':
           record[property.name] = '';
@@ -159,14 +159,6 @@ exports.populateConfigClass = function(configClass) {
   };
 
   configClass.createRecordsInDb = function(records) {
-
-    // Circular dependency fix --
-    if(!db.helper) {
-      delete require.cache[require.resolve('../modules/database')];
-      db = require('../modules/database');
-    }
-
-    console.log(db);
     return db.helper.createRecords(this.name, records);
   };
 };
