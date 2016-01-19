@@ -30,7 +30,11 @@ router.get('/:animals', function(req, res, next) {
     title: title,
     page: {
       header: title,
-      newHref: '/animals/' + configClass.path +'/new'
+      newHref: '/animals/' + configClass.path +'/new',
+      options: view.stringify({
+        viewRoute: '/animals/' + configClass.path + '/',
+        editLabel: req.t('Edit')
+      })
     },
     datatable: datatable
   });
@@ -55,5 +59,26 @@ router.get('/:animals/new', function(req, res, next) {
     }
   });
 });
+
+router.get('/:animals/:rid', function(req, res, next) {
+
+  var configClass = req.params.animals;
+  var title = req.t('custom:'+ configClass.name +'.name');
+  var inputs = view.generateFormInputLocals(configClass, req);
+
+  res.render('layouts/form', {
+    title: title,
+    page: { header: title },
+    form: {
+      header: 'Edition',
+      inputs: inputs,
+      options: view.stringify({
+        action: 'edit',
+        target: '/api/v1/animals/' + req.params.animals.path + '/' + req.params.rid
+      })
+    }
+  });
+});
+
 
 module.exports = router;

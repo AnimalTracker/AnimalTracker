@@ -10,9 +10,11 @@ block wrapper
         tr
           each col in datatable.cols
             th(class=col.name)= col.label
+          th.edit= t('Edit')
 
 block scripts
   script(src=resPath+'vendors/datatables/media/js/jquery.dataTables.min.js')
   script(src=resPath+'vendors/datatables/media/js/dataTables.bootstrap.min.js')
+  script(src=resPath + 'js/datatable.js')
   script
-    | $(document).ready(function() { $('#datatable').dataTable(!{datatable.options}); });
+    | pageOptions = !{page.options}; datatableOptions = !{datatable.options};

@@ -12,6 +12,7 @@ var getFormInputValues = function() {
 
   return values;
 };
+
 var initForm = function() {
   // Check for a generated form --
   var form = $('#generated-form');
@@ -24,7 +25,31 @@ var initForm = function() {
     console.error('Error: missing pageOptions var.');
     return
   }
-  console.log(form);
+  console.log(options);
+
+  // Load if edit --
+  if(options.action === 'edit') {
+    console.log('test');
+    $.ajax({
+        type: 'GET',
+        url: options.target,
+        beforeSend: function( xhr ) {
+          // xhr.overrideMimeType( "text/plain; charset=x-user-defined" );
+        }
+      })
+      .done(function( data ) {
+        for(var propId in data) {
+          if(!data.hasOwnProperty(propId))
+            continue;
+
+          if(propId == 'rid')
+            continue;
+
+          $('#generated-form [name=' + propId + ']').val(data[propId]);
+        }
+        console.log( "Sample of data:", data );
+      });
+  }
 
   // Submit button --
   $('#generated-submit').click(function() {

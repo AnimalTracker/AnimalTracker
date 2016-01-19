@@ -66,6 +66,18 @@ router.post('/animals/:animals', function(req, res) {
     });
 });
 
+router.param('rid', function (req, res, next, rid) {
+  req.params.rid = '#' + req.params.rid.split('-').join(':');
+  next();
+});
+
+router.get('/animals/:animals/:rid', function(req, res) {
+  Animal.getByRid(req.params.rid, req.params.animals)
+    .then(function (animal) {
+      res.status(200).json(animal);
+    });
+});
+
 /* GET others listing. */
 
 router.param('others', function (req, res, next, others) {

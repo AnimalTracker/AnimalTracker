@@ -20,7 +20,8 @@ view.generateDatatableLocalsBase = function(path, dataSrc) {
         url: '/api/v1/' + path,
         dataSrc: dataSrc
       },
-      columnDefs: []}
+      columnDefs: []
+    }
   }
 };
 
@@ -33,7 +34,8 @@ view.stringifyOptions = function(locals) {
   return locals;
 };
 
-view.populateDatatableLocals = function(locals, configClass, req) {
+view.populateDatatableLocals = function(locals, configClass, req, route) {
+  // Generic columns --
   configClass.forEachProperty(function(property) {
     if(!property.display_datatable)
       return;

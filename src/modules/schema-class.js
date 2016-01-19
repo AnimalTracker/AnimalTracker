@@ -19,6 +19,10 @@ var arrayifyFunction = function(array, fn) {
     return null;
 };
 
+var simplifyRid = function(rid) {
+  return rid ? rid.toString().substring(1).split(':').join('-') : null;
+};
+
 // -- Config Class members --
 
 exports.populateConfigClass = function(configClass) {
@@ -62,7 +66,7 @@ exports.populateConfigClass = function(configClass) {
     });
 
     // Other properties --
-    obj.rid = record['@rid'];
+    obj.rid = simplifyRid(record['@rid']);
 
     return obj;
   };
