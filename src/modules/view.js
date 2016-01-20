@@ -86,6 +86,10 @@ view.generateFormInputLocals = function(configClass, req) {
           });
         });
         break;
+      case 'reference':
+        input.type = 'reference';
+        input.id = property.class;
+        break;
       case 'text':
       default:
         break;
@@ -95,6 +99,33 @@ view.generateFormInputLocals = function(configClass, req) {
   });
 
   return inputs;
+};
+
+view.populateFormOptions = function(configClass, action, rid) {
+  var options = {
+    action: action,
+    target: '/api/v1/' + (configClass.path_base ? configClass.path_base + '/' : '' ) + configClass.path + (rid ? '/' + rid : ''),
+    references: []
+  };
+
+  configClass.forEachProperty(function(property) {
+    if(property.type != 'reference')
+      return;
+
+    var refConfigClass = schema.getConfigClass(property.class);
+    if(refConfigClass) {
+      options.references.push({
+        name: refConfigClass.name,
+        data: refConfigClass.path,
+        target: '/api/v1/' + (refConfigClass.path_base ? refConfigClass.path_base + '/' : '' ) + refConfigClass.path
+      });
+    }
+    else {
+      console.error('[schema] ConfigClass ' + property.class + ' doesn\'t exists');
+    }
+  });
+
+  return view.stringify(options);
 };
 
 view.init  = function(app) {

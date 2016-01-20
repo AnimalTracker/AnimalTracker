@@ -16,10 +16,17 @@ mixin input-select(input)
       each option in input.options
         option(value=option.value)= option.text
 
+mixin input-reference(input)
+  .form-group
+    label= input.label
+    select.form-control(name=input.name, id=input.id)
+
 mixin input(input)
   case input.type
     when 'text'
       +input-text(input)
+    when 'reference'
+      +input-reference(input)
     when 'select'
       +input-select(input)
 

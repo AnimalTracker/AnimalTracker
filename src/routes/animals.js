@@ -52,10 +52,7 @@ router.get('/:animals/new', function(req, res, next) {
     form: {
       header: 'Edition',
       inputs: inputs,
-      options: view.stringify({
-        action: 'create',
-        target: '/api/v1/animals/' + req.params.animals.path
-      })
+      options: view.populateFormOptions(configClass, 'create')
     }
   });
 });
@@ -72,10 +69,7 @@ router.get('/:animals/:rid', function(req, res, next) {
     form: {
       header: 'Edition',
       inputs: inputs,
-      options: view.stringify({
-        action: 'edit',
-        target: '/api/v1/animals/' + req.params.animals.path + '/' + req.params.rid
-      })
+      options: view.populateFormOptions(configClass, 'edit', req.params.rid)
     }
   });
 });

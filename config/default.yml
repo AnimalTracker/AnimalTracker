@@ -24,6 +24,7 @@ data_schema:
   Animal:
     - name: Rat
       path: rats
+      path_base: animals
       property:
         - name: strain
           type: list
@@ -80,6 +81,7 @@ data_schema:
 
     - name: Mus
       path: mice
+      path_base: animals
       property:
         - name: id
           type: text
@@ -144,6 +146,7 @@ data_schema:
   User:
     name: User
     path: users
+    path_base:
     property:
       - name: username
         type: text
@@ -159,6 +162,7 @@ data_schema:
   Other:
     - name: Project
       path: projects
+      path_base: others
       property:
       - name: id_apafis
         type: text

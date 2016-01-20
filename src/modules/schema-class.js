@@ -41,7 +41,7 @@ exports.populateConfigClass = function(configClass) {
       switch(property.type)
       {
         case 'reference':
-          //obj[property.name] = '';
+          obj[property.name] = db.helper.simplifyRid(record[property.name]);
           break;
         case 'list':
           obj[property.name + '_label'] = property.getOptionLabel(record[property.name], req);
@@ -67,7 +67,7 @@ exports.populateConfigClass = function(configClass) {
         case 'password':
           record[property.name] = hash(obj[property.name]);
         case 'reference':
-          //record[property.name] = '';
+          record[property.name] = db.helper.unsimplifyRid(obj[property.name]);
           break;
         case 'text':
         case 'date':
@@ -94,8 +94,9 @@ exports.populateConfigClass = function(configClass) {
       {
         case 'password':
           record[property.name] = hash(body[property.name]);
+          break;
         case 'reference':
-          //record[property.name] = '';
+          record[property.name] = db.helper.unsimplifyRid(body[property.name]);
           break;
         case 'text':
         case 'date':
@@ -106,6 +107,8 @@ exports.populateConfigClass = function(configClass) {
           break;
       }
     });
+
+    console.log(record);
 
     record.active = true;
     return record;

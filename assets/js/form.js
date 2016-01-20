@@ -51,7 +51,31 @@ var initForm = function() {
           if(data.hasOwnProperty(propId) && propId != 'rid')
             $('#generated-form [name=' + propId + ']').val(data[propId]);
         }
+        console.log(data);
         item = data;
+      });
+  }
+
+  // Load references --
+  for(var refId in options.references) {
+    var ref = options.references[refId];
+
+    console.log(options);
+    $.ajax({
+        type: 'GET',
+        url: ref.target,
+        beforeSend: function( xhr ) {
+          // xhr.overrideMimeType( "text/plain; charset=x-user-defined" );
+        }
+      })
+      .done(function( data ) {
+        var select = $('#' + ref.name);
+
+        for(var itemId in data[ref.data]) {
+          var item = data[ref.data][itemId];
+          select.append('<option value="'+ item.rid +'">'+ item.rid +'</option>');
+        }
+        console.log(data);
       });
   }
 
