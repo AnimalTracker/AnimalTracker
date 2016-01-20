@@ -33,31 +33,27 @@ data_schema:
             - id: sprague_dawley
           allow_other: true
           display_datatable: true
-        - name: date_enter
-          type: date
-        - name: date_birth
-          type: date
         - name: sex
           type: list
           list:
             - id: male
             - id: female
           allow_other: false
+          display_datatable: true
         - name: id
           type: text
           display_datatable: true
         - name: age
           type: age
           display_as: week
-        - name: origin
-          type: list
-          list:
-            - id: janvier_labs
-            - id: charles_river
-          allow_other: true
-        - name: project
-          type: reference
-          class: Project
+        - name: date_enter
+          type: date
+        - name: date_birth
+          type: date
+        - name: date_exit
+          type: date
+        - name: date_death
+          type: date
         - name: death
           type: list
           list:
@@ -70,16 +66,33 @@ data_schema:
             - id: beheaded_bio_mol
             - id: found_dead
           allow_other: true
-        - name: date_death
-          type: date
-        - name: date_exit
-          type: date
+        - name: origin
+          type: list
+          list:
+            - id: janvier_labs
+            - id: charles_river
+          allow_other: true
         - name: addressee
           type: text
+        - name: project
+          type: reference
+          class: Project
 
     - name: Mus
       path: mice
       property:
+        - name: id
+          type: text
+          display_datatable: true
+        - name: chip
+          type: text
+          display_datatable: true
+        - name: sex
+          type: list
+          list:
+            - id: male
+            - id: female
+          allow_other: false
         - name: strain
           type: text
           display_datatable: true
@@ -92,21 +105,9 @@ data_schema:
           type: date
         - name: date_birth
           type: date
-        - name: sex
-          type: list
-          list:
-            - id: male
-            - id: female
-          allow_other: false
-        - name: id
-          type: text
-          display_datatable: true
-        - name: chip
-          type: text
-          display_datatable: true
         - name: age
           type: age
-          display_as: wee k
+          display_as: week
         - name: origin
           type: list
           list:
@@ -114,9 +115,10 @@ data_schema:
             - id: charles_river
             - id: jax_mice
           allow_other: true
-        - name: project
-          type: reference
-          class: Project
+        - name: date_exit
+          type: date
+        - name: date_death
+          type: date
         - name: death
           type: list
           list:
@@ -133,12 +135,11 @@ data_schema:
             - id: beheaded_bio_mol
             - id: found_dead
           allow_other: true
-        - name: date_death
-          type: date
-        - name: date_exit
-          type: date
         - name: addressee
           type: text
+        - name: project
+          type: reference
+          class: Project
 
   User:
     name: User
