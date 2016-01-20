@@ -47,10 +47,15 @@ view.populateDatatableLocals = function(locals, configClass, req, route) {
     });
 
     // Add the js def --
-    locals.options.columnDefs.push({
+    var def = {
       targets: property.name,
       data: property.name
-    });
+    };
+
+    if(property.type === 'list')
+      def.data += '_label';
+
+    locals.options.columnDefs.push(def);
   });
 
   return locals;
@@ -73,10 +78,10 @@ view.generateFormInputLocals = function(configClass, req) {
       case 'list':
         input.type = 'select';
         input.options = [];
-        property.list.forEach(function(option) {
+        property.forEachOption(function(option) {
           input.options.push({
             value: option.id,
-            text: i18n.t('custom:' + configClass.name + '.option.' + property.name + '.' + option.id)
+            text: option.getLabel(req)
           });
         });
         break;

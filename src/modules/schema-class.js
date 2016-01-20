@@ -36,17 +36,18 @@ exports.populateConfigClass = function(configClass) {
     return ref.t('custom:'+ this.name +'.name');
   };
 
-  configClass.populateObjectFromRecord = function(obj, record) {
+  configClass.populateObjectFromRecord = function(obj, record, req) {
     this.forEachProperty(function(property) {
       switch(property.type)
       {
         case 'reference':
           //obj[property.name] = '';
           break;
+        case 'list':
+          obj[property.name + '_label'] = property.getOptionLabel(record[property.name], req);
         case 'text':
         case 'password':
         case 'date':
-        case 'list':
         default:
           obj[property.name] = record[property.name];
           break;
@@ -145,6 +146,16 @@ exports.populateConfigClass = function(configClass) {
 
 // -- Property members --
 
+var populateOption = function(option, property, configClass) {
+
+  property.optionAlias[option.id] = option;
+
+  option.getLabel = function(req) {
+    var ref = req || i18n;
+    return ref.t('custom:' + configClass.name + '.option.' + property.name + '.' + option.id);
+  };
+};
+
 exports.populateProperty = function(property, configClass) {
 
   // Add methods --
@@ -153,6 +164,26 @@ exports.populateProperty = function(property, configClass) {
     return ref.t('custom:' + configClass.name + '.property.' + this.name);
   };
 
+  if(property.type === 'list') {
+    property.forEachOption = function(fn) {
+      for(var m of this.list)
+        fn(m);
+    };
+
+    property.optionAlias = {};
+    property.forEachOption(function(option) {
+      populateOption(option, property, configClass);
+    });
+
+    property.getOptionLabel = function(optionName, req) {
+      if(property.optionAlias.hasOwnProperty(optionName)) {
+        return property.optionAlias[optionName].getLabel(req);
+      }
+      return "No label";
+    }
+  }
+
   // Generate hash on property name --
   property.hash = hash(property.name);
 };
+
