@@ -12,6 +12,7 @@ view.generateDatatableLocalsBase = function(path, dataSrc) {
   return {
     cols: [],
     options: {
+      responsive: true,
       lengthChange: false,
       language: {
         url: 'https://cdn.datatables.net/plug-ins/1.10.10/i18n/French.json'

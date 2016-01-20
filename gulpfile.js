@@ -36,6 +36,7 @@ eslintOptionsServer = {
   rules: {
     'no-unused-vars': 1,  // Warning
     'no-console': 0,      // Off
+    'no-fallthrough': 1   // Warning
   },
   globals: {
   },

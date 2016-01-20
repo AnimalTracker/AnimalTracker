@@ -1,20 +1,27 @@
 extends layout
 
 block wrapper
-  h1= page.header
-
-  a.btn.btn-primary(href=page.newHref)= t('New element')
   .row
-    table#datatable.table.table-striped.table-hover
-      thead
-        tr
-          each col in datatable.cols
-            th(class=col.name)= col.label
-          th.edit= t('Edit')
+    .col-lg-12
+      h1= page.header
 
-block scripts
-  script(src=resPath+'vendors/datatables/media/js/jquery.dataTables.min.js')
-  script(src=resPath+'vendors/datatables/media/js/dataTables.bootstrap.min.js')
+      a.btn.btn-primary(href=page.newHref)= t('New element')
+      table#datatable.dataTable.table.table-striped.table-hover.display.responsive.no-wrap(style='width:100%')
+        thead
+          tr
+            each col in datatable.cols
+              th(class=col.name)= col.label
+            th.edit= t('Edit')
+
+block append scripts
+  script(src=resPath + 'vendors/datatables/media/js/jquery.dataTables.min.js')
+  script(src=resPath + 'vendors/datatables/media/js/dataTables.bootstrap.min.js')
+  script(src=resPath + 'vendors/datatables-responsive/js/dataTables.responsive.js')
+  script(src=resPath + 'vendors/datatables-responsive/js/responsive.bootstrap.js')
   script(src=resPath + 'js/datatable.js')
   script
     | pageOptions = !{page.options}; datatableOptions = !{datatable.options};
+
+block append styles
+  link(href=resPath + 'vendors/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css', rel='stylesheet', type='text/css')
+  link(href='//cdn.datatables.net/responsive/2.0.0/css/responsive.dataTables.min.css')
