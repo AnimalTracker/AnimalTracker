@@ -79,6 +79,14 @@ view.generateFormInputLocals = function(configClass, req) {
       case 'list':
         input.type = 'select';
         input.options = [];
+
+        if(property.allow_empty) {
+          input.options.push({
+            value: '',
+            text: ''
+          });
+        }
+
         property.forEachOption(function(option) {
           input.options.push({
             value: option.id,

@@ -67,6 +67,7 @@ data_schema:
             - id: beheaded_bio_mol
             - id: found_dead
           allow_other: true
+          allow_empty: true
         - name: origin
           type: list
           list:
@@ -137,6 +138,7 @@ data_schema:
             - id: beheaded_bio_mol
             - id: found_dead
           allow_other: true
+          allow_empty: true
         - name: addressee
           type: text
         - name: project
