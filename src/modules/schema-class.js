@@ -1,8 +1,9 @@
 // Config Class/Property initialisation --
 
-var crypto  = require('crypto');
-var i18n    = require('i18next');
-var db      = require('../modules/database');
+var crypto    = require('crypto');
+var i18n      = require('i18next');
+var db        = require('../modules/database');
+var OrientDB  = require('orientjs');
 
 // -- Helper methods --
 
@@ -67,7 +68,7 @@ exports.populateConfigClass = function(configClass) {
         case 'password':
           record[property.name] = hash(obj[property.name]);
         case 'reference':
-          record[property.name] = db.helper.unsimplifyRid(obj[property.name]);
+          record[property.name] = OrientDB.RID(db.helper.unsimplifyRid(obj[property.name]));
           break;
         case 'text':
         case 'date':
@@ -96,7 +97,7 @@ exports.populateConfigClass = function(configClass) {
           record[property.name] = hash(body[property.name]);
           break;
         case 'reference':
-          record[property.name] = db.helper.unsimplifyRid(body[property.name]);
+          record[property.name] = OrientDB.RID(db.helper.unsimplifyRid(body[property.name]));
           break;
         case 'text':
         case 'date':
