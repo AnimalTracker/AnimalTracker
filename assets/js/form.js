@@ -1,12 +1,21 @@
 /*global pageOptions*/
 
+var item = {};
+var action = {};
+
 // Form system --
 
+var transformActionIntoBooleans = function(string) {
+  return {
+    edit: string === 'edit',
+    create: string != 'edit'
+  };
+};
+
 var getFormInputValues = function() {
-  var inputs = $('#generated-form :input');
   var values = {};
 
-  inputs.each(function() {
+  $('#generated-form :input').each(function() {
     values[this.name] = $(this).val();
   });
 
@@ -25,11 +34,11 @@ var initForm = function() {
     console.error('Error: missing pageOptions var.');
     return
   }
-  console.log(options);
+
+  action = transformActionIntoBooleans(options.action);
 
   // Load if edit --
-  if(options.action === 'edit') {
-    console.log('test');
+  if(action.edit) {
     $.ajax({
         type: 'GET',
         url: options.target,
@@ -39,22 +48,17 @@ var initForm = function() {
       })
       .done(function( data ) {
         for(var propId in data) {
-          if(!data.hasOwnProperty(propId))
-            continue;
-
-          if(propId == 'rid')
-            continue;
-
-          $('#generated-form [name=' + propId + ']').val(data[propId]);
+          if(data.hasOwnProperty(propId) && propId != 'rid')
+            $('#generated-form [name=' + propId + ']').val(data[propId]);
         }
-        console.log( "Sample of data:", data );
+        item = data;
       });
   }
 
   // Submit button --
   $('#generated-submit').click(function() {
     $.ajax({
-        type: 'POST',
+        type: action.edit ? 'PUT' : 'POST',
         url: options.target,
         data: getFormInputValues(),
         beforeSend: function( xhr ) {
@@ -62,7 +66,12 @@ var initForm = function() {
         }
       })
       .done(function( data ) {
-        console.log( "Sample of data:", data );
+        console.log(data);
+
+        if(data.rid) {
+          options.target += '/' + data.rid;
+          action = transformActionIntoBooleans('edit');
+        }
       });
   });
 

@@ -19,10 +19,6 @@ var arrayifyFunction = function(array, fn) {
     return null;
 };
 
-var simplifyRid = function(rid) {
-  return rid ? rid.toString().substring(1).split(':').join('-') : null;
-};
-
 // -- Config Class members --
 
 exports.populateConfigClass = function(configClass) {
@@ -44,21 +40,13 @@ exports.populateConfigClass = function(configClass) {
     this.forEachProperty(function(property) {
       switch(property.type)
       {
-        case 'text':
-          obj[property.name] = record[property.name];
-          break;
-        case 'password':
-          obj[property.name] = record[property.name];
-          break;
-        case 'date':
-          obj[property.name] = record[property.name];
-          break;
-        case 'list':
-          obj[property.name] = record[property.name];
-          break;
         case 'reference':
-          obj[property.name] = '';
+          //obj[property.name] = '';
           break;
+        case 'text':
+        case 'password':
+        case 'date':
+        case 'list':
         default:
           obj[property.name] = record[property.name];
           break;
@@ -66,7 +54,7 @@ exports.populateConfigClass = function(configClass) {
     });
 
     // Other properties --
-    obj.rid = simplifyRid(record['@rid']);
+    obj.rid = db.helper.simplifyRid(record['@rid']);
 
     return obj;
   };
@@ -75,23 +63,17 @@ exports.populateConfigClass = function(configClass) {
     this.forEachProperty(function(property) {
       switch(property.type)
       {
-        case 'text':
-          record[property.name] = obj[property.name];
-          break;
         case 'password':
           record[property.name] = hash(obj[property.name]);
-          break;
-        case 'date':
-          record[property.name] = obj[property.name];
-          break;
-        case 'list':
-          record[property.name] = obj[property.name];
-          break;
         case 'reference':
-          record[property.name] = '';
+          //record[property.name] = '';
           break;
+        case 'text':
+        case 'date':
+        case 'list':
         default:
-          record[property.name] = obj[property.name];
+          var value = obj[property.name];
+          record[property.name] = value === '' ? null : value;
           break;
       }
     });
@@ -109,23 +91,17 @@ exports.populateConfigClass = function(configClass) {
     this.forEachProperty(function(property) {
       switch(property.type)
       {
-        case 'text':
-          record[property.name] = body[property.name];
-          break;
         case 'password':
           record[property.name] = hash(body[property.name]);
-          break;
-        case 'date':
-          record[property.name] = body[property.name];
-          break;
-        case 'list':
-          record[property.name] = body[property.name];
-          break;
         case 'reference':
-          record[property.name] = '';
+          //record[property.name] = '';
           break;
+        case 'text':
+        case 'date':
+        case 'list':
         default:
-          record[property.name] = body[property.name];
+          var value = body[property.name];
+          record[property.name] = value === '' ? null : value;
           break;
       }
     });

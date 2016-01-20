@@ -30,11 +30,13 @@ exports.createRecords = function(objects, configClass) {
 };
 
 exports.createFromReqBody = function(body, configClass) {
-
-  console.log(body);
   var records = configClass.populateRecordFromReq({}, body);
-  console.log(records);
   return configClass.createRecordsInDb(records);
+};
+
+exports.updateFromReqBody = function(rid, body, configClass) {
+  var record = configClass.populateRecordFromReq({}, body);
+  return db.update(configClass.name).set(record).where({'@rid': rid}).one();
 };
 
 // Find animal in OrientDB --

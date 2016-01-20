@@ -37,6 +37,7 @@ router.get('/users/:username', function (req, res) {
 
 /* GET animals listing. */
 
+// Animals parameter --
 router.param('animals', function (req, res, next, animals) {
   var configClass = schema.getAnimalClassByPath(animals);
 
@@ -48,6 +49,7 @@ router.param('animals', function (req, res, next, animals) {
   }
 });
 
+// Animals listing --
 router.get('/animals/:animals', function(req, res) {
   Animal.getAnimals(req.params.animals)
     .then(function (animals) {
@@ -57,20 +59,24 @@ router.get('/animals/:animals', function(req, res) {
     });
 });
 
+// Animals creation --
 router.post('/animals/:animals', function(req, res) {
   Animal.createFromReqBody(req.body, req.params.animals)
-    .then(function (err) {
+    .then(function (record) {
       var result = {};
       result.message = 'Animal created';
+      result.rid = record.rid;
       res.status(201).json(result);
     });
 });
 
+// Animals rid parameter --
 router.param('rid', function (req, res, next, rid) {
-  req.params.rid = '#' + req.params.rid.split('-').join(':');
+  req.params.rid = db.helper.unsimplifyRid(rid);
   next();
 });
 
+// Animals reading --
 router.get('/animals/:animals/:rid', function(req, res) {
   Animal.getByRid(req.params.rid, req.params.animals)
     .then(function (animal) {
@@ -78,6 +84,17 @@ router.get('/animals/:animals/:rid', function(req, res) {
     });
 });
 
+// Animals edition --
+router.put('/animals/:animals/:rid', function(req, res) {
+  Animal.updateFromReqBody(req.params.rid, req.body, req.params.animals)
+    .then(function () {
+      var result = {};
+      result.message = 'Animal edited';
+      res.status(201).json(result);
+    });
+});
+
+// Animals removal --
 router.delete('/animals/:animals/:rid', function(req, res) {
   Animal.deleteByRid(req.params.rid, req.params.animals)
     .then(function () {

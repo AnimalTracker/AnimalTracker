@@ -31,8 +31,18 @@ var db = server.use(dbname);
 
 // -- Notify methods --
 
-helper.notifyRecordsCreation = function() {
+helper.notifyRecordsCreation = function(records) {
   console.log('[orientjs] Records created.');
+
+  // Simplify rids --
+  var fn = function(record) { record.rid = db.helper.simplifyRid(record['@rid']); };
+
+  if(Array.isArray(records))
+    records.forEach(fn);
+  else
+    fn(records);
+
+  return records;
 };
 
 helper.error = function(err) {
@@ -40,6 +50,17 @@ helper.error = function(err) {
 };
 
 // -- Records methods --
+
+helper.simplifyRid = function(rid) {
+  return rid ? rid.toString().substring(1).split(':').join('-') : null;
+};
+
+helper.unsimplifyRid = function(rid) {
+  return rid ? '#' + rid.split('-').join(':') : null;
+};
+
+
+
 
 helper.createRecords = function(className, arg) {
   return db.class.get(className).then(function(Class) {
