@@ -9,16 +9,16 @@ mixin alert(type)
       p No content provided
 
 mixin panel-heading(title, icon)
-  .panel-heading
-    i.fa.fa-fw(class=icon)
+  .panel-heading&attributes(attributes)
+    i(class=icon ? 'fa ' + icon : '')
     |  #{title}
 
 mixin panel(type)
-  .panel(class='panel-' + type)
+  .panel(class='panel-' + type)&attributes(attributes)
     block
 
 mixin panel-simple(title, type, icon)
-  +panel(type)
+  +panel(type)&attributes(attributes)
     +panel-heading(title, icon)
     .panel-body
       block

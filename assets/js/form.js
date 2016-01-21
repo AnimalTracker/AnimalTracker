@@ -22,6 +22,12 @@ var getFormInputValues = function() {
   return values;
 };
 
+var setHeaderIcon = function(action) {
+  if(action.edit) {
+    $('').text('')
+  }
+}
+
 var initForm = function() {
   // Check for a generated form --
   var form = $('#generated-form');
@@ -36,6 +42,13 @@ var initForm = function() {
   }
 
   action = transformActionIntoBooleans(options.action);
+
+  // Init jquery references --
+  var headerIcon = $('#form-panel .panel-heading i');
+  var headerDiv = $('#form-panel .panel-heading');
+
+  // Set the header icon --
+  headerIcon.addClass(action.edit ? 'fa fa-pencil' : 'fa fa-plus');
 
   // Load if edit --
   if(action.edit) {
@@ -93,8 +106,12 @@ var initForm = function() {
         console.log(data);
 
         if(data.rid) {
+          // Update variables --
           options.target += '/' + data.rid;
           action = transformActionIntoBooleans('edit');
+
+          // Update the header --
+          headerDiv.html('<i class="fa fa-pencil"></i> ' + options.header_alt);
         }
       });
   });

@@ -30,19 +30,13 @@ mixin input(input)
     when 'select'
       +input-select(input)
 
-block append scripts
-  script(src=resPath + 'js/form.js')
-  script
-    | var pageOptions = !{form.options};
-
-
 block wrapper
   .row
     .col-lg-12
       h1.page-header= page.header
   .row
     .col-lg-12
-      +panel-simple(form.header, 'default')
+      +panel-simple(form.header, 'default')(id='form-panel')
         form#generated-form(role='form')
           .row
             each input in form.inputs
@@ -52,6 +46,12 @@ block wrapper
                   p.help-block= input.help
           a.btn.btn-primary#generated-submit= t('Submit')
           a.btn.btn-primary#generated-delete= t('Delete')
+
+block append scripts
+  script(src=resPath + 'js/form.js')
+  script
+    | var pageOptions = !{form.options};
+
 
 
 block example

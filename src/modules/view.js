@@ -109,12 +109,16 @@ view.generateFormInputLocals = function(configClass, req) {
   return inputs;
 };
 
-view.populateFormOptions = function(configClass, action, rid) {
+view.populateFormOptions = function(configClass, action, rid, req) {
   var options = {
     action: action,
     target: '/api/v1/' + (configClass.path_base ? configClass.path_base + '/' : '' ) + configClass.path + (rid ? '/' + rid : ''),
     references: []
   };
+
+  if(action === 'create') {
+    options.header_alt = req.t('Edit')
+  }
 
   configClass.forEachProperty(function(property) {
     if(property.type != 'reference')

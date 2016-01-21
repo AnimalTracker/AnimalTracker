@@ -50,9 +50,9 @@ router.get('/:animals/new', function(req, res, next) {
     title: title,
     page: { header: title },
     form: {
-      header: 'Edition',
+      header: req.t('Creation'),
       inputs: inputs,
-      options: view.populateFormOptions(configClass, 'create')
+      options: view.populateFormOptions(configClass, 'create', null, req)
     }
   });
 });
@@ -67,9 +67,9 @@ router.get('/:animals/:rid', function(req, res, next) {
     title: title,
     page: { header: title },
     form: {
-      header: 'Edition',
+      header: req.t('Edition'),
       inputs: inputs,
-      options: view.populateFormOptions(configClass, 'edit', req.params.rid)
+      options: view.populateFormOptions(configClass, 'edit', req.params.rid, req)
     }
   });
 });
