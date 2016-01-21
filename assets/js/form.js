@@ -46,9 +46,14 @@ var initForm = function() {
   // Init jquery references --
   var headerIcon = $('#form-panel .panel-heading i');
   var headerDiv = $('#form-panel .panel-heading');
+  var datepickers = $('.datepicker');
 
   // Set the header icon --
   headerIcon.addClass(action.edit ? 'fa fa-pencil' : 'fa fa-plus');
+
+  // Init datepicker --
+  datepickers.datepicker({
+  });
 
   // Load if edit --
   if(action.edit) {

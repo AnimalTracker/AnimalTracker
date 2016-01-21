@@ -94,6 +94,10 @@ view.generateFormInputLocals = function(configClass, req) {
           });
         });
         break;
+      case 'date':
+        input.type = 'date';
+        input.placeholder = input.label;
+        break;
       case 'reference':
         input.type = 'reference';
         input.id = property.class;

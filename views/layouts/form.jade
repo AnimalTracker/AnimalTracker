@@ -29,6 +29,17 @@ mixin input-reference(input)
     label= input.label
     select.form-control(name=input.name, id=input.id)
 
+mixin input-date(input)
+  .form-group
+    label= input.label
+    .input-group.input-append.date.datepicker
+      if input.placeholder
+        input.form-control(placeholder=input.placeholder)
+      else
+        input.datepicker.form-control
+      span.input-group-addon.add-on
+        span.fa.fa-calendar
+
 mixin input(input)
   case input.type
     when 'text'
@@ -37,6 +48,8 @@ mixin input(input)
       +input-reference(input)
     when 'select'
       +input-select(input)
+    when 'date'
+      +input-date(input)
     when 'password'
       +input-password(input)
 
@@ -58,6 +71,7 @@ block wrapper
             a.btn.btn-primary#generated-delete= t('Delete')
 
 block append scripts
+  script(src=resPath + 'vendors/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')
   script(src=resPath + 'js/form.js')
   script
     | var pageOptions = !{form.options};
