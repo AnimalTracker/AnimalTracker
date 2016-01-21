@@ -19,6 +19,7 @@
   ],
   "dependencies": {
     "startbootstrap-sb-admin-2": "~1.0.8",
-    "datatables-responsive": "~2.0.0"
+    "datatables-responsive": "~2.0.0",
+    "toastr": "~2.1.2"
   }
 }

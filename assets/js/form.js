@@ -1,4 +1,4 @@
-/*global pageOptions*/
+/*global pageOptions, toastr*/
 
 var item = {};
 var action = {};
@@ -112,6 +112,9 @@ var initForm = function() {
 
           // Update the header --
           headerDiv.html('<i class="fa fa-pencil"></i> ' + options.header_alt);
+
+          // Display an info message --
+          toastr.success(data.message, "Success");
         }
       });
   });
