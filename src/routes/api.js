@@ -21,17 +21,51 @@ router.get('/users', function(req, res) {
   User.getUsers()
     .then(function (users) {
       var result = {};
-      result[schema.User.path] = users ? users : []
+      result[schema.User.path] = users ? users : [];
       res.json(result);
     });
 });
 
-router.get('/users/:username', function (req, res) {
-  User.getByUsername(req.param('username'))
+// Users creation --
+router.post('/users', function(req, res) {
+  User.createFromReqBody(req.body, schema.User)
+    .then(function (record) {
+      var result = {};
+      result.message = 'User created';
+      result.rid = record.rid;
+      res.status(201).json(result);
+    });
+});
+
+// Users rid parameter --
+router.param('rid', function (req, res, next, rid) {
+  req.params.rid = db.helper.unsimplifyRid(rid);
+  next();
+});
+
+// Users reading --
+router.get('/users/:rid', function(req, res) {
+  User.getByRid(req.params.rid, schema.User)
     .then(function (user) {
-      res.json({
-        user
-      });
+      res.status(200).json(user);
+    });
+});
+
+// Users edition --
+router.put('/users/:rid', function(req, res) {
+  User.updateFromReqBody(req.params.rid, req.body, schema.User)
+    .then(function () {
+      var result = {};
+      result.message = 'User edited';
+      res.status(201).json(result);
+    });
+});
+
+// Users removal --
+router.delete('/users/:rid', function(req, res) {
+  User.deleteByRid(req.params.rid, schema.User)
+    .then(function () {
+      res.status(200).json({message: 'Done'});
     });
 });
 
@@ -104,6 +138,7 @@ router.delete('/animals/:animals/:rid', function(req, res) {
 
 /* GET others listing. */
 
+// Others parameter --
 router.param('others', function (req, res, next, others) {
   var configClass = schema.getOtherClassByPath(others);
 
@@ -115,12 +150,56 @@ router.param('others', function (req, res, next, others) {
   }
 });
 
+// Others listing --
 router.get('/others/:others', function(req, res) {
   Other.getOthers(req.params.others)
     .then(function (others) {
       var result = {};
       result[req.params.others.path] = others ? others : []
-      res.json(result);
+      res.status(200).json(result);
+    });
+});
+
+// Others creation --
+router.post('/others/:others', function(req, res) {
+  Other.createFromReqBody(req.body, req.params.others)
+    .then(function (record) {
+      var result = {};
+      result.message = 'Other created';
+      result.rid = record.rid;
+      res.status(201).json(result);
+    });
+});
+
+// Others rid parameter --
+router.param('rid', function (req, res, next, rid) {
+  req.params.rid = db.helper.unsimplifyRid(rid);
+  next();
+});
+
+// Others reading --
+router.get('/others/:others/:rid', function(req, res) {
+  Other.getByRid(req.params.rid, req.params.others)
+    .then(function (other) {
+      res.status(200).json(other);
+    });
+});
+
+// Others edition --
+router.put('/others/:others/:rid', function(req, res) {
+  Other.updateFromReqBody(req.params.rid, req.body, req.params.others)
+    .then(function () {
+      var result = {};
+      result.message = 'Other edited';
+      res.status(201).json(result);
+    });
+});
+
+// Others removal --
+router.delete('/others/:others/:rid', function(req, res) {
+  Other.deleteByRid(req.params.rid, req.params.others)
+    .then(function () {
+      res.status(200).json({message: 'Done'});
     });
 });
 

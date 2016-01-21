@@ -44,10 +44,12 @@ exports.populateConfigClass = function(configClass) {
         case 'reference':
           obj[property.name] = db.helper.simplifyRid(record[property.name]);
           break;
+        case 'password':
+          obj[property.name + '_hidden'] = record[property.name];
+          break;
         case 'list':
           obj[property.name + '_label'] = property.getOptionLabel(record[property.name], req);
         case 'text':
-        case 'password':
         case 'date':
         default:
           obj[property.name] = record[property.name];
@@ -94,7 +96,8 @@ exports.populateConfigClass = function(configClass) {
       switch(property.type)
       {
         case 'password':
-          record[property.name] = hash(body[property.name]);
+          if(body[property.name] && body[property.name] != '')
+            record[property.name] = hash(body[property.name]);
           break;
         case 'reference':
           record[property.name] = OrientDB.RID(db.helper.unsimplifyRid(body[property.name]));

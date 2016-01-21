@@ -98,7 +98,10 @@ view.generateFormInputLocals = function(configClass, req) {
         input.type = 'reference';
         input.id = property.class;
         break;
+      case 'password':
+        input.type = 'password';
       case 'text':
+        input.placeholder = input.label;
       default:
         break;
     }

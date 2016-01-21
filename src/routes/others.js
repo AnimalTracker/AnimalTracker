@@ -30,7 +30,11 @@ router.get('/:others', function(req, res, next) {
     title: title,
     page: {
       header: title,
-      newHref: '/others/' + configClass.path +'/new'
+      newHref: '/others/' + configClass.path +'/new',
+      options: view.stringify({
+        viewRoute: '/others/' + configClass.path + '/',
+        editLabel: req.t('Edit')
+      })
     },
     datatable: datatable
   });
@@ -46,8 +50,43 @@ router.get('/:others/new', function(req, res, next) {
     title: title,
     page: { header: title },
     form: {
-      header: 'Edition',
-      inputs: inputs
+      header: req.t('Creation'),
+      inputs: inputs,
+      options: view.populateFormOptions(configClass, 'create', null, req)
+    }
+  });
+});
+
+router.get('/:others/new', function(req, res, next) {
+
+  var configClass = req.params.others;
+  var title = req.t('custom:'+ configClass.name +'.name');
+  var inputs = view.generateFormInputLocals(configClass, req);
+
+  res.render('layouts/form', {
+    title: title,
+    page: { header: title },
+    form: {
+      header: req.t('Creation'),
+      inputs: inputs,
+      options: view.populateFormOptions(configClass, 'create', null, req)
+    }
+  });
+});
+
+router.get('/:others/:rid', function(req, res, next) {
+
+  var configClass = req.params.others;
+  var title = req.t('custom:'+ configClass.name +'.name');
+  var inputs = view.generateFormInputLocals(configClass, req);
+
+  res.render('layouts/form', {
+    title: title,
+    page: { header: title },
+    form: {
+      header: req.t('Edition'),
+      inputs: inputs,
+      options: view.populateFormOptions(configClass, 'edit', req.params.rid, req)
     }
   });
 });

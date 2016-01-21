@@ -27,8 +27,19 @@ exports.class = Class;
 
 exports.createRecords = function(objects, configClass) {
   var records = configClass.transformObjectsIntoRecords(objects);
-  return configClass.createRecordsInDb(configClass, records);
+  return configClass.createRecordsInDb(records);
 };
+
+exports.createFromReqBody = function(body, configClass) {
+  var records = configClass.populateRecordFromReq({}, body);
+  return configClass.createRecordsInDb(records);
+};
+
+exports.updateFromReqBody = function(rid, body, configClass) {
+  var record = configClass.populateRecordFromReq({}, body);
+  return db.update(configClass.name).set(record).where({'@rid': rid}).one();
+};
+
 
 // Find other in OrientDB --
 
@@ -44,4 +55,8 @@ exports.getOthers = function(configClass) {
       .then(function(other) {
         return transform(other, configClass);
       });
+};
+
+exports.deleteByRid = function(rid, configClass) {
+  return db.update(configClass.name).set({active: false}).where({'@rid': rid}).one();
 };

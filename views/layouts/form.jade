@@ -9,6 +9,14 @@ mixin input-text(input)
     else
       input.form-control(name=input.name)
 
+mixin input-password(input)
+  .form-group
+    label= input.label
+    if input.placeholder
+      input.form-control(type='password', name=input.name, placeholder=input.placeholder)
+    else
+      input.form-control(type='password', name=input.name)
+
 mixin input-select(input)
   .form-group
     label= input.label
@@ -29,6 +37,8 @@ mixin input(input)
       +input-reference(input)
     when 'select'
       +input-select(input)
+    when 'password'
+      +input-password(input)
 
 block wrapper
   .row
@@ -44,8 +54,8 @@ block wrapper
                 +input(input)
                 if input.help
                   p.help-block= input.help
-          a.btn.btn-primary#generated-submit= t('Submit')
-          a.btn.btn-primary#generated-delete= t('Delete')
+            a.btn.btn-primary#generated-submit= t('Submit')
+            a.btn.btn-primary#generated-delete= t('Delete')
 
 block append scripts
   script(src=resPath + 'js/form.js')

@@ -103,7 +103,7 @@ var initForm = function() {
         }
       })
       .done(function( data ) {
-        console.log(data);
+        console.log(data)
 
         if(data.rid) {
           // Update variables --
@@ -112,7 +112,9 @@ var initForm = function() {
 
           // Update the header --
           headerDiv.html('<i class="fa fa-pencil"></i> ' + options.header_alt);
+        }
 
+        if(!data.error) {
           // Display an info message --
           toastr.success(data.message, "Success");
         }

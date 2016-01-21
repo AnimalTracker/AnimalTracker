@@ -10,7 +10,8 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 var flash = require('connect-flash');
 
-var User = require('../models/user.js');
+var db = require('../modules/database');
+var User = require('../models/user');
 
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
@@ -45,7 +46,7 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(id, done) {
-  return User.getByRid(id).then(function (user){
+  return User.getByRid(db.helper.unsimplifyRid(id)).then(function (user){
     done(user ? null : 'User not found', user);
   });
 });

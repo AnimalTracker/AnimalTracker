@@ -16,7 +16,7 @@ var hash = function(value) {
 
 var addMethods = function(obj) {
   obj.test = function(password) {
-    return hash(password) === this.password;
+    return hash(password) === this.password_hidden;
   };
 };
 
@@ -44,6 +44,17 @@ exports.createRecords = function(objects) {
   return User.createRecordsInDb(records);
 };
 
+exports.createFromReqBody = function(body, configClass) {
+  var records = configClass.populateRecordFromReq({}, body);
+  return configClass.createRecordsInDb(records);
+};
+
+exports.updateFromReqBody = function(rid, body, configClass) {
+  var record = configClass.populateRecordFromReq({}, body);
+  return db.update(configClass.name).set(record).where({'@rid': rid}).one();
+};
+
+
 // Find User in OrientDB --
 
 exports.getByUsername = function(username) {
@@ -59,4 +70,8 @@ exports.getByRid = function(rid) {
 exports.getUsers = function() {
   return db.select().from('User').where({active: true}).all()
       .then(transform);
+};
+
+exports.deleteByRid = function(rid) {
+  return db.update('User').set({active: false}).where({'@rid': rid}).one();
 };
