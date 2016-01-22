@@ -159,7 +159,7 @@ view.init  = function(app) {
     // Methods --
     var createLocal = function (configClass) {
       return {
-        name: configClass.name,
+        name: configClass.labelPath,
         path: configClass.path
       };
     };

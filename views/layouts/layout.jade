@@ -39,12 +39,12 @@ block content
             +menu-item('Dashboard', '/', 'fa-dashboard')
             +menu-item('Animaux', '', 'fa-table')
               each animal in schema.animals
-                +menu-subitem(animal.name, '/animals/'+ animal.path)
+                +menu-subitem(t(animal.name), '/animals/'+ animal.path)
 
             each others in schema.others
-              +menu-item(others.name, '/others/' + others.path, 'fa-bar-chart-o')
+              +menu-item(t(others.name), '/others/' + others.path, 'fa-bar-chart-o')
 
-            +menu-item(schema.user.name, '/users', 'fa-sitemap')
+            +menu-item(t(schema.user.name), '/users', 'fa-sitemap')
 
     #page-wrapper
       block wrapper

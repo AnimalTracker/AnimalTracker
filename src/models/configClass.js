@@ -12,6 +12,7 @@ exports.populate = function(configClass) {
 
   // -- Attributes --
   configClass.propertyAlias = {};
+  configClass.labelPath = 'custom:'+ configClass.name +'.name';
 
   // -- Primary Methods --
   configClass.forEachProperty = function(fn) {
@@ -32,7 +33,7 @@ exports.populate = function(configClass) {
 
   configClass.getLabel = function(req) {
     var ref = req || i18n;
-    return ref.t('custom:'+ this.name +'.name');
+    return ref.t(this.labelPath);
   };
 
   configClass.populateObjectFromRecord = function(obj, record, req) {
