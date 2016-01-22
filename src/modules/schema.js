@@ -37,8 +37,6 @@ var init = function() {
     // Add ConfigClass members/methods --
     configClassModel.populate(configClass);
   });
-
-  console.log(schema);
 };
 
 // -- Access Methods --

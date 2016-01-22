@@ -1,7 +1,6 @@
 // Config Class initialisation --
 
 var i18n          = require('i18next');
-var OrientDB      = require('orientjs');
 var db            = require('../modules/database');
 var helper        = require('../helpers/misc');
 var propertyModel = require('./property');
@@ -38,22 +37,7 @@ exports.populate = function(configClass) {
 
   configClass.populateObjectFromRecord = function(obj, record, req) {
     this.forEachProperty(function(property) {
-      switch(property.type)
-      {
-        case 'reference':
-          obj[property.name] = db.helper.simplifyRid(record[property.name]);
-          break;
-        case 'password':
-          obj[property.name + '_hidden'] = record[property.name];
-          break;
-        case 'list':
-          obj[property.name + '_label'] = property.getOptionLabel(record[property.name], req);
-        case 'text':
-        case 'date':
-        default:
-          obj[property.name] = record[property.name];
-          break;
-      }
+      property.recordToObject(record, obj, req);
     });
 
     // Other properties --
@@ -64,55 +48,20 @@ exports.populate = function(configClass) {
 
   configClass.populateRecordFromObject = function(record, obj) {
     this.forEachProperty(function(property) {
-      switch(property.type)
-      {
-        case 'password':
-          record[property.name] = helper.hash(obj[property.name]);
-        case 'reference':
-          record[property.name] = db.helper.unsimplifyAndRecordifyRid(obj[property.name]);
-          break;
-        case 'text':
-        case 'date':
-        case 'list':
-        default:
-          var value = obj[property.name];
-          record[property.name] = value === '' ? null : value;
-          break;
-      }
+      property.objectToRecord(obj, record);
     });
 
-    if(obj.hasOwnProperty('active')) {
-      record.active = obj.active;
-    } else {
-      record.active = true;
-    }
+    record.active = obj.hasOwnProperty('active') ? obj.active : true;
 
     return record;
   };
 
   configClass.populateRecordFromReq = function(record, body) {
     this.forEachProperty(function(property) {
-      switch(property.type)
-      {
-        case 'password':
-          if(body[property.name] && body[property.name] != '')
-            record[property.name] = helper.hash(body[property.name]);
-          break;
-        case 'reference':
-          record[property.name] = OrientDB.RID(db.helper.unsimplifyRid(body[property.name]));
-          break;
-        case 'text':
-        case 'date':
-        case 'list':
-        default:
-          var value = body[property.name];
-          record[property.name] = value === '' ? null : value;
-          break;
-      }
+      property.reqToRecord(body, record);
     });
 
     console.log(record);
-
     record.active = true;
     return record;
   };

@@ -67,8 +67,10 @@ block wrapper
                 +input(input)
                 if input.help
                   p.help-block= input.help
-            a.btn.btn-primary#generated-submit= t('Submit')
-            a.btn.btn-primary#generated-delete= t('Delete')
+          .row
+            .col-lg-12
+              a.btn.btn-primary#generated-submit= t('Submit')
+              a.btn.btn-primary#generated-delete= t('Delete')
 
 block append scripts
   script(src=resPath + 'vendors/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')

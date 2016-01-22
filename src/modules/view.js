@@ -68,49 +68,7 @@ view.generateFormInputLocals = function(configClass, req) {
   var inputs = [];
 
   configClass.forEachProperty(function(property) {
-    var input = {
-      type: 'text',
-      label: property.getLabel(req),
-      name: property.name
-    };
-
-    switch(property.type)
-    {
-      case 'list':
-        input.type = 'select';
-        input.options = [];
-
-        if(property.allow_empty) {
-          input.options.push({
-            value: '',
-            text: ''
-          });
-        }
-
-        property.forEachOption(function(option) {
-          input.options.push({
-            value: option.id,
-            text: option.getLabel(req)
-          });
-        });
-        break;
-      case 'date':
-        input.type = 'date';
-        input.placeholder = input.label;
-        break;
-      case 'reference':
-        input.type = 'reference';
-        input.id = property.class;
-        break;
-      case 'password':
-        input.type = 'password';
-      case 'text':
-        input.placeholder = input.label;
-      default:
-        break;
-    }
-
-    inputs.push(input);
+    property.generateFormInputs(inputs);
   });
 
   return inputs;
@@ -131,7 +89,7 @@ view.populateFormOptions = function(configClass, action, rid, req) {
     if(property.type != 'reference')
       return;
 
-    var refConfigClass = schema.getConfigClass(property.class);
+    var refConfigClass = schema.getConfigClass(property.reference_to);
     if(refConfigClass) {
       options.references.push({
         name: refConfigClass.name,
@@ -140,7 +98,7 @@ view.populateFormOptions = function(configClass, action, rid, req) {
       });
     }
     else {
-      console.error('[schema] ConfigClass ' + property.class + ' doesn\'t exists');
+      console.error('[schema] ConfigClass ' + property.reference_to + ' doesn\'t exists');
     }
   });
 

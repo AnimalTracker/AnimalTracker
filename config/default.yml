@@ -44,9 +44,6 @@ data_schema:
         - name: id
           type: text
           display_datatable: true
-        - name: age
-          type: age
-          display_as: week
         - name: date_enter
           type: date
         - name: date_birth
@@ -78,7 +75,7 @@ data_schema:
           type: text
         - name: project
           type: reference
-          class: Project
+          reference_to: Project
           display_datatable: true
 
     - name: Mus
@@ -111,9 +108,6 @@ data_schema:
           type: date
         - name: date_birth
           type: date
-        - name: age
-          type: age
-          display_as: week
         - name: origin
           type: list
           list:
@@ -146,7 +140,7 @@ data_schema:
           type: text
         - name: project
           type: reference
-          class: Project
+          reference_to: Project
 
   User:
     name: User
@@ -174,6 +168,6 @@ data_schema:
         display_datatable: true
       - name: creator
         type: reference
-        class: User
+        reference_to: User
         display_datatable: true
 

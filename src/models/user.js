@@ -13,7 +13,7 @@ var helper = require(path.resolve('./src/helpers/misc'));
 
 var addMethods = function(obj) {
   obj.test = function(password) {
-    return hash(password) === this.password_hidden;
+    return helper.hash(password) === this.password_hidden;
   };
 };
 
