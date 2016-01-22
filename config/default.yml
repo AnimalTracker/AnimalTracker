@@ -79,6 +79,7 @@ data_schema:
         - name: project
           type: reference
           class: Project
+          display_datatable: true
 
     - name: Mus
       path: mice
@@ -96,6 +97,7 @@ data_schema:
             - id: male
             - id: female
           allow_other: false
+          display_datatable: true
         - name: strain
           type: text
           display_datatable: true
@@ -104,6 +106,7 @@ data_schema:
           display_datatable: true
         - name: genotype
           type: text
+          display_datatable: true
         - name: date_enter
           type: date
         - name: date_birth
