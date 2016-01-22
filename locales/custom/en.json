@@ -1,3 +1,105 @@
 {
-
+  "Rat": {
+    "name": "Rat",
+    "property": {
+      "strain": "Strain",
+      "date_enter": "Arrival date",
+      "date_birth": "Birth date",
+      "sex": "Sex",
+      "id": "Number",
+      "age": "Age",
+      "origin": "Origin",
+      "project": "APAFIS referece",
+      "death": "Killing",
+      "date_death": "Death date",
+      "date_exit": "Exit date",
+      "addressee": "Adressee"
+    },
+    "option": {
+      "strain": {
+        "long_evans": "Long Evans",
+        "wistar": "Wistar",
+        "sprague_dawley": "Sprague Dawley"
+      },
+      "sex": {
+        "male": "Male",
+        "female": "Female"
+      },
+      "origin": {
+        "janvier_labs": "Janvier Labs",
+        "charles_river": "Charles River"
+      },
+      "death": {
+        "pentobarbital_end_project": "Pentobarbital lethal injection (end of project)",
+        "pentobarbital_tissue_sample": "Pentobarbital lethal injection (tissue sample)",
+        "pentobarbital_suffering": "Pentobarbital lethal injection (suffering animal)",
+        "pre_surgery": "Pre-surgery death",
+        "per_surgery": "Per-surgery death",
+        "post_surgery": "Post-surgery death",
+        "beheaded_bio_mol": "Decapitation (molecular biology)",
+        "found_dead": "Animal found dead"
+      }
+    }
+  },
+  "Mus": {
+    "name": "Mouse",
+    "property": {
+      "strain": "Strain",
+      "lineage": "Lineage",
+      "genotype": "Genotype",
+      "date_enter": "Arrival date",
+      "date_birth": "Birth date",
+      "sex": "Sex",
+      "id": "Number",
+      "chip": "Chip number",
+      "origin": "Provenance",
+      "project": "APAFIS referece",
+      "death": "Killing",
+      "date_death": "Death date",
+      "date_exit": "Exit date",
+      "addressee": "Adressee",
+      "age": "Age"
+    },
+    "option": {
+      "sex": {
+        "male": "Male",
+        "female": "Female"
+      },
+      "origin": {
+        "janvier_labs": "Janvier Labs",
+        "charles_river": "Charles River",
+        "jax_mice": "Jax Mice"
+      },
+      "death": {
+        "dislocation_end_project": "Cervical dislocation (end of project)",
+        "dislocation_tissue_sample": "Cervical dislocation (tissue sample)",
+        "dislocation_suffering": "Cervical dislocation (suffering animal)",
+        "dislocation_unusable": "Cervical dislocation (unusable animal)",
+        "pentobarbital_end_project": "Pentobarbital lethal injection (end of project)",
+        "pentobarbital_tissue_sample": "Pentobarbital lethal injection (tissue sample)",
+        "pentobarbital_suffering": "Pentobarbital lethal injection (suffering animal)",
+        "pre_surgery": "Pre-surgery death",
+        "per_surgery": "Per-surgery death",
+        "post_surgery": "Post-surgery death",
+        "beheaded_bio_mol": "Decapitation (molecular biology)",
+        "found_dead": "Animal found dead"
+      }
+    }
+  },
+  "Project": {
+    "name": "Project",
+    "property": {
+      "id_apafis": "APAFIS reference",
+      "creator": "Project creator"
+    }
+  },
+  "User": {
+    "name": "User",
+    "property": {
+      "username": "Username",
+      "password": "Password",
+      "first_name": "First name",
+      "last_name": "Last name"
+    }
+  }
 }
