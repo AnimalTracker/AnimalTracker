@@ -3,14 +3,11 @@
 "use strict"
 
 var path = require('path');
-var crypto = require('crypto');
 var db = require(path.resolve('./src/modules/database'));
 var schema = require(path.resolve('./src/modules/schema'));
 var User = schema.User;
+var helper = require(path.resolve('./src/helpers/misc'));
 
-var hash = function(value) {
-  return crypto.createHash('sha256').update(value).digest('base64');
-};
 
 // -- Class --
 
@@ -31,7 +28,7 @@ var Class = function(username, password) {
 
 var transform = function(user) {
   var objects = User.transformRecordsIntoObjects(user);
-  User.apply(objects, addMethods);
+  helper.arrayifyFunction(objects, addMethods);
   return objects;
 };
 

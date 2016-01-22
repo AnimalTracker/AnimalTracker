@@ -5,6 +5,7 @@
 var path = require('path');
 var db = require(path.resolve('./src/modules/database'));
 var schema = require(path.resolve('./src/modules/schema'));
+var helper = require('../helpers/misc');
 
 // -- Class --
 
@@ -16,10 +17,9 @@ var Class = function() {
 
 var transform = function(other, configClass) {
   var objects = configClass.transformRecordsIntoObjects(other);
-  configClass.apply(objects, addMethods);
+  helper.arrayifyFunction(objects, addMethods);
   return objects;
 };
-
 
 // -- Module exports --
 

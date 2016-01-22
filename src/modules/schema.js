@@ -3,7 +3,7 @@
 var config = require('config');
 
 var schema = config.get('data_schema');
-var schemaConstructors = require('./schema-class');
+var configClassModel = require('../models/configClass');
 
 // -- Internal Methods --
 
@@ -34,20 +34,8 @@ var init = function() {
     schema.ConfigClassAlias[configClass.name] = configClass;
     schema.ConfigClass.push(configClass);
 
-    // Add new members --
-    configClass.propertyAlias = {};
-
     // Add ConfigClass members/methods --
-    schemaConstructors.populateConfigClass(configClass);
-
-    // Add Property members/methods --
-    configClass.forEachProperty(function(property) {
-
-      // Set the alias --
-      configClass.propertyAlias[property.name] = property;
-
-      schemaConstructors.populateProperty(property, configClass);
-    });
+    configClassModel.populate(configClass);
   });
 
   console.log(schema);

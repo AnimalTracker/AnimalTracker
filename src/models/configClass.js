@@ -1,36 +1,34 @@
-// Config Class/Property initialisation --
+// Config Class initialisation --
 
-var crypto    = require('crypto');
-var i18n      = require('i18next');
-var db        = require('../modules/database');
-var OrientDB  = require('orientjs');
+var i18n          = require('i18next');
+var OrientDB      = require('orientjs');
+var db            = require('../modules/database');
+var helper        = require('../helpers/misc');
+var propertyModel = require('./property');
 
-// -- Helper methods --
+// -- Add members to the configClass --
 
-var hash = function(value) {
-  return crypto.createHash('sha256').update(value).digest('base64');
-};
+exports.populate = function(configClass) {
 
-var arrayifyFunction = function(array, fn) {
-  if(Array.isArray(array))
-    return array.map(fn);
-  else if(array)
-    return fn(array);
-  else
-    return null;
-};
+  // -- Attributes --
+  configClass.propertyAlias = {};
 
-// -- Config Class members --
-
-exports.populateConfigClass = function(configClass) {
-
-  // -- Methods --
+  // -- Primary Methods --
   configClass.forEachProperty = function(fn) {
     for(var m of this.property)
       fn(m);
   };
 
-  configClass.apply = arrayifyFunction;
+  // Add Property members/methods --
+  configClass.forEachProperty(function(property) {
+
+    // Set the alias --
+    configClass.propertyAlias[property.name] = property;
+
+    propertyModel.populate(property, configClass);
+  });
+
+  // -- Secondary Methods --
 
   configClass.getLabel = function(req) {
     var ref = req || i18n;
@@ -68,9 +66,9 @@ exports.populateConfigClass = function(configClass) {
       switch(property.type)
       {
         case 'password':
-          record[property.name] = hash(obj[property.name]);
+          record[property.name] = helper.hash(obj[property.name]);
         case 'reference':
-          record[property.name] = OrientDB.RID(db.helper.unsimplifyRid(obj[property.name]));
+          record[property.name] = db.helper.unsimplifyAndRecordifyRid(obj[property.name]);
           break;
         case 'text':
         case 'date':
@@ -97,7 +95,7 @@ exports.populateConfigClass = function(configClass) {
       {
         case 'password':
           if(body[property.name] && body[property.name] != '')
-            record[property.name] = hash(body[property.name]);
+            record[property.name] = helper.hash(body[property.name]);
           break;
         case 'reference':
           record[property.name] = OrientDB.RID(db.helper.unsimplifyRid(body[property.name]));
@@ -135,13 +133,13 @@ exports.populateConfigClass = function(configClass) {
   };
 
   configClass.transformRecordsIntoObjects = function(records) {
-    return arrayifyFunction(records, (record) => {
+    return helper.arrayifyFunction(records, (record) => {
       return this.constructObjectFromRecord({}, record);
     });
   };
 
   configClass.transformObjectsIntoRecords = function(objects) {
-    return arrayifyFunction(objects, (object) => {
+    return helper.arrayifyFunction(objects, (object) => {
       return this.populateRecordFromObject({}, object);
     });
   };
@@ -150,47 +148,3 @@ exports.populateConfigClass = function(configClass) {
     return db.helper.createRecords(this.name, records);
   };
 };
-
-// -- Property members --
-
-var populateOption = function(option, property, configClass) {
-
-  property.optionAlias[option.id] = option;
-
-  option.getLabel = function(req) {
-    var ref = req || i18n;
-    return ref.t('custom:' + configClass.name + '.option.' + property.name + '.' + option.id);
-  };
-};
-
-exports.populateProperty = function(property, configClass) {
-
-  // Add methods --
-  property.getLabel = function(req) {
-    var ref = req || i18n;
-    return ref.t('custom:' + configClass.name + '.property.' + this.name);
-  };
-
-  if(property.type === 'list') {
-    property.forEachOption = function(fn) {
-      for(var m of this.list)
-        fn(m);
-    };
-
-    property.optionAlias = {};
-    property.forEachOption(function(option) {
-      populateOption(option, property, configClass);
-    });
-
-    property.getOptionLabel = function(optionName, req) {
-      if(property.optionAlias.hasOwnProperty(optionName)) {
-        return property.optionAlias[optionName].getLabel(req);
-      }
-      return "No label";
-    }
-  }
-
-  // Generate hash on property name --
-  property.hash = hash(property.name);
-};
-
