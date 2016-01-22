@@ -36,16 +36,8 @@ block content
       .navbar-default.sidebar(role='navigation')
         .sidebar-nav.navbar-collapse
           ul#side-menu.nav
-            li.sidebar-search
-              .input-group.custom-search-form
-                input.form-control(type='text', placeholder='Search...')
-                span.input-group-btn
-                  button.btn.btn-default(type='button')
-                    i.fa.fa-search
-              // /input-group
             +menu-item('Dashboard', '/', 'fa-dashboard')
             +menu-item('Animaux', '', 'fa-table')
-              +menu-subitem('Tout', '')
               each animal in schema.animals
                 +menu-subitem(animal.name, '/animals/'+ animal.path)
 
