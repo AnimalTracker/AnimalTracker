@@ -2,22 +2,16 @@ var express = require('express');
 var router = express.Router();
 
 var schema = require('../modules/schema');
-var view = require('../modules/view');
 
-// -- 
+// -- ConfigClass Parameter --
+
 router.param('configClass', function (req, res, next, configClass) {
   configClass = schema.getConfigClassByPath(configClass);
-
-  if(!configClass) {
-    req.params.configClass = null;
-  }
-  else {
-    req.params.configClass = configClass;
-  }
+  req.params.configClass = configClass;
   next();
 });
 
-// -- Datatables --
+// -- Datatable --
 
 router.get('/:configClass', function(req, res, next) {
 
@@ -63,16 +57,16 @@ router.get('/:configClass', function(req, res, next) {
 
     locals.options.columnDefs.push(def);
   });
-  
+
   locals.options = JSON.stringify(locals.options);
 
   res.render('layouts/datatable', {
     title: title,
     page: {
       header: title,
-      newHref: '/animals/' + configClass.path +'/new',
+      newHref: '/' + configClass.path +'/new',
       options: JSON.stringify({
-        viewRoute: '/animals/' + configClass.path + '/',
+        viewRoute: '/' + configClass.path + '/',
         editLabel: req.t('Edit')
       })
     },
@@ -80,21 +74,41 @@ router.get('/:configClass', function(req, res, next) {
   });
 });
 
+// -- Forms --
+
 router.get('/:configClass/new', function(req, res, next) {
 
   var configClass = req.params.configClass;
   if(!configClass) return next();
 
   var title = req.t('custom:'+ configClass.name +'.name');
-  var inputs = view.generateFormInputLocals(configClass, req);
 
+  // Generate inputs for Jade --
+  var inputs = [];
+  configClass.forEachProperty(function(property) {
+    property.generateFormInputs(inputs);
+  });
+
+  // Generate options for client side --
+  var options = {
+    action: 'create',
+    target: '/api/v1/' + configClass.path + '/',
+    references: [],
+    header_alt: req.t('Edit')
+  };
+
+  configClass.forEachProperty(function(property) {
+    property.generateFormOptions(options);
+  });
+
+  // Final rendering --
   res.render('layouts/form', {
     title: title,
     page: { header: title },
     form: {
       header: req.t('Creation'),
       inputs: inputs,
-      options: view.populateFormOptions(configClass, 'create', null, req)
+      options: JSON.stringify(options)
     }
   });
 });
@@ -105,15 +119,32 @@ router.get('/:configClass/:rid', function(req, res, next) {
   if(!configClass) return next();
 
   var title = req.t('custom:'+ configClass.name +'.name');
-  var inputs = view.generateFormInputLocals(configClass, req);
 
+  // Generate inputs for Jade --
+  var inputs = [];
+  configClass.forEachProperty(function(property) {
+    property.generateFormInputs(inputs);
+  });
+
+  // Generate options for client side --
+  var options = {
+    action: 'edit',
+    target: '/api/v1/' + configClass.path + '/' + req.params.rid,
+    references: []
+  };
+
+  configClass.forEachProperty(function(property) {
+    property.generateFormOptions(options);
+  });
+
+  // Final rendering --
   res.render('layouts/form', {
     title: title,
     page: { header: title },
     form: {
       header: req.t('Edition'),
       inputs: inputs,
-      options: view.populateFormOptions(configClass, 'edit', req.params.rid, req)
+      options: JSON.stringify(options)
     }
   });
 });

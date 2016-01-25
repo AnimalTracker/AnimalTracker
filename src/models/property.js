@@ -24,13 +24,14 @@ require('fs').readdirSync(path.resolve('./src/models/property/')).forEach(functi
   testFunction(methods, 'objectToRecord', type);
   testFunction(methods, 'reqToRecord', type);
   testFunction(methods, 'generateFormInputs', type);
+  testFunction(methods, 'generateFormOptions', type);
 
   propertyMethods[type] = methods;
 });
 
 // -- Add members to the property --
 
-exports.populate = function(property, configClass) {
+exports.populate = function(property, configClass, schema) {
 
   // Add methods --
   property.getLabel = function(req) {
@@ -52,7 +53,7 @@ exports.populate = function(property, configClass) {
 
   // Specific initialisation code --
   if(methods.hasOwnProperty('init'))
-    methods.init(property, configClass);
+    methods.init(property, configClass, schema);
 
   // Specific transformation code --
 
@@ -60,4 +61,5 @@ exports.populate = function(property, configClass) {
   property.objectToRecord = methods.objectToRecord;
   property.reqToRecord = methods.reqToRecord;
   property.generateFormInputs = methods.generateFormInputs;
+  property.generateFormOptions = methods.generateFormOptions;
 };

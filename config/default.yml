@@ -21,8 +21,9 @@ secret_token: 'P3RoJCBuof44T2tZm7O9'
 
 
 data_schema:
-  Animal:
+  models:
     - name: Rat
+      type: animal
       path: rats
       path_base: animals
       property:
@@ -79,6 +80,7 @@ data_schema:
           display_datatable: true
 
     - name: Mus
+      type: animal
       path: mice
       path_base: animals
       property:
@@ -142,24 +144,25 @@ data_schema:
           type: reference
           reference_to: Project
 
-  User:
-    name: User
-    path: users
-    path_base:
-    property:
-      - name: username
-        type: text
-        display_datatable: true
-      - name: password
-        type: password
-      - name: first_name
-        type: text
-        display_datatable: true
-      - name: last_name
-        type: text
-        display_datatable: true
-  Other:
+    - name: User
+      type: user
+      path: users
+      path_base:
+      property:
+        - name: username
+          type: text
+          display_datatable: true
+        - name: password
+          type: password
+        - name: first_name
+          type: text
+          display_datatable: true
+        - name: last_name
+          type: text
+          display_datatable: true
+
     - name: Project
+      type: other
       path: projects
       path_base: others
       property:

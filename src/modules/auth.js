@@ -11,7 +11,8 @@ var session = require('express-session');
 var flash = require('connect-flash');
 
 var db = require('../modules/database');
-var User = require('../models/user');
+var schema = require('./schema');
+var User = schema.user;
 
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;

@@ -7,7 +7,7 @@ var propertyModel = require('./property');
 
 // -- Add members to the configClass --
 
-exports.populate = function(configClass) {
+exports.populate = function(configClass, schema) {
 
   // -- Attributes --
   configClass.propertyAlias = {};
@@ -25,7 +25,7 @@ exports.populate = function(configClass) {
     // Set the alias --
     configClass.propertyAlias[property.name] = property;
 
-    propertyModel.populate(property, configClass);
+    propertyModel.populate(property, configClass, schema);
   });
 
   // -- Secondary Methods --
@@ -34,6 +34,8 @@ exports.populate = function(configClass) {
     var ref = req || i18n;
     return ref.t(this.labelPath);
   };
+
+  // -- Transformation Methods --
 
   configClass.populateObjectFromRecord = function(obj, record, req) {
     this.forEachProperty(function(property) {
@@ -94,7 +96,46 @@ exports.populate = function(configClass) {
     });
   };
 
+  // -- Database Creation Methods --
+
   configClass.createRecordsInDb = function(records) {
     return db.helper.createRecords(this.name, records);
+  };
+
+  configClass.createRecords = function(objects) {
+    var records = this.transformObjectsIntoRecords(objects);
+    return this.createRecordsInDb(records);
+  };
+
+  configClass.createFromReqBody = function(body) {
+    var records = this.populateRecordFromReq({}, body);
+    return this.createRecordsInDb(records);
+  };
+
+  configClass.updateFromReqBody = function(rid, body) {
+    var record = this.populateRecordFromReq({}, body);
+    return db.update(this.name).set(record).where({'@rid': rid}).one();
+  };
+
+  // -- Database Reading Methods --
+
+  configClass.getByRid = function(rid) {
+    return db.select().from(this.name).where({'@rid': rid}).one()
+      .then((item) => {
+        return this.transform(item);
+      });
+  };
+
+  configClass.getAll = function() {
+    return db.select().from(this.name).where({active: true}).all()
+      .then((item) => {
+        return this.transform(item);
+      });
+  };
+
+  // -- Database Other Methods --
+
+  configClass.deleteByRid = function(rid) {
+    return db.update(this.name).set({active: false}).where({'@rid': rid}).one();
   };
 };

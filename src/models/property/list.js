@@ -64,3 +64,5 @@ exports.generateFormInputs = function(inputs, req) {
 
   inputs.push(input);
 };
+
+exports.generateFormOptions = function(options) {};

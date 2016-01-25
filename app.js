@@ -5,9 +5,7 @@ var path = require('path');
 var app = express();
 var route = {
   index:    require('./src/routes/index'),
-  users:    require('./src/routes/users'),
-  animals:  require('./src/routes/animals'),
-  others:   require('./src/routes/others'),
+  generic:  require('./src/routes/generic'),
   api:      require('./src/routes/api')
 };
 var module = {
@@ -15,7 +13,6 @@ var module = {
   database: require('./src/modules/database'),
   schema:   require('./src/modules/schema'),
   view:     require('./src/modules/view'),
-  auth:     require('./src/modules/auth'),
   i18n:     require('./src/modules/i18n')
 };
 
@@ -29,20 +26,23 @@ app.set('view engine', 'jade');
 module.i18n.init(app);
 module.database.init(app);
 module.schema.init(app);
-module.view.init(app);
-module.auth.init(app);
+module.schema.ready.then(function() {
 
-// -- Routes --
+  module.auth = require('./src/modules/auth');
+  module.auth.init(app);
+  module.view.init(app);
 
-app.use('/',        route.index);
-app.use('/users',   route.users);
-app.use('/animals', route.animals);
-app.use('/others',  route.others);
-app.use('/api/v1',  route.api);
+  // -- Routes --
 
-// -- Modules --
+  app.use('/',        route.index);
+  app.use('/api/v1',  route.api);
+  app.use('/',        route.generic);
 
-module.server.init(app);
+  // -- Modules --
+
+  module.server.init(app);
+
+});
 
 // -- System events --
 

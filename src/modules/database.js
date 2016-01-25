@@ -65,7 +65,7 @@ helper.unsimplifyRid = function(rid) {
 };
 
 helper.unsimplifyAndRecordifyRid = function(rid) {
-  return OrientDB.RID(helper.unsimplifyRid(rid));
+  return rid ? OrientDB.RID(helper.unsimplifyRid(rid)) : null;
 };
 
 helper.createRecords = function(className, arg) {

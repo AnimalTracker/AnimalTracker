@@ -23,3 +23,5 @@ exports.generateFormInputs = function(inputs, req) {
     placeholder:  label
   });
 };
+
+exports.generateFormOptions = function(options) {};

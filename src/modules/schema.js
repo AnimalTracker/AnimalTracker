@@ -1,18 +1,32 @@
 // Schema initialisation --
 
+var Promise = require('bluebird');
+var ready = Promise.defer();
+
 var config = require('config');
 
 var schema = config.get('data_schema');
 var configClassModel = require('../models/configClass');
 
+var configClassType = {
+  animal:   require('./../models/configClass/animal'),
+  other:    require('./../models/configClass/other'),
+  user:     require('./../models/configClass/user')
+};
+
+schema.ready = ready.promise;
+module.exports = schema;
+
+var nbClass = schema.models.length;
+var i = 0;
+
 // -- Internal Methods --
 
 var isNotValid = function() {
-  if(!schema.has('Animal')) {
-    console.error('[schema] Missing "Animal" class list in config.');
+  if(!schema.has('models')) {
+    console.error('[schema] Missing "models" class list in config.');
     return true;
   }
-
   return false;
 };
 
@@ -25,40 +39,79 @@ var init = function() {
     return;
 
   // Prepare the schema --
-  schema.ConfigClass = [];
-  schema.ConfigClassAlias = {};
+  schema.modelsAlias = {};
+  schema.animals = [];
+  schema.others = [];
+  schema.user = false;
 
-  schema.forEachConfigClass(function(configClass) {
+  // Set aliases --
+  schema.forEachConfigClass(function(configClass, i) {
 
     // Set the alias --
-    schema.ConfigClassAlias[configClass.name] = configClass;
-    schema.ConfigClass.push(configClass);
+    schema.modelsAlias[configClass.name] = configClass;
+
+    // -- Specific Methods --
+    if(configClass.type === 'animal') {
+      schema.animals.push(configClass);
+    }
+    else if(configClass.type === 'user') {
+
+      if(schema.user != false) {
+        console.error('[schema] Only one user model allowed. Ignoring duplicates')
+      }
+      else {
+        schema.user = configClass;
+      }
+    }
+    else {
+      schema.others.push(configClass);
+    }
+  });
+
+  // Populate classes --
+  schema.forEachConfigClass(function(configClass, i) {
+
+    if(!schema.user) {
+      console.error('[schema] Missing a "user" model in data_schema');
+      process.exit(1);
+    }
 
     // Add ConfigClass members/methods --
-    configClassModel.populate(configClass);
+    configClassModel.populate(configClass, schema);
+
+    // -- Specific Methods --
+    configClassType[configClass.type].populate(configClass);
+
+    // Counter --
+    console.log('[schema] ConfigClass ' + configClass.name + ' ('+ i + '/' + nbClass + ') processed');
+    if(i >= nbClass) {
+      console.log('[schema] Schema ready');
+
+      ready.resolve();
+      i++;
+    }
   });
 };
 
 // -- Access Methods --
 
 schema.getAnimalClasses = function() {
-  return schema.Animal;
+  return schema.animals;
 };
 
 schema.getOtherClasses = function() {
-  return schema.Other;
+  return schema.others;
 };
 
 schema.getConfigClasses = function() {
-  // Join schema.Animal with schema.Other and schema.User
-  return schema.Animal.concat(schema.Other).concat([ schema.User ]);
+  return schema.models;
 };
 
 schema.getConfigClass = function(name) {
-  if(schema.ConfigClassAlias && schema.ConfigClassAlias.hasOwnProperty(name))
-    return schema.ConfigClassAlias[name];
-  else if(!schema.ConfigClassAlias)
+  if(!schema.modelsAlias)
     console.error('[schema] getConfigClass used before initialisation');
+  else if(schema.modelsAlias.hasOwnProperty(name))
+    return schema.modelsAlias[name];
   else
     console.error('[schema] There is no '+ name +' config class');
 };
@@ -87,17 +140,21 @@ schema.getConfigClassByPath = function(path) {
 // -- For Each Methods --
 
 schema.forEachConfigClass = function(fn) {
-  for(var item of schema.getConfigClasses())
-    fn(item);
+  var i = 0
+  for(var item of schema.getConfigClasses()) {
+    i++;
+    fn(item, i);
+  }
+
 };
 
 schema.forEachAnimalClass = function(fn) {
-  for(var item of schema.Animal)
+  for(var item of schema.animals)
     fn(item);
 };
 
 schema.forEachOtherClass = function(fn) {
-  for(var item of schema.Other)
+  for(var item of schema.others)
     fn(item);
 };
 
@@ -106,5 +163,3 @@ schema.forEachOtherClass = function(fn) {
 schema.init  = function(app) {
   init();
 };
-
-module.exports = schema;

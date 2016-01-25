@@ -4,7 +4,8 @@ var db = require('../modules/database');
 var passport = require('passport');
 var flash = require ('connect-flash');
 
-var User = require('../models/user');
+var schema = require('../modules/schema');
+var User = schema.user;
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
