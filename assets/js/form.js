@@ -26,7 +26,7 @@ var setHeaderIcon = function(action) {
   if(action.edit) {
     $('').text('')
   }
-}
+};
 
 var initForm = function() {
   // Check for a generated form --
@@ -87,13 +87,32 @@ var initForm = function() {
         }
       })
       .done(function( data ) {
-        var select = $('#' + ref.name);
+        var select = $('#generated-form [name=' + ref.name + ']');
 
+        // Create each option --
         for(var itemId in data[ref.data]) {
-          var item = data[ref.data][itemId];
-          select.append('<option value="'+ item.rid +'">'+ item.rid +'</option>');
+          var option = data[ref.data][itemId];
+
+          // Label to display --
+          var label = [];
+          if(ref.property_to_display) {
+
+            // Parse properties to display --
+            for(var propNb in ref.property_to_display) {
+              var prop = ref.property_to_display[propNb];
+              label.push(option[prop]);
+            }
+          }
+          else {
+            label.push(option.rid);
+          }
+          select.append('<option value="'+ option.rid +'">'+ label.join(' - ') +'</option>');
         }
-        console.log(data);
+
+        // Refresh select --
+        if(item) {
+          select.val(item[ref.name]);
+        }
       });
   }
 

@@ -86,9 +86,11 @@ exports.generateFormInputs = function(inputs, req) {
 exports.generateFormOptions = function(options) {
   var path = this.reference.path;
   var item = {
-    name: this.reference.name,
+    name: this.name,
+    reference: this.reference.name,
     data: path,
-    target: '/api/v1/' + path
+    target: '/api/v1/' + path,
+    property_to_display: this.property_to_display
   };
 
   options.references.push(item);
