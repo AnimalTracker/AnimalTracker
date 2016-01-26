@@ -67,6 +67,7 @@ router.get('/:configClass/new', function(req, res, next) {
   if(!configClass) return next();
 
   var title = req.t('custom:'+ configClass.name +'.name');
+  var lang = 'fr';
 
   // Generate inputs for Jade --
   var inputs = [];
@@ -76,7 +77,8 @@ router.get('/:configClass/new', function(req, res, next) {
     action: 'create',
     target: '/api/v1/' + configClass.path + '/',
     references: [],
-    header_alt: req.t('Edit')
+    header_alt: req.t('Edit'),
+    lang: lang
   };
 
   configClass.forEachProperty(function(property) {
@@ -87,7 +89,10 @@ router.get('/:configClass/new', function(req, res, next) {
   // Final rendering --
   res.render('layouts/form', {
     title: title,
-    page: { header: title },
+    page: {
+      header: title,
+      lang: lang
+    },
     form: {
       header: req.t('Creation'),
       inputs: inputs,
@@ -102,6 +107,7 @@ router.get('/:configClass/:rid', function(req, res, next) {
   if(!configClass) return next();
 
   var title = req.t('custom:'+ configClass.name +'.name');
+  var lang = 'fr';
 
   // Generate inputs for Jade --
   var inputs = [];
@@ -110,7 +116,8 @@ router.get('/:configClass/:rid', function(req, res, next) {
   var options = {
     action: 'edit',
     target: '/api/v1/' + configClass.path + '/' + req.params.rid,
-    references: []
+    references: [],
+    lang: lang
   };
 
   configClass.forEachProperty(function(property) {
@@ -121,7 +128,10 @@ router.get('/:configClass/:rid', function(req, res, next) {
   // Final rendering --
   res.render('layouts/form', {
     title: title,
-    page: { header: title },
+    page: {
+      header: title,
+      lang: lang
+    },
     form: {
       header: req.t('Edition'),
       inputs: inputs,

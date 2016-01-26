@@ -53,7 +53,8 @@ var initForm = function() {
 
   // Init datepicker --
   datepickers.datepicker({
-    format: 'dd/mm/yyyy'
+    format: 'dd/mm/yyyy',
+    language: options.lang
   });
 
   // Load if edit --
