@@ -32,11 +32,11 @@ mixin input-reference(input)
 mixin input-date(input)
   .form-group
     label= input.label
-    .input-group.input-append.date.datepicker
+    .input-group.input-append.date.datepicker(data-provide=datepicker)
       if input.placeholder
-        input.form-control(placeholder=input.placeholder)
+        input.form-control(name=input.name, placeholder=input.placeholder)
       else
-        input.datepicker.form-control
+        input.form-control(name=input.name)
       span.input-group-addon.add-on
         span.fa.fa-calendar
 

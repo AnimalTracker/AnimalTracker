@@ -17,10 +17,9 @@ helper.notifyPropertiesCreation = function() {
 
 helper.getPropertyFromType = function(property) {
   switch (property.type) {
-    case 'date':
-      return 'Date';
     case 'reference':
       return 'Link';
+    case 'date':
     case 'text':
     case 'password':
     case 'list':
