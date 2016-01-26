@@ -150,16 +150,29 @@ var initForm = function() {
 
   // Delete button --
   $('#generated-delete').click(function() {
-    $.ajax({
-        type: 'DELETE',
-        url: options.target,
-        beforeSend: function( xhr ) {
-          // xhr.overrideMimeType( "text/plain; charset=x-user-defined" );
-        }
-      })
-      .done(function( data ) {
-        console.log( "Sample of data:", data );
-      });
+    swal({
+          title: "Êtes vous sûr ?",
+          text: "La suppression est définitive",
+          type: "warning",
+          showCancelButton: true,
+          cancelButtonText: "Annuler",
+          confirmButtonColor: "#DD6B55",
+          confirmButtonText: "Supprimer",
+          closeOnConfirm: false
+        },
+        function(){
+          $.ajax({
+            type: 'DELETE',
+            url: options.target,
+            beforeSend: function( xhr ) {
+              // xhr.overrideMimeType( "text/plain; charset=x-user-defined" );
+            }
+          })
+          .done(function( data ) {
+            swal("Supprimé", "La donnée a bien été supprimée", "success");
+            console.log( "Sample of data:", data );
+          });
+        });
   });
 };
 
