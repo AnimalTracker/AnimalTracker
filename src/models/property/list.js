@@ -27,6 +27,8 @@ exports.init = function (property, configClass) {
   };
 };
 
+// -- Transformation methods --
+
 exports.recordToObject = function (record,  obj, req) {
   obj[this.name + '_label'] = this.getOptionLabel(record[this.name], req);
   obj[this.name] = record[this.name];
@@ -39,6 +41,26 @@ exports.objectToRecord = function (obj,  record) {
 exports.reqToRecord = function (body, record) {
   record[this.name] = body[this.name] === '' ? null : body[this.name];
 };
+
+// -- Datatable methods --
+
+exports.generateDTLocals = function(columns, req) {
+  // Add the column --
+  columns.push({
+    name: this.name,
+    label: this.getLabel(req)
+  });
+};
+
+exports.generateDTOptions = function(options) {
+  // Add the js def for the column --
+  options.push({
+    targets: this.name,
+    data: this.name + '_label'
+  });
+};
+
+// -- Form methods --
 
 exports.generateFormInputs = function(inputs, req) {
   var input = {

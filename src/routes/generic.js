@@ -37,25 +37,10 @@ router.get('/:configClass', function(req, res, next) {
 
   // Generic columns --
   configClass.forEachProperty(function(property) {
-    if(!property.display_datatable)
-      return;
-
-    // Add the column --
-    locals.cols.push({
-      name: property.name,
-      label: property.getLabel(req)
-    });
-
-    // Add the js def --
-    var def = {
-      targets: property.name,
-      data: property.name
-    };
-
-    if(property.type === 'list')
-      def.data += '_label';
-
-    locals.options.columnDefs.push(def);
+    if(property.display_datatable) {
+      property.generateDTLocals(locals.cols);
+      property.generateDTOptions(locals.options.columnDefs);
+    }
   });
 
   locals.options = JSON.stringify(locals.options);
@@ -85,9 +70,6 @@ router.get('/:configClass/new', function(req, res, next) {
 
   // Generate inputs for Jade --
   var inputs = [];
-  configClass.forEachProperty(function(property) {
-    property.generateFormInputs(inputs);
-  });
 
   // Generate options for client side --
   var options = {
@@ -98,6 +80,7 @@ router.get('/:configClass/new', function(req, res, next) {
   };
 
   configClass.forEachProperty(function(property) {
+    property.generateFormInputs(inputs);
     property.generateFormOptions(options);
   });
 
@@ -122,9 +105,6 @@ router.get('/:configClass/:rid', function(req, res, next) {
 
   // Generate inputs for Jade --
   var inputs = [];
-  configClass.forEachProperty(function(property) {
-    property.generateFormInputs(inputs);
-  });
 
   // Generate options for client side --
   var options = {
@@ -134,6 +114,7 @@ router.get('/:configClass/:rid', function(req, res, next) {
   };
 
   configClass.forEachProperty(function(property) {
+    property.generateFormInputs(inputs);
     property.generateFormOptions(options);
   });
 
