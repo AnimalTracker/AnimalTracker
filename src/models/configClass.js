@@ -133,6 +133,23 @@ exports.populate = function(configClass, schema) {
       });
   };
 
+  configClass.getAllWithReferences = function() {
+    var select = ['*'];
+
+    // If no references, use simple getAll instead --
+    if(!this.references)
+      return this.getAll();
+
+    this.references.forEach(function(ref) {
+      select.push(ref.name + '.*');
+    });
+
+    return db.select(select.join(', ')).from(this.name).where({active: true}).all()
+      .then((item) => {
+        return this.transform(item);
+      });
+  };
+
   // -- Database Other Methods --
 
   configClass.deleteByRid = function(rid) {

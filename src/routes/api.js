@@ -29,7 +29,7 @@ router.param('configClass', function (req, res, next, configClass) {
 // Listing --
 router.get('/:configClass', function(req, res) {
   var configClass = req.params.configClass;
-  configClass.getAll()
+  configClass.getAllWithReferences()
     .then(function (items) {
       var result = {};
       result[configClass.path] = items ? items : [];

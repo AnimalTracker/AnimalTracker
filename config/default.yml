@@ -78,6 +78,7 @@ data_schema:
           type: reference
           reference_to: Project
           display_datatable: true
+          property_to_display: [ id_apafis ]
 
     - name: Mus
       type: animal
@@ -143,6 +144,7 @@ data_schema:
         - name: project
           type: reference
           reference_to: Project
+          property_to_display: [ id_apafis ]
 
     - name: User
       type: user
@@ -166,11 +168,12 @@ data_schema:
       path: projects
       path_base: others
       property:
-      - name: id_apafis
-        type: text
-        display_datatable: true
-      - name: creator
-        type: reference
-        reference_to: User
-        display_datatable: true
+        - name: id_apafis
+          type: text
+          display_datatable: true
+        - name: creator
+          type: reference
+          reference_to: User
+          display_datatable: true
+          property_to_display: [ first_name, last_name ]
 
