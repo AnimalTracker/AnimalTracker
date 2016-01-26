@@ -80,18 +80,18 @@ var createDatabase = function() {
     console.info('[util] Database "' + db.name + '" created.');
     db.close();
   }).then(function() {
-    var db = require('./src/modules/database');
-
+    var db = require('./src/modules/database'),
+        schema = {};
     db.ready
       .then(function() {
-        var schema = require('./src/modules/schema');
+        schema = require('./src/modules/schema');
         return schema.init();
       })
       .then(function(){
         return require('./src/helpers/databaseCreation').populateDatabase();
       })
       .then(function() {
-        return require('./src/models/user').createRecords([
+        return schema.user.createRecords([
           { username: 'test',  password: 'test', first_name: 'prenom', last_name: 'nom'},
           { username: 'test2', password: 'azerty', first_name: 'prenom2', last_name: 'nom2'}
         ]);

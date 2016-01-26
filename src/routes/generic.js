@@ -23,7 +23,7 @@ router.get('/:configClass', function(req, res, next) {
     cols: [],
     options: {
       responsive: true,
-      lengthChange: false,
+      lengthMenu: [[ 25, 50, 100 , 1000, -1], [25, 50, 100 , 1000, "Tout"] ],
       language: {
         url: 'https://cdn.datatables.net/plug-ins/1.10.10/i18n/French.json'
       },
