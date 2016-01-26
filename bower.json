@@ -21,6 +21,7 @@
     "startbootstrap-sb-admin-2": "~1.0.8",
     "datatables-responsive": "~2.0.0",
     "toastr": "~2.1.2",
-    "bootstrap-datepicker": "~1.5.1"
+    "bootstrap-datepicker": "~1.5.1",
+    "sweetalert": "~1.1.3"
   }
 }
