@@ -30,9 +30,14 @@ exports.populate = function(configClass, schema) {
 
   // -- Secondary Methods --
 
-  configClass.getLabel = function(req) {
+  configClass.getLabel = function(req, options) {
     var ref = req || i18n;
-    return ref.t(this.labelPath);
+    return ref.t(this.labelPath, options);
+  };
+
+  configClass.getLabelPlural = function(req, options) {
+    var ref = req || i18n;
+    return ref.t(this.labelPath + '_plural', options);
   };
 
   // -- Transformation Methods --

@@ -36,9 +36,9 @@ require('fs').readdirSync(path.resolve('./src/models/property/')).forEach(functi
 exports.populate = function(property, configClass, schema) {
 
   // Add methods --
-  property.getLabel = function(req) {
+  property.getLabel = function(req, options) {
     var ref = req || i18n;
-    return ref.t('custom:' + configClass.name + '.property.' + this.name);
+    return ref.t('custom:' + configClass.name + '.property.' + this.name, options);
   };
 
   // Generate hash on property name --

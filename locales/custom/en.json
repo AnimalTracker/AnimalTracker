@@ -1,6 +1,7 @@
 {
   "Rat": {
     "name": "Rat",
+    "name_plural": "Rats",
     "property": {
       "strain": "Strain",
       "date_enter": "Arrival date",
@@ -43,6 +44,7 @@
   },
   "Mus": {
     "name": "Mouse",
+    "name_plural": "Mice",
     "property": {
       "strain": "Strain",
       "lineage": "Lineage",
@@ -88,6 +90,7 @@
   },
   "Project": {
     "name": "Project",
+    "name_plural": "Projects",
     "property": {
       "id_apafis": "APAFIS reference",
       "creator": "Project creator"
@@ -95,6 +98,7 @@
   },
   "User": {
     "name": "User",
+    "name_plural": "Users",
     "property": {
       "username": "Username",
       "password": "Password",

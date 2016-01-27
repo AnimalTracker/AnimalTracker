@@ -20,7 +20,7 @@ router.get('/', function(req, res, next) {
   schema.forEachConfigClass((configClass) => {
     promises.push(configClass.countAll());
     promisesMetadata.push({
-      label: configClass.getLabel(req),
+      label: configClass.getLabelPlural(req),
       type: configClass.type === 'animal' ? 'primary' : configClass.type === 'other' ? 'green' : 'yellow',
       configClassType: configClass.type,
       path: '/' + configClass.path
