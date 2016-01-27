@@ -35,6 +35,7 @@ router.get('/', function(req, res, next) {
     promisesMetadata.push({
       label: configClass.getLabelPlural(req),
       type: configClass.type === 'animal' ? 'primary' : configClass.type === 'other' ? 'green' : 'yellow',
+      icon: configClass.type === 'animal' ? 'fa-paw' : configClass.type === 'other' ? 'fa-tasks' : 'fa-user',
       configClassType: configClass.type,
       path: '/' + configClass.path
     });
@@ -51,6 +52,7 @@ router.get('/', function(req, res, next) {
     locals.blocks.push({
       label: req.t('All animals'),
       type: 'primary',
+      icon: 'fa-list',
       count: 0
     });
 

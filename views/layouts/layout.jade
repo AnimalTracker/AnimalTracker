@@ -34,8 +34,8 @@ block content
       .navbar-default.sidebar(role='navigation')
         .sidebar-nav.navbar-collapse
           ul#side-menu.nav
-            +menu-item('Dashboard', '/', 'fa-dashboard')
-            +menu-item('Animaux', '', 'fa-table')
+            +menu-item(t('Dashboard'), '/', 'fa-dashboard')
+            +menu-item(t('Animals'), '', 'fa-table')
               each animal in schema.animals
                 +menu-subitem(t(animal.name), animal.path)
 

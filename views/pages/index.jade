@@ -20,13 +20,13 @@ block wrapper
   #dashboard
     .row
       .col-lg-12
-        h1.page-header Dashboard
+        h1.page-header= t('Dashboard')
 
     .row
       each item in blocks
-        +block-item('fa-tasks', item.type, item.count, item.label, item.path)
+        +block-item(item.icon, item.type, item.count, item.label, item.path)
     .row
-      .col-lg-8
+      .col-lg-12
         +panel('default')
           +panel-heading('Area Chart Example', 'fa-bar-chart-o')
             .pull-right
@@ -46,57 +46,6 @@ block wrapper
                     a(href='#') Separated link
           .panel-body
             #morris-area-chart
-
-      .col-lg-4
-        +panel-simple('Notifications Panel', 'default', 'fa-bell')
-          .list-group
-            a.list-group-item(href='#')
-              i.fa.fa-comment.fa-fw
-              |  New Comment
-              span.pull-right.text-muted.small
-                em 4 minutes ago
-            a.list-group-item(href='#')
-              i.fa.fa-twitter.fa-fw
-              |  3 New Followers
-              span.pull-right.text-muted.small
-                em 12 minutes ago
-            a.list-group-item(href='#')
-              i.fa.fa-envelope.fa-fw
-              |  Message Sent
-              span.pull-right.text-muted.small
-                em 27 minutes ago
-            a.list-group-item(href='#')
-              i.fa.fa-tasks.fa-fw
-              |  New Task
-              span.pull-right.text-muted.small
-                em 43 minutes ago
-            a.list-group-item(href='#')
-              i.fa.fa-upload.fa-fw
-              |  Server Rebooted
-              span.pull-right.text-muted.small
-                em 11:32 AM
-            a.list-group-item(href='#')
-              i.fa.fa-bolt.fa-fw
-              |  Server Crashed!
-              span.pull-right.text-muted.small
-                em 11:13 AM
-            a.list-group-item(href='#')
-              i.fa.fa-warning.fa-fw
-              |  Server Not Responding
-              span.pull-right.text-muted.small
-                em 10:57 AM
-            a.list-group-item(href='#')
-              i.fa.fa-shopping-cart.fa-fw
-              |  New Order Placed
-              span.pull-right.text-muted.small
-                em 9:49 AM
-            a.list-group-item(href='#')
-              i.fa.fa-money.fa-fw
-              |  Payment Received
-              span.pull-right.text-muted.small
-                em Yesterday
-
-          a.btn.btn-default.btn-block(href='#') View All Alerts
 
 block scripts
   // Morris Charts JavaScript
