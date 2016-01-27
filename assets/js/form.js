@@ -132,12 +132,14 @@ var initForm = function() {
         console.log(data)
 
         if(data.rid) {
+          var rid = Array.isArray(data.rid) ? data.rid[0] : data.rid;
           // Update variables --
-          options.target += '/' + data.rid;
+          options.target += rid;
           action = transformActionIntoBooleans('edit');
 
           // Update the header --
           headerDiv.html('<i class="fa fa-pencil"></i> ' + options.header_alt);
+          $('#nb_to_add').remove();
         }
 
         if(!data.error) {

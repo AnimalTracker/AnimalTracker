@@ -14,7 +14,8 @@
       "death": "Mise à mort",
       "date_death": "Date de mort",
       "date_exit": "Date de sortie",
-      "addressee": "Destinataire"
+      "addressee": "Destinataire",
+      "lot_number": "Numéro de lot"
     },
     "option": {
       "strain": {
@@ -60,7 +61,8 @@
       "date_death": "Date de mort",
       "date_exit": "Date de sortie",
       "addressee": "Destinataire",
-      "age": "Age"
+      "age": "Age",
+      "lot_number": "Numéro de lot"
     },
     "option": {
       "sex": {

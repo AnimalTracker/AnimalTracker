@@ -79,6 +79,8 @@ data_schema:
           reference_to: Project
           display_datatable: true
           property_to_display: [ id_apafis ]
+        - name: lot_number
+          type: text
 
     - name: Mus
       type: animal
@@ -145,6 +147,8 @@ data_schema:
           type: reference
           reference_to: Project
           property_to_display: [ id_apafis ]
+        - name: lot_number
+          type: text
 
     - name: Project
       type: other
