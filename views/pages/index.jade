@@ -1,7 +1,7 @@
 extends ../layouts/layout
 include ../components/base
 
-mixin block-item(icon, type, number, label)
+mixin block-item(icon, type, number, label, href)
   .col-lg-3.col-md-6
     +panel(type)
       .panel-heading
@@ -11,12 +11,13 @@ mixin block-item(icon, type, number, label)
           .col-xs-9.text-right
             .huge= number
             div= label
-      a(href='#')
-        .panel-footer
-          span.pull-left View Details
-          span.pull-right
-            i.fa.fa-arrow-circle-right
-          .clearfix
+      if href
+        a(href=href)
+          .panel-footer
+            span.pull-left View Details
+            span.pull-right
+              i.fa.fa-arrow-circle-right
+            .clearfix
 
 block wrapper
   .row
@@ -25,7 +26,7 @@ block wrapper
 
   .row
     each item in blocks
-      +block-item('fa-tasks', item.type, item.count, item.label)
+      +block-item('fa-tasks', item.type, item.count, item.label, item.path)
   .row
     .col-lg-8
       +panel('default')

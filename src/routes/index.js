@@ -21,7 +21,8 @@ router.get('/', function(req, res, next) {
     promises.push(configClass.countAll());
     promisesMetadata.push({
       label: configClass.getLabel(req),
-      type: configClass.type === 'animal' ? 'primary' : configClass.type === 'other' ? 'green' : 'yellow'
+      type: configClass.type === 'animal' ? 'primary' : configClass.type === 'other' ? 'green' : 'yellow',
+      path: '/' + configClass.path
     });
   });
 
