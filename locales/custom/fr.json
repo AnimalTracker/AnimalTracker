@@ -103,7 +103,15 @@
       "username": "Pseudo",
       "password": "Mot de passe",
       "first_name": "Prénom",
-      "last_name": "Nom de famille"
+      "last_name": "Nom de famille",
+      "role": "Rôle"
+    },
+    "option": {
+      "role": {
+        "viewer": "Invité",
+        "admin": "Administrateur",
+        "project_manager": "Créateur de projets"
+      }
     }
   }
 }

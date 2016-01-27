@@ -8,6 +8,20 @@ var schema = require('../modules/schema');
 var User = schema.user;
 var Promise = require('bluebird');
 
+var populateRights = function(req) {
+  var admin = req.user.role === 'admin';
+  var project_manager = admin || req.user.role === 'project_manager';
+  var viewer = admin || project_manager;
+
+  return {
+    admin: admin,
+    project_manager: project_manager,
+    viewer: viewer,
+    rid: req.user.rid,
+    username: req.user.username
+  };
+};
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   if (!req.isAuthenticated())
@@ -29,6 +43,7 @@ router.get('/', function(req, res, next) {
   Promise.all(promises).then((results) => {
     var locals = {
       title: 'Dashboard',
+      rights: populateRights(req),
       blocks: []
     };
 

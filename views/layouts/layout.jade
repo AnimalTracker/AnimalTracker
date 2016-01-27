@@ -16,11 +16,12 @@ block content
       ul.nav.navbar-top-links.navbar-right
         li.dropdown
           a.dropdown-toggle(data-toggle='dropdown', href='#')
+            = rights.username
             i.fa.fa-user.fa-fw
             i.fa.fa-caret-down
           ul.dropdown-menu.dropdown-user
             li
-              a(href='#')
+              a(href='/users/' + rights.rid)
                 i.fa.fa-user.fa-fw
                 |  User Profile
             li
@@ -44,7 +45,8 @@ block content
             each others in schema.others
               +menu-item(t(others.name), others.path, 'fa-bar-chart-o')
 
-            +menu-item(t(schema.user.name), schema.user.path, 'fa-sitemap')
+            if rights.admin
+              +menu-item(t(schema.user.name), schema.user.path, 'fa-sitemap')
 
     #page-wrapper
       block wrapper

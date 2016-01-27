@@ -170,6 +170,14 @@ data_schema:
           display_datatable: true
         - name: password
           type: password
+        - name: role
+          type: list
+          list:
+            - id: admin
+            - id: project_manager
+            - id: viewer
+          allow_other: false
+          display_datatable: true
         - name: first_name
           type: text
           display_datatable: true

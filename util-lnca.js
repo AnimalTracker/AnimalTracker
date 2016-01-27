@@ -62,24 +62,34 @@ var fakeData = function() {
 
   var records = { users: [], projects: [], rats: [], mus: [] };
 
+  var options = {};
+  getOptions('User', options);
+  getOptions('Rat', options);
+  getOptions('Mus', options);
+
   // Users --
   return populate('User', rand(20, 30), () => {
     var first_name = faker.name.firstName(), last_name = faker.name.lastName();
     var username = first_name.toLowerCase() + last_name.toLowerCase();
-    return { username: username,  password: username, first_name: first_name, last_name: last_name };
+    return {
+      username: username,
+      password: username,
+      role: randItem(options.User.role).id,
+      first_name: first_name,
+      last_name: last_name
+    };
   }).then(function(users) {
     records.users = users;
 
     // Projects --
     return populate('Project', rand(50, 150), () => {
-      return { id_apafis: 'APAFIS#' + faker.random.number(), creator: randItem(records.users).rid };
+      return {
+        id_apafis: 'APAFIS#' + faker.random.number(),
+        creator: randItem(records.users).rid
+      };
     });
   }).then(function(projects) {
     records.projects = projects;
-
-    var options = {};
-    getOptions('Rat', options);
-    getOptions('Mus', options);
 
     // Rats and Mice --
     return Promise.join(

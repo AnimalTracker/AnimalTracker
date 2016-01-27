@@ -95,8 +95,16 @@ var createDatabase = function() {
         faker.locale = "fr";
 
         return schema.user.createRecords([
-          { username: 'test',  password: 'test', first_name: faker.name.firstName(), last_name: faker.name.lastName()},
-          { username: 'demo',  password: 'demo', first_name: faker.name.firstName(), last_name: faker.name.lastName()},
+          { username: 'test',  password: 'test', role: 'admin',
+            first_name: faker.name.firstName(), last_name: faker.name.lastName()},
+          { username: 'demo',  password: 'demo', role: 'admin',
+            first_name: faker.name.firstName(), last_name: faker.name.lastName()},
+          { username: 'admin',  password: 'admin', role: 'admin',
+            first_name: faker.name.firstName(), last_name: faker.name.lastName()},
+          { username: 'project_manager',  password: 'project_manager', role: 'project_manager',
+            first_name: faker.name.firstName(), last_name: faker.name.lastName()},
+          { username: 'viewer',  password: 'viewer', role: 'viewer',
+            first_name: faker.name.firstName(), last_name: faker.name.lastName()},
         ]);
       })
     .then(function() {

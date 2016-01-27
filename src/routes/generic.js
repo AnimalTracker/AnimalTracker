@@ -3,6 +3,20 @@ var router = express.Router();
 
 var schema = require('../modules/schema');
 
+var populateRights = function(req) {
+  var admin = req.user.role === 'admin';
+  var project_manager = admin || req.user.role === 'project_manager';
+  var viewer = admin || project_manager;
+
+  return {
+    admin: admin,
+    project_manager: project_manager,
+    viewer: viewer,
+    rid: req.user.rid,
+    username: req.user.username
+  };
+};
+
 // -- ConfigClass Parameter --
 
 router.param('configClass', function (req, res, next, configClass) {
@@ -17,8 +31,12 @@ router.get('/:configClass', function(req, res, next) {
   var configClass = req.params.configClass;
   if(!configClass) return next();
 
+  // Check rights --
   if (!req.isAuthenticated())
     return res.redirect('/login');
+
+  if(configClass.type === 'user' && req.user.role != 'admin')
+    return res.redirect('/');
 
   var title = configClass.getLabelPlural(req);
   var locals = {
@@ -49,6 +67,7 @@ router.get('/:configClass', function(req, res, next) {
 
   res.render('layouts/datatable', {
     title: title,
+    rights: populateRights(req),
     page: {
       header: title,
       newHref: '/' + configClass.path +'/new',
@@ -67,9 +86,14 @@ router.get('/:configClass/new', function(req, res, next) {
   var configClass = req.params.configClass;
   if(!configClass) return next();
 
+  // Check rights --
   if (!req.isAuthenticated())
     return res.redirect('/login');
 
+  if(configClass.type === 'user' && req.user.role != 'admin')
+    return res.redirect('/');
+
+  // Labels --
   var title = req.t('custom:'+ configClass.name +'.name');
   var lang = 'fr';
 
@@ -93,6 +117,7 @@ router.get('/:configClass/new', function(req, res, next) {
   // Final rendering --
   res.render('layouts/form', {
     title: title,
+    rights: populateRights(req),
     page: {
       header: title,
       lang: lang
@@ -109,9 +134,14 @@ router.get('/:configClass/:rid', function(req, res, next) {
   var configClass = req.params.configClass;
   if(!configClass) return next();
 
+  // Check rights --
   if (!req.isAuthenticated())
     return res.redirect('/login');
 
+  if(configClass.type === 'user' && !(req.user.role == 'admin' || req.params.rid == req.user.rid))
+    return res.redirect('/');
+
+  // Label --
   var title = req.t('custom:'+ configClass.name +'.name');
   var lang = 'fr';
 
@@ -134,6 +164,7 @@ router.get('/:configClass/:rid', function(req, res, next) {
   // Final rendering --
   res.render('layouts/form', {
     title: title,
+    rights: populateRights(req),
     page: {
       header: title,
       lang: lang
