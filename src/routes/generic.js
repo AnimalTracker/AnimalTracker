@@ -86,6 +86,8 @@ router.get('/:configClass/new', function(req, res, next) {
     property.generateFormOptions(options);
   });
 
+  var allowMultipleInsert = configClass.type === 'animal';
+
   // Final rendering --
   res.render('layouts/form', {
     title: title,
@@ -96,7 +98,8 @@ router.get('/:configClass/new', function(req, res, next) {
     form: {
       header: req.t('Creation'),
       inputs: inputs,
-      options: JSON.stringify(options)
+      options: JSON.stringify(options),
+      allowMultipleInsert: allowMultipleInsert
     }
   });
 });
@@ -135,7 +138,8 @@ router.get('/:configClass/:rid', function(req, res, next) {
     form: {
       header: req.t('Edition'),
       inputs: inputs,
-      options: JSON.stringify(options)
+      options: JSON.stringify(options),
+      allowMultipleInsert: false
     }
   });
 });

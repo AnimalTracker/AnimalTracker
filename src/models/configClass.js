@@ -113,7 +113,13 @@ exports.populate = function(configClass, schema) {
   };
 
   configClass.createFromReqBody = function(body) {
-    var records = this.populateRecordFromReq({}, body);
+    var records = [],
+        nbToAdd = body.nb_to_add || 1;
+
+    for (var i = 0; i < nbToAdd; i++) {
+      records.push(this.populateRecordFromReq({}, body));
+    }
+
     return this.createRecordsInDb(records);
   };
 

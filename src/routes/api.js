@@ -41,10 +41,15 @@ router.get('/:configClass', function(req, res) {
 router.post('/:configClass', function(req, res) {
   var configClass = req.params.configClass;
   configClass.createFromReqBody(req.body)
-    .then(function (item) {
+    .then(function (items) {
       var result = {};
       result.message = req.t(configClass.labelPath) + ' created.';
-      result.rid = item.rid;
+      if (Array.isArray(items)) {
+        result.rid = [];
+        items.forEach((item) => { result.rid.push(item.rid); });
+      } else {
+        result.rid = items.rid;
+      }
       res.status(201).json(result);
     });
 });

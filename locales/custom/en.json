@@ -14,7 +14,8 @@
       "death": "Killing",
       "date_death": "Death date",
       "date_exit": "Exit date",
-      "addressee": "Adressee"
+      "addressee": "Adressee",
+      "lot_number": "Lot number"
     },
     "option": {
       "strain": {
@@ -60,7 +61,8 @@
       "date_death": "Death date",
       "date_exit": "Exit date",
       "addressee": "Adressee",
-      "age": "Age"
+      "age": "Age",
+      "lot_number": "Lot number"
     },
     "option": {
       "sex": {
