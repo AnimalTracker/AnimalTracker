@@ -22,6 +22,7 @@ router.get('/', function(req, res, next) {
     promisesMetadata.push({
       label: configClass.getLabel(req),
       type: configClass.type === 'animal' ? 'primary' : configClass.type === 'other' ? 'green' : 'yellow',
+      configClassType: configClass.type,
       path: '/' + configClass.path
     });
   });
@@ -32,9 +33,20 @@ router.get('/', function(req, res, next) {
       blocks: []
     };
 
+    // Result for animals (global) --
+    locals.blocks.push({
+      label: req.t('All animals'),
+      type: 'primary',
+      count: 0
+    });
+
+    // For each configClass --
     for(var i = 0; i < promisesMetadata.length; i++) {
       var block = promisesMetadata[i];
       block.count = results[i];
+
+      if(block.configClassType === 'animal')
+        locals.blocks[0].count += block.count;
 
       locals.blocks.push(block);
     }

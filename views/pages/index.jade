@@ -9,96 +9,94 @@ mixin block-item(icon, type, number, label, href)
           .col-xs-3
             i.fa.fa-5x(class=icon)
           .col-xs-9.text-right
-            .huge= number
-            div= label
-      if href
-        a(href=href)
-          .panel-footer
-            span.pull-left View Details
-            span.pull-right
-              i.fa.fa-arrow-circle-right
-            .clearfix
+            if href
+              a.huge(href=href) #{number}
+              div= label
+            else
+              .huge= number
+              div= label
 
 block wrapper
-  .row
-    .col-lg-12
-      h1.page-header Dashboard
+  #dashboard
+    .row
+      .col-lg-12
+        h1.page-header Dashboard
 
-  .row
-    each item in blocks
-      +block-item('fa-tasks', item.type, item.count, item.label, item.path)
-  .row
-    .col-lg-8
-      +panel('default')
-        +panel-heading('Area Chart Example', 'fa-bar-chart-o')
-          .pull-right
-            .btn-group
-              button.btn.btn-default.btn-xs.dropdown-toggle(type='button', data-toggle='dropdown')
-                | Actions
-                span.caret
-              ul.dropdown-menu.pull-right(role='menu')
-                li
-                  a(href='#') Action
-                li
-                  a(href='#') Another action
-                li
-                  a(href='#') Something else here
-                li.divider
-                li
-                  a(href='#') Separated link
-        .panel-body
-          #morris-area-chart
+    .row
+      each item in blocks
+        +block-item('fa-tasks', item.type, item.count, item.label, item.path)
+    .row
+      .col-lg-8
+        +panel('default')
+          +panel-heading('Area Chart Example', 'fa-bar-chart-o')
+            .pull-right
+              .btn-group
+                button.btn.btn-default.btn-xs.dropdown-toggle(type='button', data-toggle='dropdown')
+                  | Actions
+                  span.caret
+                ul.dropdown-menu.pull-right(role='menu')
+                  li
+                    a(href='#') Action
+                  li
+                    a(href='#') Another action
+                  li
+                    a(href='#') Something else here
+                  li.divider
+                  li
+                    a(href='#') Separated link
+          .panel-body
+            #morris-area-chart
 
-    .col-lg-4
-      +panel-simple('Notifications Panel', 'default', 'fa-bell')
-        .list-group
-          a.list-group-item(href='#')
-            i.fa.fa-comment.fa-fw
-            |  New Comment
-            span.pull-right.text-muted.small
-              em 4 minutes ago
-          a.list-group-item(href='#')
-            i.fa.fa-twitter.fa-fw
-            |  3 New Followers
-            span.pull-right.text-muted.small
-              em 12 minutes ago
-          a.list-group-item(href='#')
-            i.fa.fa-envelope.fa-fw
-            |  Message Sent
-            span.pull-right.text-muted.small
-              em 27 minutes ago
-          a.list-group-item(href='#')
-            i.fa.fa-tasks.fa-fw
-            |  New Task
-            span.pull-right.text-muted.small
-              em 43 minutes ago
-          a.list-group-item(href='#')
-            i.fa.fa-upload.fa-fw
-            |  Server Rebooted
-            span.pull-right.text-muted.small
-              em 11:32 AM
-          a.list-group-item(href='#')
-            i.fa.fa-bolt.fa-fw
-            |  Server Crashed!
-            span.pull-right.text-muted.small
-              em 11:13 AM
-          a.list-group-item(href='#')
-            i.fa.fa-warning.fa-fw
-            |  Server Not Responding
-            span.pull-right.text-muted.small
-              em 10:57 AM
-          a.list-group-item(href='#')
-            i.fa.fa-shopping-cart.fa-fw
-            |  New Order Placed
-            span.pull-right.text-muted.small
-              em 9:49 AM
-          a.list-group-item(href='#')
-            i.fa.fa-money.fa-fw
-            |  Payment Received
-            span.pull-right.text-muted.small
-              em Yesterday
+      .col-lg-4
+        +panel-simple('Notifications Panel', 'default', 'fa-bell')
+          .list-group
+            a.list-group-item(href='#')
+              i.fa.fa-comment.fa-fw
+              |  New Comment
+              span.pull-right.text-muted.small
+                em 4 minutes ago
+            a.list-group-item(href='#')
+              i.fa.fa-twitter.fa-fw
+              |  3 New Followers
+              span.pull-right.text-muted.small
+                em 12 minutes ago
+            a.list-group-item(href='#')
+              i.fa.fa-envelope.fa-fw
+              |  Message Sent
+              span.pull-right.text-muted.small
+                em 27 minutes ago
+            a.list-group-item(href='#')
+              i.fa.fa-tasks.fa-fw
+              |  New Task
+              span.pull-right.text-muted.small
+                em 43 minutes ago
+            a.list-group-item(href='#')
+              i.fa.fa-upload.fa-fw
+              |  Server Rebooted
+              span.pull-right.text-muted.small
+                em 11:32 AM
+            a.list-group-item(href='#')
+              i.fa.fa-bolt.fa-fw
+              |  Server Crashed!
+              span.pull-right.text-muted.small
+                em 11:13 AM
+            a.list-group-item(href='#')
+              i.fa.fa-warning.fa-fw
+              |  Server Not Responding
+              span.pull-right.text-muted.small
+                em 10:57 AM
+            a.list-group-item(href='#')
+              i.fa.fa-shopping-cart.fa-fw
+              |  New Order Placed
+              span.pull-right.text-muted.small
+                em 9:49 AM
+            a.list-group-item(href='#')
+              i.fa.fa-money.fa-fw
+              |  Payment Received
+              span.pull-right.text-muted.small
+                em Yesterday
 
-        a.btn.btn-default.btn-block(href='#') View All Alerts
+          a.btn.btn-default.btn-block(href='#') View All Alerts
 
 block scripts
   // Morris Charts JavaScript
