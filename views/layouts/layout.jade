@@ -23,16 +23,13 @@ block content
             li
               a(href='/users/' + rights.rid)
                 i.fa.fa-user.fa-fw
-                |  User Profile
-            li
-              a(href='#')
-                i.fa.fa-gear.fa-fw
-                |  Settings
+                |  #{t('User Profile')}
+
             li.divider
             li
               a(href='/logout')
                 i.fa.fa-sign-out.fa-fw
-                |  Logout
+                |  #{t('Logout')}
 
       .navbar-default.sidebar(role='navigation')
         .sidebar-nav.navbar-collapse
