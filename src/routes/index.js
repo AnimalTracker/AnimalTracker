@@ -10,9 +10,8 @@ var Promise = require('bluebird');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  if (!req.isAuthenticated()) {
+  if (!req.isAuthenticated())
     return res.redirect('/login');
-  }
 
   var promises = [];
   var promisesMetadata = [];
@@ -58,9 +57,8 @@ router.get('/', function(req, res, next) {
 // Login form receiver --
 
 router.get('/login', function(req, res, next) {
-  if (req.isAuthenticated()) {
+  if (req.isAuthenticated())
     return res.redirect('/');
-  }
 
   return res.render("pages/login", {
     errors: req.flash('error'),
@@ -87,9 +85,9 @@ router.post('/login', function(req, res, next) {
   })(req, res, next);
 });
 
-router.post('/logout', function(req, res, next) {
+router.get('/logout', function(req, res, next) {
   req.logout();
-  res.redirect('/');
+  res.redirect('/login');
 });
 
 module.exports = router;

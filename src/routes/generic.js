@@ -14,9 +14,11 @@ router.param('configClass', function (req, res, next, configClass) {
 // -- Datatable --
 
 router.get('/:configClass', function(req, res, next) {
-
   var configClass = req.params.configClass;
   if(!configClass) return next();
+
+  if (!req.isAuthenticated())
+    return res.redirect('/login');
 
   var title = configClass.getLabelPlural(req);
   var locals = {
@@ -62,9 +64,11 @@ router.get('/:configClass', function(req, res, next) {
 // -- Forms --
 
 router.get('/:configClass/new', function(req, res, next) {
-
   var configClass = req.params.configClass;
   if(!configClass) return next();
+
+  if (!req.isAuthenticated())
+    return res.redirect('/login');
 
   var title = req.t('custom:'+ configClass.name +'.name');
   var lang = 'fr';
@@ -102,9 +106,11 @@ router.get('/:configClass/new', function(req, res, next) {
 });
 
 router.get('/:configClass/:rid', function(req, res, next) {
-
   var configClass = req.params.configClass;
   if(!configClass) return next();
+
+  if (!req.isAuthenticated())
+    return res.redirect('/login');
 
   var title = req.t('custom:'+ configClass.name +'.name');
   var lang = 'fr';
