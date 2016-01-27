@@ -57,6 +57,12 @@ block wrapper
   .row
     .col-lg-12
       h1.page-header= page.header
+        a.btn.btn-danger.pull-right#generated-delete
+          i.fa.fa-trash.btn-icon
+          = t('Delete')
+        a.btn.btn-success.pull-right#generated-submit
+          i.fa.fa-cog.btn-icon
+          = t('Submit')
   .row
     .col-lg-12
       +panel-simple(form.header, 'default')(id='form-panel')
@@ -67,10 +73,6 @@ block wrapper
                 +input(input)
                 if input.help
                   p.help-block= input.help
-          .row
-            .col-lg-12
-              a.btn.btn-primary#generated-submit= t('Submit')
-              a.btn.btn-primary#generated-delete= t('Delete')
 
 block append scripts
   script(src=resPath + 'vendors/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')

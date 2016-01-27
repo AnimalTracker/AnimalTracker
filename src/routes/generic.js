@@ -18,7 +18,7 @@ router.get('/:configClass', function(req, res, next) {
   var configClass = req.params.configClass;
   if(!configClass) return next();
 
-  var title = configClass.getLabel(req);
+  var title = configClass.getLabelPlural(req);
   var locals = {
     cols: [],
     options: {

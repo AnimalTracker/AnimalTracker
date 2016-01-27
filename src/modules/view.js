@@ -18,7 +18,7 @@ view.init  = function(app) {
     // Methods --
     var createLocal = function (configClass) {
       return {
-        name: configClass.labelPath,
+        name: configClass.labelPath + '_plural',
         path: '/' + configClass.path
       };
     };
