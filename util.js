@@ -91,9 +91,12 @@ var createDatabase = function() {
         return require('./src/helpers/databaseCreation').populateDatabase();
       })
       .then(function() {
+        var faker = require('faker');
+        faker.locale = "fr";
+
         return schema.user.createRecords([
-          { username: 'test',  password: 'test', first_name: 'prenom', last_name: 'nom'},
-          { username: 'test2', password: 'azerty', first_name: 'prenom2', last_name: 'nom2'}
+          { username: 'test',  password: 'test', first_name: faker.name.firstName(), last_name: faker.name.lastName()},
+          { username: 'demo',  password: 'demo', first_name: faker.name.firstName(), last_name: faker.name.lastName()},
         ]);
       })
     .then(function() {

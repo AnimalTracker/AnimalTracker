@@ -31,8 +31,10 @@ var db = server.use(dbname);
 
 // -- Notify methods --
 
-helper.notifyRecordsCreation = function(records) {
-  console.log('[orientjs] Records created.');
+helper.notifyRecordsCreation = function(records, configClassName) {
+
+  var number = Array.isArray(records) ? records.length : 1;
+  console.log('[orientjs] ' + number + ' ' + (configClassName ? configClassName + ' record(s) created' : 'records created.'));
 
   // Simplify rids --
   var fn = function(record) { record.rid = db.helper.simplifyRid(record['@rid']); };
@@ -70,7 +72,9 @@ helper.unsimplifyAndRecordifyRid = function(rid) {
 
 helper.createRecords = function(className, arg) {
   return db.class.get(className).then(function(Class) {
-    return Class.create(arg).then(helper.notifyRecordsCreation);
+    return Class.create(arg).then((records) => {
+      return helper.notifyRecordsCreation(records, className);
+    });
   });
 };
 
