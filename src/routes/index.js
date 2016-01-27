@@ -6,6 +6,7 @@ var flash = require ('connect-flash');
 
 var schema = require('../modules/schema');
 var User = schema.user;
+var Promise = require('bluebird');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -13,17 +14,32 @@ router.get('/', function(req, res, next) {
     return res.redirect('/login');
   }
 
-  // Demo Query --
-  return db.ready
-    .then(function(){
+  var promises = [];
+  var promisesMetadata = [];
 
-      //var user = new User.class('test3','test');
-      //console.log(user);
-      //return user.save();
-    })
-    .then(function() {
-      res.render('pages/index', { title: 'Express' });
+  schema.forEachConfigClass((configClass) => {
+    promises.push(configClass.countAll());
+    promisesMetadata.push({
+      label: configClass.getLabel(req),
+      type: configClass.type === 'animal' ? 'primary' : configClass.type === 'other' ? 'green' : 'yellow'
     });
+  });
+
+  Promise.all(promises).then((results) => {
+    var locals = {
+      title: 'Dashboard',
+      blocks: []
+    };
+
+    for(var i = 0; i < promisesMetadata.length; i++) {
+      var block = promisesMetadata[i];
+      block.count = results[i];
+
+      locals.blocks.push(block);
+    }
+
+    res.render('pages/index', locals);
+  });
 });
 
 // Login form receiver --

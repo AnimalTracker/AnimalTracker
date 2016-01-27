@@ -24,8 +24,8 @@ block wrapper
       h1.page-header Dashboard
 
   .row
-    +block-item('fa-tasks', 'primary', 26, 'Rats')
-    +block-item('fa-tasks', 'green', 45, 'Souris')
+    each item in blocks
+      +block-item('fa-tasks', item.type, item.count, item.label)
   .row
     .col-lg-8
       +panel('default')

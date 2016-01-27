@@ -146,6 +146,20 @@ data_schema:
           reference_to: Project
           property_to_display: [ id_apafis ]
 
+    - name: Project
+      type: other
+      path: projects
+      path_base: others
+      property:
+        - name: id_apafis
+          type: text
+          display_datatable: true
+        - name: creator
+          type: reference
+          reference_to: User
+          display_datatable: true
+          property_to_display: [ first_name, last_name ]
+
     - name: User
       type: user
       path: users
@@ -162,18 +176,4 @@ data_schema:
         - name: last_name
           type: text
           display_datatable: true
-
-    - name: Project
-      type: other
-      path: projects
-      path_base: others
-      property:
-        - name: id_apafis
-          type: text
-          display_datatable: true
-        - name: creator
-          type: reference
-          reference_to: User
-          display_datatable: true
-          property_to_display: [ first_name, last_name ]
 

@@ -133,6 +133,10 @@ exports.populate = function(configClass, schema) {
       });
   };
 
+  configClass.countAll = function() {
+    return db.select('count(*)').from(this.name).where({active: true}).scalar();
+  };
+
   configClass.getAllWithReferences = function() {
     var select = ['*'];
 
