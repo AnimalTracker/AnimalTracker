@@ -1,4 +1,4 @@
-/*global pageOptions, toastr*/
+/*global pageOptions, toastr, swal*/
 
 var item = {};
 var action = {};
