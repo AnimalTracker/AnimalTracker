@@ -9,6 +9,7 @@ var schema = config.get('data_schema');
 var configClassModel = require('../models/configClass');
 
 var configClassType = {
+  generic:  require('./../models/configClass/generic'),
   animal:   require('./../models/configClass/animal'),
   other:    require('./../models/configClass/other'),
   user:     require('./../models/configClass/user')
@@ -76,10 +77,11 @@ var init = function() {
       process.exit(1);
     }
 
-    // Add ConfigClass members/methods --
+    // Add ConfigClass root methods --
     configClassModel.populate(configClass, schema);
 
-    // -- Specific Methods --
+    // -- Specific/generic Methods --
+    configClassType.generic.populate(configClass);
     configClassType[configClass.type].populate(configClass);
 
     // Counter --

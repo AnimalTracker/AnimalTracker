@@ -1,17 +1,26 @@
 // Other Config Class initialisation --
 
-var helper        = require('../../helpers/misc');
-
 // -- Add members to the other configClass --
 
-exports.populate = function(other) {
+exports.populate = function(Other) {
 
-  var addMethods = function() {
+  // -- DB to View --
+
+  Other.specificRecordToObject = function(record, obj, options) {
+
+    // Generic properties/methods --
+    Other.genericRecordToObject(record, obj, options);
+
+    return obj;
   };
 
-  other.transform = function(other) {
-    var objects = this.transformRecordsIntoObjects(other);
-    helper.arrayifyFunction(objects, addMethods);
-    return objects;
+  // -- View to DB --
+
+  Other.specificObjectToRecord = function(obj, record, options) {
+
+    // Generic properties/methods --
+    Other.genericObjectToRecord(obj, record, options);
+
+    return record;
   };
 };

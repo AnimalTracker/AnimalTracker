@@ -1,17 +1,26 @@
 // Animal Config Class initialisation --
 
-var helper       = require('../../helpers/misc');
-
 // -- Add members to the animal configClass --
 
-exports.populate = function(animal) {
+exports.populate = function(Animal) {
 
-  var addMethods = function() {
+  // -- DB to View --
+
+  Animal.specificRecordToObject = function(record, obj, options) {
+
+    // Generic properties/methods --
+    Animal.genericRecordToObject(record, obj, options);
+
+    return obj;
   };
 
-  animal.transform = function(animal) {
-    var objects = this.transformRecordsIntoObjects(animal);
-    helper.arrayifyFunction(objects, addMethods);
-    return objects;
+  // -- View to DB --
+
+  Animal.specificObjectToRecord = function(obj, record, options) {
+
+    // Generic properties/methods --
+    Animal.genericObjectToRecord(obj, record, options);
+
+    return record;
   };
 };

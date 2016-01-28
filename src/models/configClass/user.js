@@ -2,28 +2,50 @@
 
 var helper  = require('../../helpers/misc');
 var db      = require('../../modules/database');
+var jwt     = require('jwt-simple');
+var secret  = require('config').get('secret_token');
 
 // -- Add members to the user configClass --
 
-exports.populate = function(user) {
+exports.populate = function(User) {
 
-  var addMethods = function(obj) {
+  // -- DB to View --
+
+  User.specificRecordToObject = function(record, obj, options) {
+
+    // Generic properties/methods --
+    User.genericRecordToObject(record, obj, options);
+
+    // Test the password --
     obj.test = function(password) {
       return helper.hash(password) === this.password_hidden;
     };
+
+    // Add the token --
+    obj.apitoken = record.apitoken;
+
+    return obj;
   };
 
-  user.transform = function(user) {
-    var objects = this.transformRecordsIntoObjects(user);
-    helper.arrayifyFunction(objects, addMethods);
-    return objects;
+  // -- View to DB --
+
+  User.specificObjectToRecord = function(obj, record, options) {
+
+    // Generic properties/methods --
+    User.genericObjectToRecord(obj, record, options);
+
+    // Add the token --
+    record.apitoken = jwt.encode({ rid: obj.rid }, secret);
+
+    return record;
   };
 
-  user.getByUsername = function(username) {
+  // -- Additional Data Access Methods --
+
+  User.getByUsername = function(username) {
     return db.select().from(this.name).where({active: true, username: username}).one()
       .then((item) => {
-        return this.transform(item);
+        return this.transformRecordsIntoObjects(item);
       });
   };
-
 };
