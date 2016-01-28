@@ -53,7 +53,7 @@ exports.populate = function(configClass) {
     return db.helper.createRecords(this.name, records);
   };
 
-  configClass.createFromObjet = function(objects) {
+  configClass.createFromObject = function(objects) {
     var records = this.transformObjectsIntoRecords(objects);
     return this.createRecordsInDb(records);
   };

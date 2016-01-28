@@ -94,7 +94,7 @@ var createDatabase = function() {
         var faker = require('faker');
         faker.locale = "fr";
 
-        return schema.user.createRecords([
+        return schema.user.createFromObject([
           { username: 'test',  password: 'test', role: 'admin',
             first_name: faker.name.firstName(), last_name: faker.name.lastName()},
           { username: 'demo',  password: 'demo', role: 'admin',
