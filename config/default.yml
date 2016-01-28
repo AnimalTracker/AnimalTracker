@@ -163,6 +163,35 @@ data_schema:
           reference_to: User
           display_datatable: true
           property_to_display: [ first_name, last_name ]
+        - name: title
+          type: text
+        - name: date_begin
+          type: date
+        - name: date_end
+          type: date
+        - name: duration
+          type: number
+        - name: animals_number
+          type: number
+        - name: species
+          type: list
+          list:
+            - id: rat
+            - id: mouse
+            - id: both
+        - name: sex
+          type: list
+          list:
+            - id: male
+            - id: female
+            - id: both
+        - name: severity
+          type: list
+          list:
+            - id: absence
+            - id: slight
+            - id: moderate
+            - id: severe
 
     - name: User
       type: user
@@ -188,4 +217,3 @@ data_schema:
         - name: last_name
           type: text
           display_datatable: true
-

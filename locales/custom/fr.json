@@ -95,7 +95,33 @@
     "name_plural": "Projets",
     "property": {
       "id_apafis": "Référence APAFIS",
-      "creator": "Concepteur du projet"
+      "creator": "Concepteur du projet",
+      "title": "Titre du projet",
+      "date_begin": "Date de début",
+      "date_end": "Date de fin",
+      "duration": "Durée",
+      "animals_number": "Nombre d'animaux",
+      "species": "Espèces",
+      "sex": "Sexe",
+      "severity": "Sévérité"
+    },
+    "option": {
+      "species": {
+        "rat": "Rats",
+        "mouse": "Souris",
+        "both": "Rats et souris"
+      },
+      "sex": {
+        "male": "Mâles",
+        "female": "Femelles",
+        "both": "Mâles and femelles"
+      },
+      "severity": {
+        "absence": "Niveau 0 - Absence",
+        "slight": "Niveau 1 - Légère",
+        "moderate": "Niveau 2 - Modérée",
+        "severe": "Niveau 3 - Sévère"
+      }
     }
   },
   "User": {

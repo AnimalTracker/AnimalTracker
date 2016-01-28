@@ -9,6 +9,11 @@ mixin input-text(input)
     else
       input.form-control(name=input.name)
 
+mixin input-number(input)
+  .form-group
+    label= input.label
+    input.form-control(type='number', name=input.name, placeholder=input.placeholder)
+
 mixin input-password(input)
   .form-group
     label= input.label
@@ -44,6 +49,8 @@ mixin input(input)
   case input.type
     when 'text'
       +input-text(input)
+    when 'number'
+      +input-number(input)
     when 'reference'
       +input-reference(input)
     when 'select'
