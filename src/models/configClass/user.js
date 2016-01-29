@@ -3,6 +3,7 @@
 var helper  = require('../../helpers/misc');
 var db      = require('../../modules/database');
 var jwt     = require('jwt-simple');
+var Promise = require('bluebird');
 var secret  = require('config').get('secret_token');
 
 // -- Add members to the user configClass --
@@ -34,10 +35,22 @@ exports.populate = function(User) {
     // Generic properties/methods --
     User.genericObjectToRecord(obj, record, options);
 
-    // Add the token --
-    record.apitoken = jwt.encode({ rid: obj.rid }, secret);
-
     return record;
+  };
+
+  User.postCreate = function(results) {
+
+    var promises = [];
+    for(var record of results) {
+
+      // Add the token --
+      var update = {};
+      update.apitoken = jwt.encode({ rid: record.rid }, secret);
+
+      promises.push(db.update(this.name).set(update).where({'@rid': record['@rid']}).one());
+    }
+
+    return Promise.all(promises).then(() => { return results; });
   };
 
   // -- Additional Data Access Methods --

@@ -50,7 +50,12 @@ exports.populate = function(configClass) {
   // Creation Methods --
 
   configClass.createRecordsInDb = function(records) {
-    return db.helper.createRecords(this.name, records);
+    return db.helper.createRecords(this.name, records).then(function(results) {
+      if(configClass.postCreate) {
+        console.log('[orientjs] Trigger ' + configClass.name + '.postUpdate hook');
+        return configClass.postCreate(results);
+      }
+    });
   };
 
   configClass.createFromObject = function(objects) {
