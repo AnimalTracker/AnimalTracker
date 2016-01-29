@@ -4,12 +4,14 @@
     "name_plural": "Rats",
     "property": {
       "strain": "Strain",
+      "other_strain": "Other strain",
       "date_enter": "Arrival date",
       "date_birth": "Birth date",
       "sex": "Sex",
       "id": "Number",
       "age": "Age",
       "origin": "Origin",
+      "other_origin": "Other origin",
       "project": "APAFIS referece",
       "death": "Killing",
       "date_death": "Death date",
@@ -21,7 +23,8 @@
       "strain": {
         "long_evans": "Long Evans",
         "wistar": "Wistar",
-        "sprague_dawley": "Sprague Dawley"
+        "sprague_dawley": "Sprague Dawley",
+        "other": "Other strain"
       },
       "sex": {
         "male": "Male",
@@ -29,7 +32,8 @@
       },
       "origin": {
         "janvier_labs": "Janvier Labs",
-        "charles_river": "Charles River"
+        "charles_river": "Charles River",
+        "other": "Other origin"
       },
       "death": {
         "pentobarbital_end_project": "Pentobarbital lethal injection (end of project)",
@@ -55,7 +59,8 @@
       "sex": "Sex",
       "id": "Number",
       "chip": "Chip number",
-      "origin": "Provenance",
+      "origin": "Origin",
+      "other_origin": "Other origin",
       "project": "APAFIS referece",
       "death": "Killing",
       "date_death": "Death date",
@@ -72,7 +77,8 @@
       "origin": {
         "janvier_labs": "Janvier Labs",
         "charles_river": "Charles River",
-        "jax_mice": "Jax Mice"
+        "jax_mice": "Jax Mice",
+        "other": "Other origin"
       },
       "death": {
         "dislocation_end_project": "Cervical dislocation (end of project)",

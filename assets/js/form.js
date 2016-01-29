@@ -68,8 +68,11 @@ var initForm = function() {
       })
       .done(function( data ) {
         for(var propId in data) {
-          if(data.hasOwnProperty(propId) && propId != 'rid')
-            $('#generated-form [name=' + propId + ']').val(data[propId]);
+          if(data.hasOwnProperty(propId) && propId != 'rid') {
+            var prop = $('#generated-form [name=' + propId + ']');
+            prop.val(data[propId]);
+            prop.change();
+          }
         }
         console.log(data);
         item = data;
@@ -178,8 +181,20 @@ var initForm = function() {
   });
 };
 
-//
+var initDisableFields = function() {
+  pageOptions.displayOnly.forEach(function(element) {
+    $('[name=' + element.condition.id + ']').change(function() {
+      disableFields(element);
+    });
+    disableFields(element);
+  });
+};
+
+var disableFields = function(element) {
+  $('[name=' + element.name + ']').prop('disabled', $('[name=' + element.condition.id + ']').val() !== element.condition.value);
+};
 
 $(document).ready(function() {
   initForm();
+  initDisableFields();
 });

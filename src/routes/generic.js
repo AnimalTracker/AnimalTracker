@@ -105,6 +105,7 @@ router.get('/:configClass/new', function(req, res, next) {
     action: 'create',
     target: '/api/v1/' + configClass.path + '/',
     references: [],
+    displayOnly: [],
     header_alt: req.t('Edit'),
     lang: lang
   };
@@ -156,6 +157,7 @@ router.get('/:configClass/:rid', function(req, res, next) {
     action: 'edit',
     target: '/api/v1/' + configClass.path + '/' + req.params.rid,
     references: [],
+    displayOnly: [],
     lang: lang
   };
 
