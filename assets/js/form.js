@@ -1,4 +1,4 @@
-/*global pageOptions, toastr, swal*/
+/*global pageOptions, toastr, swal, apitoken*/
 
 var item = {};
 var action = {};
@@ -62,9 +62,7 @@ var initForm = function() {
     $.ajax({
         type: 'GET',
         url: options.target,
-        beforeSend: function( xhr ) {
-          // xhr.overrideMimeType( "text/plain; charset=x-user-defined" );
-        }
+        headers: { 'Authorization': 'JWT ' + apitoken }
       })
       .done(function( data ) {
         for(var propId in data) {
@@ -84,9 +82,7 @@ var initForm = function() {
     $.ajax({
         type: 'GET',
         url: ref.target,
-        beforeSend: function( xhr ) {
-          // xhr.overrideMimeType( "text/plain; charset=x-user-defined" );
-        }
+        headers: { 'Authorization': 'JWT ' + apitoken }
       })
       .done(function( data ) {
         var select = $('#generated-form [name=' + ref.name + ']');
@@ -123,10 +119,8 @@ var initForm = function() {
     $.ajax({
         type: action.edit ? 'PUT' : 'POST',
         url: options.target,
-        data: getFormInputValues(),
-        beforeSend: function( xhr ) {
-          // xhr.overrideMimeType( "text/plain; charset=x-user-defined" );
-        }
+        headers: { 'Authorization': 'JWT ' + apitoken },
+        data: getFormInputValues()
       })
       .done(function( data ) {
         console.log(data)
@@ -166,9 +160,7 @@ var initForm = function() {
           $.ajax({
             type: 'DELETE',
             url: options.target,
-            beforeSend: function( xhr ) {
-              // xhr.overrideMimeType( "text/plain; charset=x-user-defined" );
-            }
+            headers: { 'Authorization': 'JWT ' + apitoken }
           })
           .done(function( data ) {
             swal("Supprimé", "La donnée a bien été supprimée", "success");

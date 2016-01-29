@@ -1,4 +1,4 @@
-/*global pageOptions, datatableOptions*/
+/*global pageOptions, datatableOptions, apitoken*/
 
 $(document).ready(function() {
   var options = datatableOptions;

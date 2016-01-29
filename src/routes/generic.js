@@ -3,20 +3,6 @@ var router = express.Router();
 
 var schema = require('../modules/schema');
 
-var populateRights = function(req) {
-  var admin = req.user.role === 'admin';
-  var project_manager = admin || req.user.role === 'project_manager';
-  var viewer = admin || project_manager;
-
-  return {
-    admin: admin,
-    project_manager: project_manager,
-    viewer: viewer,
-    rid: req.user.rid,
-    username: req.user.username
-  };
-};
-
 // -- ConfigClass Parameter --
 
 router.param('configClass', function (req, res, next, configClass) {
@@ -49,6 +35,7 @@ router.get('/:configClass', function(req, res, next) {
       },
       ajax: {
         url: '/api/v1/' + configClass.path,
+        headers: { 'Authorization': 'JWT ' + req.user.apitoken },
         dataSrc: configClass.path
       },
       columnDefs: []
@@ -67,7 +54,7 @@ router.get('/:configClass', function(req, res, next) {
 
   res.render('layouts/datatable', {
     title: title,
-    rights: populateRights(req),
+    rights: schema.user.populateRights(req),
     page: {
       header: title,
       newHref: '/' + configClass.path +'/new',
@@ -119,7 +106,7 @@ router.get('/:configClass/new', function(req, res, next) {
   // Final rendering --
   res.render('layouts/form', {
     title: title,
-    rights: populateRights(req),
+    rights: schema.user.populateRights(req),
     page: {
       header: title,
       lang: lang
@@ -167,7 +154,7 @@ router.get('/:configClass/:rid', function(req, res, next) {
   // Final rendering --
   res.render('layouts/form', {
     title: title,
-    rights: populateRights(req),
+    rights: schema.user.populateRights(req),
     page: {
       header: title,
       lang: lang

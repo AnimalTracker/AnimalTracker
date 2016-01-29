@@ -61,4 +61,21 @@ exports.populate = function(User) {
         return this.transformRecordsIntoObjects(item);
       });
   };
+
+  // -- Rights locals for views --
+
+  User.populateRights = function(req) {
+    var admin = req.user.role === 'admin';
+    var project_manager = admin || req.user.role === 'project_manager';
+    var viewer = admin || project_manager;
+
+    return {
+      admin: admin,
+      project_manager: project_manager,
+      viewer: viewer,
+      rid: req.user.rid,
+      username: req.user.username,
+      apitoken: req.user.apitoken
+    };
+  };
 };

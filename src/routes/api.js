@@ -1,16 +1,38 @@
 // Api Routes --
 // RESTful API cheat sheet : http://ricostacruz.com/cheatsheets/rest-api.html
 
-var express = require('express'),
-    router  = express.Router(),
-    db      = require('../modules/database'),
-    schema  = require('../modules/schema');
+var express   = require('express'),
+    router    = express.Router(),
+    db        = require('../modules/database'),
+    schema    = require('../modules/schema'),
+    passport  = require('passport');
 
 /* Check if API is up */
 router.get('/', function(req, res) {
   res.json({
     message: 'Server is running'
   });
+});
+
+// -- Auth system (API methods below are protected) --
+
+router.use(function (req, res, next) {
+  passport.authenticate('jwt', function(err, user, info) {
+    if (!info)
+      return next();
+
+    // If an message (error) occurs --
+    if (info === {}) {
+      info.error = 'Unauthorized';
+    }
+    else if(info instanceof Error) {
+      info.error = info.message;
+    }
+
+    return res.status(401).json(info);
+
+    // If not, continue --
+  })(req, res, next);
 });
 
 // -- ConfigClass Parameter --
@@ -27,7 +49,7 @@ router.param('configClass', function (req, res, next, configClass) {
 });
 
 // Listing --
-router.get('/:configClass', function(req, res) {
+router.get('/:configClass', function(req, res, next) {
   var configClass = req.params.configClass;
   configClass.getAllWithReferences()
     .then(function (items) {
@@ -80,7 +102,7 @@ router.put('/:configClass/:rid', function(req, res) {
     });
 });
 
-// Animals removal --
+// Removal --
 router.delete('/:configClass/:rid', function(req, res) {
   var configClass = req.params.configClass;
   configClass.deleteByRid(req.params.rid)

@@ -16,6 +16,8 @@ var User = schema.user;
 
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+var JwtStrategy = require('passport-jwt').Strategy;
+var secret = require('config').get('secret_token');
 
 // -- Strategy --
 
@@ -41,6 +43,25 @@ passport.use(new LocalStrategy(
     });
   }
 ));
+
+var opts = {
+  secretOrKey: secret
+};
+
+passport.use(new JwtStrategy(opts, function(jwt_payload, done) {
+  User.getByRid(db.helper.unsimplifyRid(jwt_payload.rid)).then(function (user){
+
+    // Check if user exists --
+    if(!user) {
+      return done(null, false, { message: 'Incorrect username.' });
+    }
+    else {
+      // Success --
+      return done(null, user);
+    }
+  });
+}));
+
 
 passport.serializeUser(function(user, done) {
   done(null, user.rid);
