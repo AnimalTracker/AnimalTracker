@@ -33,8 +33,12 @@ data_schema:
             - id: long_evans
             - id: wistar
             - id: sprague_dawley
+            - id: other
           allow_other: true
           display_datatable: true
+        - name: other_strain
+          type: text
+          display_only: {id: strain, value: other}
         - name: sex
           type: list
           list:
@@ -71,7 +75,11 @@ data_schema:
           list:
             - id: janvier_labs
             - id: charles_river
+            - id: other
           allow_other: true
+        - name: other_origin
+          type: text
+          display_only: {id: origin, value: other}
         - name: addressee
           type: text
         - name: project
@@ -119,7 +127,11 @@ data_schema:
             - id: janvier_labs
             - id: charles_river
             - id: jax_mice
+            - id: other
           allow_other: true
+        - name: other_origin
+          type: text
+          display_only: {id: origin, value: other}
         - name: date_exit
           type: date
         - name: date_death

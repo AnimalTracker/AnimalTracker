@@ -45,4 +45,7 @@ exports.generateFormInputs = function(inputs, req) {
   });
 };
 
-exports.generateFormOptions = function(options) {};
+exports.generateFormOptions = function(options) {
+  if (this.display_only)
+    options.displayOnly.push({name: this.name, condition: this.display_only});
+};

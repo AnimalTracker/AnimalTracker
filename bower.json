@@ -23,5 +23,8 @@
     "toastr": "~2.1.2",
     "bootstrap-datepicker": "~1.5.1",
     "sweetalert": "~1.1.3"
+  },
+  "resolutions": {
+    "datatables-responsive": "~2.0.0"
   }
 }
