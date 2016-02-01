@@ -88,16 +88,30 @@ gulp.task('src:watch', ['src:lint'], function() {
   gulp.watch(['./src/**/*.js', 'app.js'], ['src:lint']);
 });
 
+// Process other resources --
+
+gulp.task('resource.root:build', function() {
+  return gulp.src(['./assets/root/**/*']) // Take all root resources
+    .pipe(gulp.dest('./public'))          // Copy in public
+});
+
+gulp.task('resource.root:watch', ['resource.root:build'], function() {
+  // Watch all the root resources, then run the copy task
+  gulp.watch(['/assets/root/**/*'], ['resource.root:build']);
+});
+
 // High level tasks --
 
 gulp.task('watch', function () {
   gulp.start([
     'less:build',
     'scripts:build',
+    'resource.root:build',
     'src:lint',
     'less:watch',
     'scripts:watch',
-    'src:watch']);
+    'src:watch',
+    'resource.root:watch']);
 });
 
 gulp.task('default', ['watch']);
