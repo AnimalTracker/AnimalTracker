@@ -49,7 +49,7 @@ router.param('configClass', function (req, res, next, configClass) {
 });
 
 // Listing --
-router.get('/:configClass', function(req, res, next) {
+router.get('/:configClass', function(req, res) {
   var configClass = req.params.configClass;
   configClass.getAllWithReferences()
     .then(function (items) {

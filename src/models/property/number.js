@@ -45,4 +45,4 @@ exports.generateFormInputs = function(inputs, req) {
   });
 };
 
-exports.generateFormOptions = function(options) {};
+exports.generateFormOptions = function() {};

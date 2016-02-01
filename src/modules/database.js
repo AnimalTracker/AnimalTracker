@@ -99,8 +99,7 @@ db.ready = server.list()
 
 // -- Module requirements --
 
-db.init = function(app) {
-
+db.init = function() {
 };
 
 db.close = function() {

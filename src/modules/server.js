@@ -49,7 +49,7 @@ var startLiveReloadServer = function() {
 
 var startExpressServer = function(app) {
   // 404 Error --
-  app.use(function(req, res, next) {
+  app.use(function(req, res) {
     console.error('404: ' + req.url);
     res.status(404).send('Not Found');
   });

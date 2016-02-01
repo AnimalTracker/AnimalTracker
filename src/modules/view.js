@@ -1,8 +1,5 @@
 // Generic view helpers --
 
-var config = require('config');
-var i18n = require('i18next');
-
 var schema = require('../modules/schema');
 var view = {};
 

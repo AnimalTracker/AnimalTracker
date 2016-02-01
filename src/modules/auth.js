@@ -3,8 +3,6 @@
 // Based on OrientDB : http://orientdb.com/docs/last/Database-Security.html
 
 var config = require('config');
-var crypto = require('crypto');
-var express = require('express');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');

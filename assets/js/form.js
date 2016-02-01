@@ -22,12 +22,6 @@ var getFormInputValues = function() {
   return values;
 };
 
-var setHeaderIcon = function(action) {
-  if(action.edit) {
-    $('').text('')
-  }
-};
-
 var initForm = function() {
   // Check for a generated form --
   var form = $('#generated-form');
@@ -36,8 +30,7 @@ var initForm = function() {
 
   // Get data --
   var options = pageOptions;
-  if(!options) {
-    console.error('Error: missing pageOptions var.');
+  if(! options) {
     return
   }
 
@@ -72,7 +65,7 @@ var initForm = function() {
             prop.change();
           }
         }
-        console.log(data);
+
         item = data;
       });
   }
@@ -81,7 +74,6 @@ var initForm = function() {
   for(var refId in options.references) {
     var ref = options.references[refId];
 
-    console.log(options);
     $.ajax({
         type: 'GET',
         url: ref.target,
@@ -126,8 +118,6 @@ var initForm = function() {
         data: getFormInputValues()
       })
       .done(function( data ) {
-        console.log(data)
-
         if(data.rid) {
           var rid = Array.isArray(data.rid) ? data.rid[0] : data.rid;
           // Update variables --
@@ -165,9 +155,8 @@ var initForm = function() {
             url: options.target,
             headers: { 'Authorization': 'JWT ' + apitoken }
           })
-          .done(function( data ) {
+          .done(function() {
             swal("Supprimé", "La donnée a bien été supprimée", "success");
-            console.log( "Sample of data:", data );
           });
         });
   });

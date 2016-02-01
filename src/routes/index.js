@@ -1,15 +1,12 @@
 var express = require('express');
 var router = express.Router();
-var db = require('../modules/database');
 var passport = require('passport');
-var flash = require ('connect-flash');
 
 var schema = require('../modules/schema');
-var User = schema.user;
 var Promise = require('bluebird');
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', function(req, res) {
   if (!req.isAuthenticated())
     return res.redirect('/login');
 
@@ -59,7 +56,7 @@ router.get('/', function(req, res, next) {
 
 // Login form receiver --
 
-router.get('/login', function(req, res, next) {
+router.get('/login', function(req, res) {
   if (req.isAuthenticated())
     return res.redirect('/');
 
@@ -88,7 +85,7 @@ router.post('/login', function(req, res, next) {
   })(req, res, next);
 });
 
-router.get('/logout', function(req, res, next) {
+router.get('/logout', function(req, res) {
   req.logout();
   res.redirect('/login');
 });

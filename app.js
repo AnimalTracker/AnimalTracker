@@ -46,6 +46,6 @@ module.schema.ready.then(function() {
 
 // -- System events --
 
-process.on('exit', function(code) {
+process.on('exit', function() {
   module.database.close();
 });

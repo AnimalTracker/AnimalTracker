@@ -19,7 +19,6 @@ schema.ready = ready.promise;
 module.exports = schema;
 
 var nbClass = schema.models.length;
-var i = 0;
 
 // -- Internal Methods --
 
@@ -46,7 +45,7 @@ var init = function() {
   schema.user = false;
 
   // Set aliases --
-  schema.forEachConfigClass(function(configClass, i) {
+  schema.forEachConfigClass(function(configClass) {
 
     // Set the alias --
     schema.modelsAlias[configClass.name] = configClass;
@@ -162,6 +161,6 @@ schema.forEachOtherClass = function(fn) {
 
 // -- Module exports --
 
-schema.init  = function(app) {
+schema.init  = function() {
   init();
 };
