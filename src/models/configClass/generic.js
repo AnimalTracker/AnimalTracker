@@ -54,6 +54,8 @@ exports.populate = function(configClass) {
       if(configClass.postCreate) {
         console.log('[orientjs] Trigger ' + configClass.name + '.postUpdate hook');
         return configClass.postCreate(results);
+      } else {
+        return results;
       }
     });
   };
