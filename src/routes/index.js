@@ -61,6 +61,7 @@ router.get('/login', function(req, res) {
     return res.redirect('/');
 
   return res.render("pages/login", {
+    title: 'AnimalTracker',
     errors: req.flash('error'),
     user: req.user
   });
