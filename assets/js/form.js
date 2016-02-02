@@ -204,7 +204,7 @@ var signedOperation = function(context, value, valueType) {
     if(context.type === 'date' && valueType === 'number') {
       context.value.subtract(value, context.unit);
     }
-    if(context.type === 'date' && valueType === 'date') {
+    else if(context.type === 'date' && valueType === 'date') {
       context.value = context.value.diff(value, context.unit);
       context.type = 'number';
     }

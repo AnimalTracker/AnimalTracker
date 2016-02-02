@@ -51,8 +51,22 @@ data_schema:
           display_datatable: true
         - name: date_enter
           type: date
+          apply:
+            - on: date_birth
+              value: x - age_at_enter
+              unit: weeks
         - name: date_birth
           type: date
+          apply:
+            - on: age_at_enter
+              value: date_enter - x
+              unit: weeks
+        - name: age_at_enter
+          type: number
+          apply:
+            - on: date_birth
+              value: date_enter - x
+              unit: weeks
         - name: date_exit
           type: date
         - name: date_death
@@ -119,8 +133,22 @@ data_schema:
           display_datatable: true
         - name: date_enter
           type: date
+          apply:
+            - on: date_birth
+              value: x - age_at_enter
+              unit: weeks
         - name: date_birth
           type: date
+          apply:
+            - on: age_at_enter
+              value: date_enter - x
+              unit: weeks
+        - name: age_at_enter
+          type: number
+          apply:
+            - on: date_birth
+              value: date_enter - x
+              unit: weeks
         - name: origin
           type: list
           list:
@@ -182,19 +210,19 @@ data_schema:
           apply:
             - on: date_end
               value: x + duration
-              unit: weeks
+              unit: years
         - name: date_end
           type: date
           apply:
             - on: duration
               value: x - date_begin
-              unit: weeks
+              unit: years
         - name: duration
           type: number
           apply:
             - on: date_end
               value: date_begin + x
-              unit: weeks
+              unit: years
         - name: animals_number
           type: number
         - name: species

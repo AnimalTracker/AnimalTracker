@@ -17,7 +17,8 @@
       "addressee": "Destinataire",
       "lot_number": "Numéro de lot",
       "other_strain": "Autre souche",
-      "other_origin": "Autre provenance"
+      "other_origin": "Autre provenance",
+      "age_at_enter": "Âge à l'entrée (en semaines)"
     },
     "option": {
       "strain": {
@@ -67,7 +68,8 @@
       "addressee": "Destinataire",
       "age": "Age",
       "lot_number": "Numéro de lot",
-      "other_origin": "Autre provenance"
+      "other_origin": "Autre provenance",
+      "age_at_enter": "Âge à l'entrée (en semaines)"
     },
     "option": {
       "sex": {
@@ -105,7 +107,7 @@
       "title": "Titre du projet",
       "date_begin": "Date de début",
       "date_end": "Date de fin",
-      "duration": "Durée",
+      "duration": "Durée (en années)",
       "animals_number": "Nombre d'animaux",
       "species": "Espèces",
       "sex": "Sexe",

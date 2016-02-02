@@ -17,7 +17,8 @@
       "date_death": "Death date",
       "date_exit": "Exit date",
       "addressee": "Adressee",
-      "lot_number": "Lot number"
+      "lot_number": "Lot number",
+      "age_at_enter": "Age at enter (in weeks)"
     },
     "option": {
       "strain": {
@@ -67,7 +68,8 @@
       "date_exit": "Exit date",
       "addressee": "Adressee",
       "age": "Age",
-      "lot_number": "Lot number"
+      "lot_number": "Lot number",
+      "age_at_enter": "Age at enter (in weeks)"
     },
     "option": {
       "sex": {
@@ -105,7 +107,7 @@
       "title": "Project title",
       "date_begin": "Start date",
       "date_end": "End date",
-      "duration": "Duration",
+      "duration": "Duration (in years)",
       "animals_number": "Animals number",
       "species": "Species",
       "sex": "Sex",
