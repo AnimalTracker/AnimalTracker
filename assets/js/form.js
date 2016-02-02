@@ -243,8 +243,7 @@ var initApplySubOperation = function(element, target) {
       if(context.abort)
         return;
 
-      var refValue = ref === 'x' ? context.x : $('[name=' + ref + ']').val();
-      signedOperation(context, refValue, type);
+      signedOperation(context, $('[name=' + ref + ']').val(), type);
 
       if(context.lastSign)
         context.lastSign = null;
@@ -270,7 +269,7 @@ var applyOperation = function(element) {
 
 
   element.apply.forEach(function(target){
-    var context = { value: null, type: null, lastSign: null, x: element.selector.val(), unit: target.unit };
+    var context = { value: null, type: null, lastSign: null, unit: target.unit };
 
     target.operations.forEach(function(op) {
       op(context);
