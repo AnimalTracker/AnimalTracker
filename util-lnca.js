@@ -75,6 +75,7 @@ var fakeData = function() {
       username: username,
       password: username,
       role: randItem(options.User.role).id,
+      language: 'fr',
       first_name: first_name,
       last_name: last_name
     };

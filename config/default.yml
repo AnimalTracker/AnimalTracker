@@ -263,6 +263,12 @@ data_schema:
             - id: viewer
           allow_other: false
           display_datatable: true
+        - name: language
+          type: list
+          list:
+            - id: fr
+            - id: en
+          allow_other: false
         - name: first_name
           type: text
           display_datatable: true

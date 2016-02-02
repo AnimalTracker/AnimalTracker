@@ -1,6 +1,6 @@
 # GeneTracker
 ## Getting started
-### Developpement
+### Development
 Dependencies:
 - [NodeJS 4.2.4 and latest](https://nodejs.org/en/download/)
 
@@ -9,8 +9,8 @@ Setup:
 ```shell
 # Retrieve sources
 cd /path/to/install
-git clone https://github.com/GeneTracker/GeneTracker
-cd GeneTracker
+git clone https://github.com/AnimalTracker/AnimalTracker
+cd AnimalTracker
 
 # Setup NodeJS dependencies
 sudo npm install -g gulp bower
@@ -35,8 +35,8 @@ Setup:
 ```shell
 # Retrieve sources
 cd /path/to/install
-git clone https://github.com/GeneTracker/GeneTracker
-cd GeneTracker
+git clone https://github.com/AnimalTracker/AnimalTracker
+cd AnimalTracker
 
 # Setup NodeJS dependencies
 npm install --production

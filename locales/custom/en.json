@@ -140,13 +140,18 @@
       "password": "Password",
       "first_name": "First name",
       "last_name": "Last name",
-      "role": "Role"
+      "role": "Role",
+      "language": "Language"
     },
     "option": {
       "role": {
         "viewer": "Viewer",
         "admin": "Admin",
         "project_manager": "Project manager"
+      },
+      "language": {
+        "fr": "French",
+        "en": "English"
       }
     }
   }
