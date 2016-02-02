@@ -1,5 +1,34 @@
 // Extends from property --
 
+exports.init = function (property, configClass) {
+  if(!property.apply)
+    return;
+
+  property.apply.forEach((target) => {
+    var operations = target.value.split(' ');
+    var result = [];
+
+    operations.forEach((op) => {
+      if(op == 'x') {
+        op = 'date:x';
+      }
+      else if(op != '+' && op != '-') {
+        var ref = configClass.propertyAlias[op];
+
+        if(ref) {
+          op = ref.type + ':' + ref.name;
+        }
+        else {
+          console.error('[schema] In ' + property.name + ', property ' + op + ' in ' + configClass.name + ' does not exists');
+        }
+      }
+
+      result.push(op);
+    });
+
+    target.value = result.join(' ');
+  });
+};
 // -- Transformation methods --
 
 exports.recordToObject = function (record,  obj) {
@@ -44,4 +73,10 @@ exports.generateFormInputs = function(inputs, req) {
   });
 };
 
-exports.generateFormOptions = function() {};
+exports.generateFormOptions = function(options) {
+  if(this.apply)
+    options.applyOperations.push({
+      name: this.name,
+      apply: this.apply
+    });
+};

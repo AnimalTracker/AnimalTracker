@@ -179,10 +179,22 @@ data_schema:
           type: text
         - name: date_begin
           type: date
+          apply:
+            - on: date_end
+              value: x + duration
+              unit: weeks
         - name: date_end
           type: date
+          apply:
+            - on: duration
+              value: x - date_begin
+              unit: weeks
         - name: duration
           type: number
+          apply:
+            - on: date_end
+              value: date_begin + x
+              unit: weeks
         - name: animals_number
           type: number
         - name: species

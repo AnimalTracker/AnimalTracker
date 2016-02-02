@@ -20,10 +20,10 @@ exports.populate = function(configClass, schema) {
 
   // Add Property members/methods --
   configClass.forEachProperty(function(property) {
-
     // Set the alias --
     configClass.propertyAlias[property.name] = property;
-
+  });
+  configClass.forEachProperty(function(property) {
     propertyModel.populate(property, configClass, schema);
   });
 

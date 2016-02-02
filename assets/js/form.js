@@ -1,4 +1,4 @@
-/*global pageOptions, toastr, swal, apitoken*/
+/*global pageOptions, toastr, swal, apitoken, moment*/
 
 var item = {};
 var action = {};
@@ -162,6 +162,8 @@ var initForm = function() {
   });
 };
 
+// -- Disable fields --
+
 var initDisableFields = function() {
   pageOptions.displayOnly.forEach(function(element) {
     $('[name=' + element.condition.id + ']').change(function() {
@@ -175,7 +177,120 @@ var disableFields = function(element) {
   $('[name=' + element.name + ']').prop('disabled', $('[name=' + element.condition.id + ']').val() !== element.condition.value);
 };
 
+// -- "Apply" operation --
+
+var signedOperation = function(context, value, valueType) {
+  if(value === '') {
+    context.abort = true;
+    return;
+  }
+
+  // Process the value
+  if(valueType === 'date') {
+    value = moment(value, 'DD/MM/YYYY');
+  }
+  else if(valueType === 'number') {
+    value = parseInt(value);
+  }
+
+  // Process the sign
+  if(context.lastSign === '+') { // Add operation
+    if(context.type === 'date' && valueType === 'number')
+      context.value.add(value, context.unit);
+    else
+      context.value += value;
+  }
+  else if(context.lastSign == '-') { // Remove operation
+    if(context.type === 'date' && valueType === 'number') {
+      context.value.subtract(value, context.unit);
+    }
+    if(context.type === 'date' && valueType === 'date') {
+      context.value = value.diff(context.value, context.unit);
+      context.type = 'number';
+    }
+    else {
+      context.value -= value;
+    }
+  }
+  else { // Replace operation
+    context.type = valueType;
+    context.value = value;
+  }
+};
+
+var initApplySubOperation = function(element, target) {
+  // Initialise the proper selector (input or .datepicker)
+  target.selector = $('[name=' + target.on + ']');
+  if(target.type === 'date')
+    target.selector = target.selector.parent();
+
+  // Build the function list
+  target.operations = [];
+  target.value.split(' ').forEach(function(op) {
+    // Sign operations
+    if(op === '-' || op === '+') {
+      target.operations.push(function(context) {
+        context.lastSign = op;
+      });
+      return;
+    }
+
+    // Value operations
+    var info = op.split(':');
+    var type = info[0];
+    var ref = info[1];
+    target.operations.push(function(context) {
+      if(context.abort)
+        return;
+
+      var refValue = ref === 'x' ? context.x : $('[name=' + ref + ']').val();
+      signedOperation(context, refValue, type);
+
+      if(context.lastSign)
+        context.lastSign = null;
+    });
+  });
+};
+
+var initApplyOperation = function() {
+  pageOptions.applyOperations.forEach(function(element) {
+    element.selector = $('[name=' + element.name + ']');
+    element.apply.forEach(function(target) { initApplySubOperation(element, target); });
+    element.selector.change(function() { applyOperation(element); });
+  });
+};
+
+var applyMutex = false;
+
+var applyOperation = function(element) {
+  if(applyMutex)
+    return;
+  else
+    applyMutex = true;
+
+
+  element.apply.forEach(function(target){
+    var context = { value: null, type: null, lastSign: null, x: element.selector.val(), unit: target.unit };
+
+    target.operations.forEach(function(op) {
+      op(context);
+    });
+
+    // Apply its value:
+    if(context.value != null && !context.abort) {
+
+      if(context.type === 'date')
+        target.selector.datepicker('setDate', context.value.toDate());
+      else
+        target.selector.val(context.value);
+    }
+  });
+
+  applyMutex = false;
+};
+
 $(document).ready(function() {
   initForm();
   initDisableFields();
+  initApplyOperation();
 });

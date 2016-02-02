@@ -22,7 +22,8 @@
     "datatables-responsive": "~2.0.0",
     "toastr": "~2.1.2",
     "bootstrap-datepicker": "~1.5.1",
-    "sweetalert": "~1.1.3"
+    "sweetalert": "~1.1.3",
+    "moment": "^2.11.1"
   },
   "resolutions": {
     "datatables-responsive": "~2.0.0"

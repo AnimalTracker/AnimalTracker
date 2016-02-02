@@ -93,6 +93,7 @@ router.get('/:configClass/new', function(req, res, next) {
     target: '/api/v1/' + configClass.path + '/',
     references: [],
     displayOnly: [],
+    applyOperations: [],
     header_alt: req.t('Edit'),
     lang: lang
   };
@@ -145,6 +146,7 @@ router.get('/:configClass/:rid', function(req, res, next) {
     target: '/api/v1/' + configClass.path + '/' + req.params.rid,
     references: [],
     displayOnly: [],
+    applyOperations: [],
     lang: lang
   };
 
