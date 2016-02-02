@@ -15,18 +15,23 @@ exports.init = function (property, configClass) {
       else if(op != '+' && op != '-') {
         var ref = configClass.propertyAlias[op];
 
-        if(ref) {
+        if(ref)
           op = ref.type + ':' + ref.name;
-        }
-        else {
+        else
           console.error('[schema] In ' + property.name + ', property ' + op + ' in ' + configClass.name + ' does not exists');
-        }
       }
 
       result.push(op);
     });
 
     target.value = result.join(' ');
+
+    var targetRef = configClass.propertyAlias[target.on];
+
+    if(targetRef)
+      target.type = targetRef.type;
+    else
+      console.error('[schema] In ' + property.name + ', property ' + op + ' in ' + configClass.name + ' does not exists');
   });
 };
 

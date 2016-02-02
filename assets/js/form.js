@@ -205,7 +205,7 @@ var signedOperation = function(context, value, valueType) {
       context.value.subtract(value, context.unit);
     }
     if(context.type === 'date' && valueType === 'date') {
-      context.value = value.diff(context.value, context.unit);
+      context.value = context.value.diff(value, context.unit);
       context.type = 'number';
     }
     else {
@@ -222,7 +222,7 @@ var initApplySubOperation = function(element, target) {
   // Initialise the proper selector (input or .datepicker)
   target.selector = $('[name=' + target.on + ']');
   if(target.type === 'date')
-    target.selector = target.selector.parent();
+    target.dateSelector = target.selector.parent();
 
   // Build the function list
   target.operations = [];
@@ -278,9 +278,9 @@ var applyOperation = function(element) {
 
     // Apply its value:
     if(context.value != null && !context.abort) {
-
-      if(context.type === 'date')
-        target.selector.datepicker('setDate', context.value.toDate());
+      if(target.type === 'date' && context.type === 'date') {
+        target.dateSelector.datepicker('setDate', context.value.format('DD/MM/YYYY'));
+      }
       else
         target.selector.val(context.value);
     }
