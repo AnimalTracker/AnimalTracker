@@ -26,7 +26,7 @@ passport.use(new LocalStrategy(
 
       // Check if user exists --
       if(!user) {
-        return done(null, false, { message: 'Incorrect username.' });
+        return done(null, false, { error: 'Incorrect username' });
       }
 
       // Check password --
@@ -36,7 +36,7 @@ passport.use(new LocalStrategy(
       }
       else {
         // Not matching --
-        return done(null, false, { message: 'Incorrect password.' });
+        return done(null, false, { error: 'Incorrect password' });
       }
     });
   }

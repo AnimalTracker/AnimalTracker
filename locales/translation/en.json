@@ -23,5 +23,7 @@
       "cancel": "Cancel",
       "confirm": "Delete"
     }
-  }
+  },
+  "Incorrect username": "Incorrect username.",
+  "Incorrect password": "Incorrect password."
 }

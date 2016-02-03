@@ -11,7 +11,7 @@ block content
         .login-panel.panel.panel-default
           .panel-body
             each error in errors
-                +alert('info')= error
+                +alert('danger')= error
 
             form(role='form', method='POST', action='/login')
               fieldset

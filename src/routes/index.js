@@ -80,7 +80,7 @@ router.post('/login', function(req, res, next) {
       return next(err);
     }
     if (!user) {
-      req.flash('error', info.message);
+      req.flash('error', req.t(info.error));
       return res.redirect('/login');
     }
     req.logIn(user, function(err) {

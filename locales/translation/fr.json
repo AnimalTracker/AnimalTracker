@@ -16,12 +16,14 @@
   "Username": "Nom d'utilisateur",
   "Password": "Mot de passe",
   "Login": "Se connecter",
-  "swal" : {
-    "delete" : {
+  "swal": {
+    "delete": {
       "title": "Êtes vous sûr ?",
       "text": "La suppression est définitive",
       "cancel": "Annuler",
       "confirm": "Supprimer"
     }
-  }
+  },
+  "Incorrect username": "Cet utilisateur n'existe pas.",
+  "Incorrect password": "Mot de passe incorrect."
 }
