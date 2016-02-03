@@ -68,13 +68,18 @@ router.post('/:configClass', function(req, res) {
   var configClass = req.params.configClass;
   configClass.createFromReqBody(req.body)
     .then(function (items) {
-      var result = {};
-      result.message = req.t(configClass.labelPath) + ' created.';
+      var result = {
+        title: req.t('Created'),
+        status: 'success'
+      };
+
       if (Array.isArray(items)) {
         result.rid = [];
         items.forEach((item) => { result.rid.push(item.rid); });
+        result.message= req.t('Created_description', {type: configClass.getLabel(), count: items.length});
       } else {
         result.rid = items.rid;
+        result.message= req.t('Created_description', {type: configClass.getLabel()});
       }
       res.status(201).json(result);
     });
@@ -100,9 +105,11 @@ router.put('/:configClass/:rid', function(req, res) {
   var configClass = req.params.configClass;
   configClass.updateFromReqBody(req.params.rid, req.body)
     .then(function () {
-      var result = {};
-      result.message = req.t(configClass.labelPath) + ' edited';
-      res.status(201).json(result);
+      res.status(201).json({
+        title: req.t('Edited'),
+        message: req.t('Edited_description', {type: configClass.getLabel()}),
+        status: 'success'
+      });
     });
 });
 
@@ -111,7 +118,11 @@ router.delete('/:configClass/:rid', function(req, res) {
   var configClass = req.params.configClass;
   configClass.deleteByRid(req.params.rid)
     .then(function () {
-      res.status(200).json({message: 'Done'});
+      res.status(200).json({
+        title: req.t('Deleted'),
+        message: req.t('Deleted_description', {type: configClass.getLabel()}),
+        status: 'success'
+      });
     });
 });
 

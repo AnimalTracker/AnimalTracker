@@ -19,11 +19,18 @@
   "swal": {
     "delete": {
       "title": "Êtes vous sûr ?",
-      "text": "La suppression est définitive",
+      "text": "La suppression est définitive.",
       "cancel": "Annuler",
       "confirm": "Supprimer"
     }
   },
   "Incorrect username": "Cet utilisateur n'existe pas.",
-  "Incorrect password": "Mot de passe incorrect."
+  "Incorrect password": "Mot de passe incorrect.",
+  "Deleted": "Supprimé",
+  "Deleted_description": "L'enregistrement de type {{type}} a bien été supprimé.",
+  "Edited": "Edité",
+  "Edited_description": "{{type}} modifié(e).",
+  "Created": "Créé",
+  "Created_description": "Enregistrement de {{type}} créé.",
+  "Created_description_plural": "{{count}} enregistrements de {{type}} créés."
 }

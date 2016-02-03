@@ -25,5 +25,11 @@
     }
   },
   "Incorrect username": "Incorrect username.",
-  "Incorrect password": "Incorrect password."
+  "Incorrect password": "Incorrect password.",
+  "Deleted": "Deleted",
+  "Deleted_description": "The {{type}} record has been deleted.",
+  "Edited": "Edited",
+  "Edited_description": "{{type}} record edited.",
+  "Created": "Created",
+  "Created_description": "{{type}} record edited."
 }

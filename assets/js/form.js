@@ -131,7 +131,7 @@ var initForm = function() {
 
         if(!data.error) {
           // Display an info message --
-          toastr.success(data.message, "Success");
+          toastr.success(data.message, data.title);
         }
       });
   });
@@ -155,8 +155,8 @@ var initForm = function() {
             url: options.target,
             headers: { 'Authorization': 'JWT ' + apitoken }
           })
-          .done(function() {
-            swal("Supprimé", "La donnée a bien été supprimée", "success");
+          .done(function(data) {
+            swal(data.title, data.message, data.status); // "", "La donnée a bien été supprimée"
           });
         });
   });
