@@ -2,7 +2,18 @@ var express = require('express');
 var router = express.Router();
 
 var schema = require('../modules/schema');
+
+// -- I18n --
+
 var i18n = require('../modules/i18n');
+var datatableTranslation = [
+];
+var formTranslation = [
+  'swal.delete.title',
+  'swal.delete.text',
+  'swal.delete.cancel',
+  'swal.delete.confirm'
+];
 
 // -- ConfigClass Parameter --
 
@@ -63,7 +74,8 @@ router.get('/:configClass', function(req, res, next) {
       newHref: '/' + configClass.path +'/new',
       options: JSON.stringify({
         viewRoute: '/' + configClass.path + '/',
-        editLabel: req.t('Edit')
+        editLabel: req.t('Edit'),
+        t: i18n.generateTranslations(datatableTranslation, req)
       })
     },
     datatable: locals
@@ -100,6 +112,7 @@ router.get('/:configClass/new', function(req, res, next) {
     displayOnly: [],
     applyOperations: [],
     header_alt: req.t('Edit'),
+    t: i18n.generateTranslations(formTranslation, req),
     lang: lang
   };
 
@@ -154,6 +167,7 @@ router.get('/:configClass/:rid', function(req, res, next) {
     references: [],
     displayOnly: [],
     applyOperations: [],
+    t: i18n.generateTranslations(formTranslation, req),
     lang: lang
   };
 

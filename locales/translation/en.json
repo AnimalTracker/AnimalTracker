@@ -15,5 +15,13 @@
   "All": "All",
   "Username": "Username",
   "Password": "Password",
-  "Login": "Login"
+  "Login": "Login",
+  "swal" : {
+    "delete" : {
+      "title": "Are you sure ?",
+      "text": "The deletion is permanent",
+      "cancel": "Cancel",
+      "confirm": "Delete"
+    }
+  }
 }

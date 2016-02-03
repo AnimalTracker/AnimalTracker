@@ -140,13 +140,13 @@ var initForm = function() {
   // Delete button --
   $('#generated-delete').click(function() {
     swal({
-          title: "Êtes vous sûr ?",
-          text: "La suppression est définitive",
+          title: options.t['swal.delete.title'],
+          text: options.t['swal.delete.text'],
           type: "warning",
           showCancelButton: true,
-          cancelButtonText: "Annuler",
+          cancelButtonText: options.t['swal.delete.cancel'],
           confirmButtonColor: "#DD6B55",
-          confirmButtonText: "Supprimer",
+          confirmButtonText: options.t['swal.delete.confirm'],
           closeOnConfirm: false
         },
         function(){

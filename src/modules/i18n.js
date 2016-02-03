@@ -85,3 +85,12 @@ exports.getDatatableLanguage = function(lang) {
   else
     return datatableDefaultLanguage;
 };
+
+// Helper --
+exports.generateTranslations = function(list, req) {
+  var r = {};
+  for(var key of list) {
+    r[key] = req.t(key);
+  }
+  return r;
+};

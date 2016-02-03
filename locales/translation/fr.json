@@ -15,5 +15,13 @@
   "All": "Tout",
   "Username": "Nom d'utilisateur",
   "Password": "Mot de passe",
-  "Login": "Se connecter"
+  "Login": "Se connecter",
+  "swal" : {
+    "delete" : {
+      "title": "Êtes vous sûr ?",
+      "text": "La suppression est définitive",
+      "cancel": "Annuler",
+      "confirm": "Supprimer"
+    }
+  }
 }
