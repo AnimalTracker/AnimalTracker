@@ -1,6 +1,5 @@
 {
   "New element": "New element",
-  "Sign In": "Sign In",
   "Remember Me": "Remember Me",
   "Submit": "Submit",
   "Edit": "Edit",
@@ -13,5 +12,8 @@
   "Logout": "Log out",
   "Dashboard": "Dashboard",
   "Animals": "Animals",
-  "All": "All"
+  "All": "All",
+  "Username": "Username",
+  "Password": "Password",
+  "Login": "Login"
 }

@@ -79,14 +79,9 @@ exports.init = function(app) {
 // Datatable language --
 
 exports.getDatatableLanguage = function(lang) {
-  console.log(lang, datatableLanguages, datatableDefaultLanguage);
   if(datatableLanguages.hasOwnProperty(lang))
     return datatableLanguages[lang];
 
   else
     return datatableDefaultLanguage;
-
-  //'https://cdn.datatables.net/plug-ins/1.10.10/i18n/French.json'
-
-
 };

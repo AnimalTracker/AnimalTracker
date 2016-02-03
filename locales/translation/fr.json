@@ -1,6 +1,5 @@
 {
   "New element": "Nouvel élément",
-  "Sign In": "Se connecter",
   "Remember Me": "Se souvenir de moi",
   "Submit": "Sauvegarder",
   "Edit": "Editer",
@@ -13,5 +12,8 @@
   "Logout": "Déconnexion",
   "Dashboard": "Tableau de bord",
   "Animals": "Animaux",
-  "All": "Tout"
+  "All": "Tout",
+  "Username": "Nom d'utilisateur",
+  "Password": "Mot de passe",
+  "Login": "Se connecter"
 }
