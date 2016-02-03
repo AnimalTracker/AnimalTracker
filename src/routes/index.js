@@ -21,6 +21,7 @@ router.get('/', function(req, res) {
       label: configClass.getLabelPlural(req),
       type: configClass.type === 'animal' ? 'primary' : configClass.type === 'other' ? 'green' : 'yellow',
       icon: configClass.type === 'animal' ? 'fa-paw' : configClass.type === 'other' ? 'fa-tasks' : 'fa-user',
+      row: configClass.type === 'animal' ? 0 : 1,
       configClassType: configClass.type,
       path: '/' + configClass.path
     });
@@ -30,11 +31,11 @@ router.get('/', function(req, res) {
     var locals = {
       title: 'Dashboard',
       rights: schema.user.populateRights(req),
-      blocks: []
+      blocks: [[],[]]
     };
 
     // Result for animals (global) --
-    locals.blocks.push({
+    locals.blocks[0].push({
       label: req.t('All animals'),
       type: 'primary',
       icon: 'fa-list',
@@ -46,10 +47,11 @@ router.get('/', function(req, res) {
       var block = promisesMetadata[i];
       block.count = results[i];
 
-      if(block.configClassType === 'animal')
-        locals.blocks[0].count += block.count;
+      if(block.configClassType === 'animal') {
+        locals.blocks[0][0].count += block.count;
+      }
 
-      locals.blocks.push(block);
+      locals.blocks[block.row].push(block);
     }
 
     res.render('pages/index', locals);

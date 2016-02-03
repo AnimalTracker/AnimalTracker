@@ -22,33 +22,9 @@ block wrapper
       .col-lg-12
         h1.page-header= t('Dashboard')
 
-    .row
-      each item in blocks
-        +block-item(item.icon, item.type, item.count, item.label, item.path)
-    .row
-      .col-lg-12
-        +panel('default')
-          +panel-heading('Area Chart Example', 'fa-bar-chart-o')
-            .pull-right
-              .btn-group
-                button.btn.btn-default.btn-xs.dropdown-toggle(type='button', data-toggle='dropdown')
-                  | Actions
-                  span.caret
-                ul.dropdown-menu.pull-right(role='menu')
-                  li
-                    a(href='#') Action
-                  li
-                    a(href='#') Another action
-                  li
-                    a(href='#') Something else here
-                  li.divider
-                  li
-                    a(href='#') Separated link
-          .panel-body
-            #morris-area-chart
+    each row in blocks
+      .row
+        each item in row
+          +block-item(item.icon, item.type, item.count, item.label, item.path)
 
 block append scripts
-  // Morris Charts JavaScript
-  script(src='vendors/raphael/raphael-min.js')
-  script(src='vendors/morrisjs/morris.min.js')
-  script(src='js/morris-data.js')
