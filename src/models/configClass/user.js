@@ -55,10 +55,10 @@ exports.populate = function(User) {
 
   // -- Additional Data Access Methods --
 
-  User.getByUsername = function(username) {
+  User.getByUsername = function(username, options) {
     return db.select().from(this.name).where({active: true, username: username}).one()
       .then((item) => {
-        return this.transformRecordsIntoObjects(item);
+        return this.transformRecordsIntoObjects(item, options);
       });
   };
 

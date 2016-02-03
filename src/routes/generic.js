@@ -24,6 +24,8 @@ router.get('/:configClass', function(req, res, next) {
   if(configClass.type === 'user' && req.user.role != 'admin')
     return res.redirect('/');
 
+  req.i18n.changeLanguage(req.user.language);
+
   var title = configClass.getLabelPlural(req);
   var locals = {
     cols: [],
@@ -45,7 +47,7 @@ router.get('/:configClass', function(req, res, next) {
   // Generic columns --
   configClass.forEachProperty(function(property) {
     if(property.display_datatable) {
-      property.generateDTLocals(locals.cols);
+      property.generateDTLocals(locals.cols, req);
       property.generateDTOptions(locals.options.columnDefs);
     }
   });
@@ -80,6 +82,8 @@ router.get('/:configClass/new', function(req, res, next) {
   if(configClass.type === 'user' && req.user.role != 'admin')
     return res.redirect('/');
 
+  req.i18n.changeLanguage(req.user.language);
+
   // Labels --
   var title = req.t('custom:'+ configClass.name +'.name');
   var lang = 'fr';
@@ -99,7 +103,7 @@ router.get('/:configClass/new', function(req, res, next) {
   };
 
   configClass.forEachProperty(function(property) {
-    property.generateFormInputs(inputs);
+    property.generateFormInputs(inputs, req);
     property.generateFormOptions(options);
   });
 
@@ -133,6 +137,8 @@ router.get('/:configClass/:rid', function(req, res, next) {
   if(configClass.type === 'user' && !(req.user.role == 'admin' || req.params.rid == req.user.rid))
     return res.redirect('/');
 
+  req.i18n.changeLanguage(req.user.language);
+
   // Label --
   var title = req.t('custom:'+ configClass.name +'.name');
   var lang = 'fr';
@@ -151,7 +157,7 @@ router.get('/:configClass/:rid', function(req, res, next) {
   };
 
   configClass.forEachProperty(function(property) {
-    property.generateFormInputs(inputs);
+    property.generateFormInputs(inputs, req);
     property.generateFormOptions(options);
   });
 

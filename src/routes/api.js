@@ -18,8 +18,11 @@ router.get('/', function(req, res) {
 
 router.use(function (req, res, next) {
   passport.authenticate('jwt', function(err, user, info) {
-    if (!info)
+    if (!info) {
+      req.user = user;
+      req.i18n.changeLanguage(req.user.language);
       return next();
+    }
 
     // If an message (error) occurs --
     if (info === {}) {
@@ -50,8 +53,9 @@ router.param('configClass', function (req, res, next, configClass) {
 
 // Listing --
 router.get('/:configClass', function(req, res) {
+
   var configClass = req.params.configClass;
-  configClass.getAllWithReferences()
+  configClass.getAllWithReferences({req: req})
     .then(function (items) {
       var result = {};
       result[configClass.path] = items ? items : [];
@@ -85,7 +89,7 @@ router.param('rid', function (req, res, next, rid) {
 // Reading --
 router.get('/:configClass/:rid', function(req, res) {
   var configClass = req.params.configClass;
-  configClass.getByRid(req.params.rid)
+  configClass.getByRid(req.params.rid, {req: req})
     .then(function (item) {
       res.status(200).json(item);
     });

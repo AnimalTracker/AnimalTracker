@@ -10,6 +10,8 @@ router.get('/', function(req, res) {
   if (!req.isAuthenticated())
     return res.redirect('/login');
 
+  req.i18n.changeLanguage(req.user.language);
+
   var promises = [];
   var promisesMetadata = [];
 

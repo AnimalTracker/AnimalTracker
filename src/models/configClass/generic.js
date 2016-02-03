@@ -83,17 +83,17 @@ exports.populate = function(configClass) {
 
   // Reading Methods --
 
-  configClass.getByRid = function(rid) {
+  configClass.getByRid = function(rid, options) {
     return db.select().from(this.name).where({'@rid': rid}).one()
       .then((item) => {
-        return this.transformRecordsIntoObjects(item);
+        return this.transformRecordsIntoObjects(item, options);
       });
   };
 
-  configClass.getAll = function() {
+  configClass.getAll = function(options) {
     return db.select().from(this.name).where({active: true}).all()
       .then((item) => {
-        return this.transformRecordsIntoObjects(item);
+        return this.transformRecordsIntoObjects(item, options);
       });
   };
 
@@ -101,12 +101,12 @@ exports.populate = function(configClass) {
     return db.select('count(*)').from(this.name).where({active: true}).scalar();
   };
 
-  configClass.getAllWithReferences = function() {
+  configClass.getAllWithReferences = function(options) {
     var select = ['*'];
 
     // If no references, use simple getAll instead --
     if(!this.references)
-      return this.getAll();
+      return this.getAll(options);
 
     this.references.forEach(function(ref) {
       select.push(ref.name + '.*');
@@ -114,7 +114,7 @@ exports.populate = function(configClass) {
 
     return db.select(select.join(', ')).from(this.name).where({active: true}).all()
       .then((item) => {
-        return this.transformRecordsIntoObjects(item);
+        return this.transformRecordsIntoObjects(item, options);
       });
   };
 
