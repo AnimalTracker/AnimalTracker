@@ -8,12 +8,8 @@ exports.recordToObject = function (record,  obj) {
 };
 
 exports.objectToRecord = function (obj,  record) {
-  record[this.name] = helper.hash(obj[this.name]);
-};
-
-exports.reqToRecord = function (body, record) {
-  if(body[this.name] && body[this.name] != '')
-    record[this.name] = helper.hash(body[this.name]);
+  if(obj[this.name] && obj[this.name].length > 0)
+    record[this.name] = helper.hash(obj[this.name]);
 };
 
 // -- Datatable methods --

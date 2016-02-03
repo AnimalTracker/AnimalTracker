@@ -38,10 +38,6 @@ exports.objectToRecord = function (obj,  record) {
   record[this.name] = obj[this.name] === '' ? null : obj[this.name];
 };
 
-exports.reqToRecord = function (body, record) {
-  record[this.name] = body[this.name] === '' ? null : body[this.name];
-};
-
 // -- Datatable methods --
 
 exports.generateDTLocals = function(columns, req) {

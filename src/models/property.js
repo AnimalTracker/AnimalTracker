@@ -22,7 +22,6 @@ require('fs').readdirSync(path.resolve('./src/models/property/')).forEach(functi
 
   testFunction(methods, 'recordToObject', type);
   testFunction(methods, 'objectToRecord', type);
-  testFunction(methods, 'reqToRecord', type);
   testFunction(methods, 'generateDTLocals', type);
   testFunction(methods, 'generateDTOptions', type);
   testFunction(methods, 'generateFormInputs', type);
@@ -61,7 +60,6 @@ exports.populate = function(property, configClass, schema) {
 
   property.recordToObject = methods.recordToObject;
   property.objectToRecord = methods.objectToRecord;
-  property.reqToRecord = methods.reqToRecord;
   property.generateDTLocals = methods.generateDTLocals;
   property.generateDTOptions = methods.generateDTOptions;
   property.generateFormInputs = methods.generateFormInputs;

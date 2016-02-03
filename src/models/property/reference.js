@@ -46,10 +46,6 @@ exports.objectToRecord = function (obj,  record) {
   record[this.name] = db.helper.unsimplifyAndRecordifyRid(obj[this.name]);
 };
 
-exports.reqToRecord = function (body, record) {
-  record[this.name] = db.helper.unsimplifyAndRecordifyRid(body[this.name]);
-};
-
 // Datatable JS options --
 
 exports.generateDTLocals = function(columns, req) {
