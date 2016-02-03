@@ -76,10 +76,10 @@ router.post('/:configClass', function(req, res) {
       if (Array.isArray(items)) {
         result.rid = [];
         items.forEach((item) => { result.rid.push(item.rid); });
-        result.message= req.t('Created_description', {type: configClass.getLabel(), count: items.length});
+        result.message= req.t('Created_description', {type: configClass.getLabel(req), count: items.length});
       } else {
         result.rid = items.rid;
-        result.message= req.t('Created_description', {type: configClass.getLabel()});
+        result.message= req.t('Created_description', {type: configClass.getLabel(req)});
       }
       res.status(201).json(result);
     });
@@ -107,7 +107,7 @@ router.put('/:configClass/:rid', function(req, res) {
     .then(function () {
       res.status(201).json({
         title: req.t('Edited'),
-        message: req.t('Edited_description', {type: configClass.getLabel()}),
+        message: req.t('Edited_description', {type: configClass.getLabel(req)}),
         status: 'success'
       });
     });
@@ -120,7 +120,7 @@ router.delete('/:configClass/:rid', function(req, res) {
     .then(function () {
       res.status(200).json({
         title: req.t('Deleted'),
-        message: req.t('Deleted_description', {type: configClass.getLabel()}),
+        message: req.t('Deleted_description', {type: configClass.getLabel(req)}),
         status: 'success'
       });
     });
