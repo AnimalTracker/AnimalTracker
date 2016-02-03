@@ -31,7 +31,7 @@ exports.init = function (property, configClass) {
     if(targetRef)
       target.type = targetRef.type;
     else
-      console.error('[schema] In ' + property.name + ', property ' + op + ' in ' + configClass.name + ' does not exists');
+      console.error('[schema] In ' + property.name + ', property ' + target.on + ' in ' + configClass.name + ' does not exists');
   });
 };
 
