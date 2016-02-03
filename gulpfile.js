@@ -4,6 +4,7 @@ var path = require('path');
 var watch = require('gulp-watch');
 var eslint = require('gulp-eslint');
 var plumber = require('gulp-plumber');
+var stripJsonComments = require('gulp-strip-json-comments');
 
 // Options --
 // ESlint configuration : eslint.org/docs/user-guide/configuring
@@ -100,18 +101,35 @@ gulp.task('resource.root:watch', ['resource.root:build'], function() {
   gulp.watch(['/assets/root/**/*'], ['resource.root:build']);
 });
 
+// DT language files --
+
+gulp.task('lang:build', function () {
+  return gulp.src('./public/vendors/datatables-plugins/i18n/*.lang')
+    .pipe(stripJsonComments())
+    .pipe(gulp.dest('./public/i18n/datatables/'));
+});
+
 // High level tasks --
 
-gulp.task('watch', function () {
+gulp.task('build', function () {
   gulp.start([
     'less:build',
     'scripts:build',
     'resource.root:build',
+    'lang:build'
+  ]);
+});
+
+gulp.task('watch', function () {
+  gulp.start([
+    'build',
     'src:lint',
     'less:watch',
     'scripts:watch',
     'src:watch',
     'resource.root:watch']);
 });
+
+
 
 gulp.task('default', ['watch']);

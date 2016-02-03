@@ -1,9 +1,10 @@
 // I18n initialisation --
 // Based on i18n : https://www.npmjs.com/package/i18n
 
-var i18next = require('i18next');
-var middleware = require('i18next-express-middleware');
-var backend = require('i18next-node-fs-backend');
+var config      = require('config'),
+    i18next     = require('i18next'),
+    middleware  = require('i18next-express-middleware'),
+    backend     = require('i18next-node-fs-backend');
 
 var options = {
   load: 'unspecific',
@@ -45,6 +46,26 @@ i18next
     // Test i18n --
   });
 
+// -- Config --
+
+var datatableLanguages = {},
+    datatableDefaultLanguage,
+    datatableFolder = 'i18n/datatables/';
+
+if(config.has('i18n')) {
+  for(var lang of config.get('i18n')) {
+    if(!lang.id)
+      continue;
+
+    if(lang.datatable) {
+      datatableLanguages[lang.id] = datatableFolder + lang.datatable + '.lang';
+
+      if(lang.default)
+        datatableDefaultLanguage = datatableFolder + lang.datatable + '.lang';
+    }
+  }
+}
+
 // -- Module requirements --
 
 exports.init = function(app) {
@@ -53,4 +74,19 @@ exports.init = function(app) {
     ignoreRoutes: ["/foo"]
     // removeLngFromUrl: false
   }));
+};
+
+// Datatable language --
+
+exports.getDatatableLanguage = function(lang) {
+  console.log(lang, datatableLanguages, datatableDefaultLanguage);
+  if(datatableLanguages.hasOwnProperty(lang))
+    return datatableLanguages[lang];
+
+  else
+    return datatableDefaultLanguage;
+
+  //'https://cdn.datatables.net/plug-ins/1.10.10/i18n/French.json'
+
+
 };

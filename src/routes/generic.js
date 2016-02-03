@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 var schema = require('../modules/schema');
+var i18n = require('../modules/i18n');
 
 // -- ConfigClass Parameter --
 
@@ -31,9 +32,9 @@ router.get('/:configClass', function(req, res, next) {
     cols: [],
     options: {
       responsive: true,
-      lengthMenu: [[ 25, 50, 100 , 1000, -1], [25, 50, 100 , 1000, "Tout"] ],
+      lengthMenu: [[ 25, 50, 100 , 1000, -1], [25, 50, 100 , 1000, req.t("All")] ],
       language: {
-        url: 'https://cdn.datatables.net/plug-ins/1.10.10/i18n/French.json'
+        url: i18n.getDatatableLanguage(req.user.language)
       },
       ajax: {
         url: '/api/v1/' + configClass.path,

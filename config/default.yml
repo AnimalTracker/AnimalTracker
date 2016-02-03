@@ -13,6 +13,13 @@ database:
   password: 'yourpassword'
   dbname: 'genetracker'
 
+i18n:
+  - id: fr
+    datatable: French
+    default: true
+  - id: en
+    datatable: English
+
 # Override this !
 secret_token: 'P3RoJCBuof44T2tZm7O9'
 
