@@ -65,16 +65,18 @@ block wrapper
     .row
       .col-lg-12
         h1.page-header= page.header
-          a.btn.btn-danger.pull-right#generated-delete
-            i.fa.fa-trash.btn-icon
-            = t('Delete')
-          a.btn.btn-success.pull-right#generated-submit
-            i.fa.fa-cog.btn-icon
-            = t('Submit')
-          if form.allowMultipleInsert
-            #nb_to_add.input-group.pull-right(style='width:230px')
-              span.input-group-addon= t('Quantity')
-              input.form-control(type='number', name='nb_to_add', value='1', min='1', max='1000')
+          if rights.project_manager
+            span#actions
+              a.btn.btn-danger.pull-right.hide#generated-delete
+                i.fa.fa-trash.btn-icon
+                = t('Delete')
+              a.btn.btn-success.pull-right#generated-submit
+                i.fa.fa-cog.btn-icon
+                = t('Submit')
+              if form.allowMultipleInsert
+                #nb_to_add.input-group.pull-right(style='width:230px')
+                  span.input-group-addon= t('Quantity')
+                  input.form-control(type='number', name='nb_to_add', value='1', min='1', max='1000')
     .row
       .col-lg-12
         +panel-simple(form.header, 'default')(id='form-panel')

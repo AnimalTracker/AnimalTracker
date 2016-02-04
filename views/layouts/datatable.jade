@@ -4,9 +4,10 @@ block wrapper
   .row
     .col-lg-12
       h1.page-header= page.header
-        a.btn.btn-primary.pull-right(href=page.newHref)
-          i.fa.fa-plus.btn-icon
-          = t('New element')
+        if rights.project_manager
+          a.btn.btn-primary.pull-right(href=page.newHref)
+            i.fa.fa-plus.btn-icon
+            = t('New element')
   .row
     .col-lg-12
       table#datatable.dataTable.table.table-striped.table-hover.display.responsive.no-wrap(style='width:100%')

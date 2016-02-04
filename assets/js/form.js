@@ -67,6 +67,9 @@ var initForm = function() {
         }
 
         item = data;
+
+        // Activate the delete button --
+        $('#generated-delete').removeClass('hide');
       });
   }
 
@@ -158,6 +161,8 @@ var initForm = function() {
             headers: { 'Authorization': 'JWT ' + apitoken }
           })
           .done(function(data) {
+            // Activate the delete button --
+            $('#actions').addClass('hide');
             swal(data.title, data.message, data.status);
           })
           .error(function(err) {
