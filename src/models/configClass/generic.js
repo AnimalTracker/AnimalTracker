@@ -78,13 +78,13 @@ exports.populate = function(configClass) {
 
   configClass.updateFromReqBody = function(rid, body) {
     var record = this.specificObjectToRecord(body, {});
-    return db.update(this.name).set(record).where({'@rid': rid}).one();
+    return db.update(this.name).set(record).where({'@rid': rid, active: true}).one();
   };
 
   // Reading Methods --
 
   configClass.getByRid = function(rid, options) {
-    return db.select().from(this.name).where({'@rid': rid}).one()
+    return db.select().from(this.name).where({'@rid': rid, active: true}).one()
       .then((item) => {
         return this.transformRecordsIntoObjects(item, options);
       });
