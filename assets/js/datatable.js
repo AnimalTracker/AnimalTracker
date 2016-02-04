@@ -1,4 +1,4 @@
-/*global pageOptions, datatableOptions*/
+/*global pageOptions, datatableOptions, toastr*/
 
 $(document).ready(function() {
   var options = datatableOptions;
@@ -23,6 +23,12 @@ $(document).ready(function() {
       return '<a class="confirm" href="' + pageOptions.viewRoute + row.rid+'"><i class="fa fa-pencil"></i> ' + pageOptions.editLabel + '</a>';
     }
   });
+
+  // Add the error callback --
+  options.ajax.error = function(err) {
+    var data = err.responseJSON;
+    toastr.error(data.message, data.title);
+  };
 
   $('#datatable').dataTable(options);
 });

@@ -18,7 +18,7 @@
       "date_exit": "Exit date",
       "addressee": "Adressee",
       "lot_number": "Lot number",
-      "age_at_enter": "Age at enter (in weeks)"
+      "age_at_enter": "Age at arrival (in weeks)"
     },
     "option": {
       "strain": {
@@ -69,7 +69,7 @@
       "addressee": "Adressee",
       "age": "Age",
       "lot_number": "Lot number",
-      "age_at_enter": "Age at enter (in weeks)"
+      "age_at_enter": "Age at arrival (in weeks)"
     },
     "option": {
       "sex": {

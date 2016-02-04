@@ -129,10 +129,12 @@ var initForm = function() {
           $('#nb_to_add').remove();
         }
 
-        if(!data.error) {
-          // Display an info message --
-          toastr.success(data.message, data.title);
-        }
+        // Display an info message --
+        toastr.success(data.message, data.title);
+      })
+      .error(function(err) {
+        var data = err.responseJSON;
+        toastr.error(data.message, data.title);
       });
   });
 
@@ -156,7 +158,11 @@ var initForm = function() {
             headers: { 'Authorization': 'JWT ' + apitoken }
           })
           .done(function(data) {
-            swal(data.title, data.message, data.status); // "", "La donnée a bien été supprimée"
+            swal(data.title, data.message, data.status);
+          })
+          .error(function(err) {
+            var data = err.responseJSON;
+            swal(data.title, data.message, data.status);
           });
         });
   });

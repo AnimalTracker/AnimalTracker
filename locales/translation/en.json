@@ -31,5 +31,9 @@
   "Edited": "Edited",
   "Edited_description": "{{type}} record edited.",
   "Created": "Created",
-  "Created_description": "{{type}} record edited."
+  "Created_description": "{{type}} record edited.",
+  "Error": "Error",
+  "Insufficient rights": "Insufficient rights.",
+  "Unauthorized": "Unauthorized.",
+  "Route not found": "Route not found."
 }

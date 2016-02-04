@@ -32,5 +32,9 @@
   "Edited_description": "{{type}} modifié(e).",
   "Created": "Créé",
   "Created_description": "Enregistrement de {{type}} créé.",
-  "Created_description_plural": "{{count}} enregistrements de {{type}} créés."
+  "Created_description_plural": "{{count}} enregistrements de {{type}} créés.",
+  "Error": "Erreur",
+  "Insufficient rights": "Droits insuffisants.",
+  "Unauthorized": "Non autorisé.",
+  "Route not found": "Aucune route n'a été trouvée."
 }

@@ -14,6 +14,14 @@ router.get('/', function(req, res) {
   });
 });
 
+var responseInsufficientRights = function(req, res) {
+  return res.status(401).json({
+    title: req.t('Error'),
+    message: req.t('Insufficient rights'),
+    status: 'error'
+  });
+};
+
 // -- Auth system (API methods below are protected) --
 
 router.use(function (req, res, next) {
@@ -26,13 +34,18 @@ router.use(function (req, res, next) {
 
     // If an message (error) occurs --
     if (info === {}) {
-      info.error = 'Unauthorized';
+      info.error = req.t('Unauthorized');
+      info.title = req.t('Error');
     }
     else if(info instanceof Error) {
       info.error = info.message;
     }
 
-    return res.status(401).json(info);
+    res.status(401).json({
+      title: info.title || req.t('Error', {lng: 'en'}),
+      message: info.error,
+      status: 'error'
+    });
 
     // If not, continue --
   })(req, res, next);
@@ -53,8 +66,11 @@ router.param('configClass', function (req, res, next, configClass) {
 
 // Listing --
 router.get('/:configClass', function(req, res) {
-
   var configClass = req.params.configClass;
+
+  if(configClass.type === 'user' && req.user.role != 'admin')
+    return responseInsufficientRights(req, res);
+
   configClass.getAllWithReferences({req: req})
     .then(function (items) {
       var result = {};
@@ -66,6 +82,13 @@ router.get('/:configClass', function(req, res) {
 // Creation --
 router.post('/:configClass', function(req, res) {
   var configClass = req.params.configClass;
+
+  if(req.user.role === 'viewer')
+    return responseInsufficientRights(req, res);
+
+  if(configClass.type === 'user' && req.user.role != 'admin')
+    return responseInsufficientRights(req, res);
+
   configClass.createFromReqBody(req.body)
     .then(function (items) {
       var result = {
@@ -88,6 +111,11 @@ router.post('/:configClass', function(req, res) {
 // Rid parameter --
 router.param('rid', function (req, res, next, rid) {
   req.params.rid = db.helper.unsimplifyRid(rid);
+  var configClass = req.params.configClass;
+
+  if(configClass.type === 'user' && !(req.user.role == 'admin' || req.params.rid == req.user.rid))
+    return responseInsufficientRights(req, res);
+
   next();
 });
 
@@ -102,6 +130,9 @@ router.get('/:configClass/:rid', function(req, res) {
 
 // Edition --
 router.put('/:configClass/:rid', function(req, res) {
+  if(req.user.role === 'viewer')
+    return responseInsufficientRights(req, res);
+
   var configClass = req.params.configClass;
   configClass.updateFromReqBody(req.params.rid, req.body)
     .then(function () {
@@ -115,6 +146,9 @@ router.put('/:configClass/:rid', function(req, res) {
 
 // Removal --
 router.delete('/:configClass/:rid', function(req, res) {
+  if(req.user.role === 'viewer')
+    return responseInsufficientRights(req, res);
+
   var configClass = req.params.configClass;
   configClass.deleteByRid(req.params.rid)
     .then(function () {
@@ -124,6 +158,14 @@ router.delete('/:configClass/:rid', function(req, res) {
         status: 'success'
       });
     });
+});
+
+router.use(function(req, res) {
+  return res.status(404).json({
+    title: req.t('Error'),
+    message: req.t('Route not found'),
+    status: 'error'
+  });
 });
 
 module.exports = router;
