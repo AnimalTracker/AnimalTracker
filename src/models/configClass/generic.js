@@ -67,7 +67,7 @@ exports.populate = function(configClass) {
       }
     });
 
-    if(result.select.length > 1)
+    if(result.select.length > 0)
       result.select = result.select.join(', ');
     else
       result.select = undefined;
