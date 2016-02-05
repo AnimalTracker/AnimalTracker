@@ -61,8 +61,15 @@ var initForm = function() {
         for(var propId in data) {
           if(data.hasOwnProperty(propId) && propId != 'rid') {
             var prop = $('#generated-form [name=' + propId + ']');
-            prop.val(data[propId]);
-            prop.change();
+
+            // Handle label properties --
+            if(prop.hasClass('label')) {
+              prop.text(data[propId])
+            }
+            else {
+              prop.val(data[propId]);
+              prop.change();
+            }
           }
         }
 

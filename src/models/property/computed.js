@@ -31,12 +31,10 @@ exports.generateDTOptions = function(options) {
 
 exports.generateFormInputs = function(inputs, req) {
   // Add the Jade def for the input --
-  var label = this.getLabel(req)
   inputs.push({
-    type:         'text',
-    label:        label,
-    name:         this.name,
-    placeholder:  label
+    type:         'label',
+    label:        this.getLabel(req),
+    name:         this.name
   });
 };
 

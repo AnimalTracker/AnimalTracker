@@ -231,18 +231,6 @@ data_schema:
             - on: date_end
               value: date_begin + duration
               unit: years
-        - name: animals_number
-          type: number
-        - name: actual_rat_number
-          type: computed
-          subtype: reverse-reference
-          reference_from: Rat
-          property: project
-        - name: actual_mus_number
-          type: computed
-          subtype: reverse-reference
-          reference_from: Mus
-          property: project
         - name: species
           type: list
           list:
@@ -262,6 +250,18 @@ data_schema:
             - id: slight
             - id: moderate
             - id: severe
+        - name: animals_number
+          type: number
+        - name: actual_rat_number
+          type: computed
+          subtype: reverse-reference
+          reference_from: Rat
+          property: project
+        - name: actual_mus_number
+          type: computed
+          subtype: reverse-reference
+          reference_from: Mus
+          property: project
 
     - name: User
       type: user
