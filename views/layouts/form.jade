@@ -78,11 +78,12 @@ block wrapper
       .col-lg-12
         +panel-simple(form.header, 'default')(id='form-panel')
           .row.form-horizontal
-            each input in form.inputs
+            each column in form.inputs
               .col-lg-6
-                +input(input)
-                if input.help
-                  p.help-block= input.help
+                each input in column
+                  +input(input)
+                  if input.help
+                    p.help-block= input.help
 
 block append scripts
   script(src=resPath + 'vendors/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')

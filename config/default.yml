@@ -34,6 +34,19 @@ data_schema:
       path: rats
       path_base: animals
       property:
+        - name: id
+          type: text
+          display_datatable: true
+        - name: lot_number
+          type: text
+          display_datatable: true
+        - name: sex
+          type: list
+          list:
+            - id: male
+            - id: female
+          allow_other: false
+          display_datatable: true
         - name: strain
           type: list
           list:
@@ -46,16 +59,23 @@ data_schema:
         - name: other_strain
           type: text
           display_only: {id: strain, value: other}
-        - name: sex
+        - name: origin
           type: list
           list:
-            - id: male
-            - id: female
-          allow_other: false
-          display_datatable: true
-        - name: id
+            - id: janvier_labs
+            - id: charles_river
+            - id: other
+          allow_other: true
+        - name: other_origin
           type: text
+          display_only: {id: origin, value: other}
+        - name: addressee
+          type: text
+        - name: project
+          type: reference
+          reference_to: Project
           display_datatable: true
+          property_to_display: [ id_apafis ]
         - name: date_enter
           type: date
           apply:
@@ -91,26 +111,6 @@ data_schema:
             - id: found_dead
           allow_other: true
           allow_empty: true
-        - name: origin
-          type: list
-          list:
-            - id: janvier_labs
-            - id: charles_river
-            - id: other
-          allow_other: true
-        - name: other_origin
-          type: text
-          display_only: {id: origin, value: other}
-        - name: addressee
-          type: text
-        - name: project
-          type: reference
-          reference_to: Project
-          display_datatable: true
-          property_to_display: [ id_apafis ]
-        - name: lot_number
-          type: text
-          display_datatable: true
 
     - name: Mus
       type: animal
@@ -123,13 +123,8 @@ data_schema:
         - name: chip
           type: text
           display_datatable: true
-        - name: sex
-          type: list
-          list:
-            - id: male
-            - id: female
-          allow_other: false
-          display_datatable: true
+        - name: lot_number
+          type: text
         - name: strain
           type: text
           display_datatable: true
@@ -139,6 +134,30 @@ data_schema:
         - name: genotype
           type: text
           display_datatable: true
+        - name: sex
+          type: list
+          list:
+            - id: male
+            - id: female
+          allow_other: false
+          display_datatable: true
+        - name: origin
+          type: list
+          list:
+            - id: janvier_labs
+            - id: charles_river
+            - id: jax_mice
+            - id: other
+          allow_other: true
+        - name: other_origin
+          type: text
+          display_only: {id: origin, value: other}
+        - name: addressee
+          type: text
+        - name: project
+          type: reference
+          reference_to: Project
+          property_to_display: [ id_apafis ]
         - name: date_enter
           type: date
           apply:
@@ -157,17 +176,6 @@ data_schema:
             - on: date_birth
               value: date_enter - age_at_enter
               unit: weeks
-        - name: origin
-          type: list
-          list:
-            - id: janvier_labs
-            - id: charles_river
-            - id: jax_mice
-            - id: other
-          allow_other: true
-        - name: other_origin
-          type: text
-          display_only: {id: origin, value: other}
         - name: date_exit
           type: date
         - name: date_death
@@ -189,14 +197,6 @@ data_schema:
             - id: found_dead
           allow_other: true
           allow_empty: true
-        - name: addressee
-          type: text
-        - name: project
-          type: reference
-          reference_to: Project
-          property_to_display: [ id_apafis ]
-        - name: lot_number
-          type: text
 
     - name: Project
       type: other
@@ -206,13 +206,13 @@ data_schema:
         - name: id_apafis
           type: text
           display_datatable: true
+        - name: title
+          type: text
         - name: creator
           type: reference
           reference_to: User
           display_datatable: true
           property_to_display: [ first_name, last_name ]
-        - name: title
-          type: text
         - name: date_begin
           type: date
           apply:

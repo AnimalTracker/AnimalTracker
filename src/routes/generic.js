@@ -27,13 +27,13 @@ router.param('configClass', function (req, res, next, configClass) {
 
 router.get('/:configClass', function(req, res, next) {
   var configClass = req.params.configClass;
-  if(!configClass) return next();
+  if (!configClass) return next();
 
   // Check rights --
   if (!req.isAuthenticated())
     return res.redirect('/login');
 
-  if(configClass.type === 'user' && req.user.role != 'admin')
+  if (configClass.type === 'user' && req.user.role != 'admin')
     return res.redirect('/');
 
   req.i18n.changeLanguage(req.user.language);
@@ -43,13 +43,13 @@ router.get('/:configClass', function(req, res, next) {
     cols: [],
     options: {
       responsive: true,
-      lengthMenu: [[ 25, 50, 100 , 1000, -1], [25, 50, 100 , 1000, req.t("All")] ],
+      lengthMenu: [[25, 50, 100, 1000, -1], [25, 50, 100, 1000, req.t("All")]],
       language: {
         url: i18n.getDatatableLanguage(req.user.language)
       },
       ajax: {
         url: '/api/v1/' + configClass.path,
-        headers: { 'Authorization': 'JWT ' + req.user.apitoken },
+        headers: {'Authorization': 'JWT ' + req.user.apitoken},
         dataSrc: configClass.path
       },
       columnDefs: []
@@ -57,8 +57,8 @@ router.get('/:configClass', function(req, res, next) {
   };
 
   // Generic columns --
-  configClass.forEachProperty(function(property) {
-    if(property.display_datatable) {
+  configClass.forEachProperty(function (property) {
+    if (property.display_datatable) {
       property.generateDTLocals(locals.cols, req);
       property.generateDTOptions(locals.options.columnDefs);
     }
@@ -83,6 +83,19 @@ router.get('/:configClass', function(req, res, next) {
 });
 
 // -- Forms --
+
+var splitColumns = function(inputs) {
+
+  // Split columns for better display --
+  if (inputs.length < 2) {
+    return [inputs];
+  }
+  else {
+    var splitNb = Math.ceil(inputs.length / 2);
+    return [inputs.slice(0, splitNb), inputs.slice(splitNb)];
+  }
+
+};
 
 router.get('/:configClass/new', function(req, res, next) {
   var configClass = req.params.configClass;
@@ -133,7 +146,7 @@ router.get('/:configClass/new', function(req, res, next) {
     },
     form: {
       header: req.t('Creation'),
-      inputs: inputs,
+      inputs: splitColumns(inputs),
       options: JSON.stringify(options),
       allowMultipleInsert: allowMultipleInsert
     }
@@ -186,7 +199,7 @@ router.get('/:configClass/:rid', function(req, res, next) {
     },
     form: {
       header: req.t('Edition'),
-      inputs: inputs,
+      inputs: splitColumns(inputs),
       options: JSON.stringify(options),
       allowMultipleInsert: false
     }
