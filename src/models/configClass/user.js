@@ -38,6 +38,10 @@ exports.populate = function(User) {
     return record;
   };
 
+  User.specificSelectParams = function() {
+    return User.genericSelectParams();
+  };
+
   User.postCreate = function(results) {
 
     var promises = [];

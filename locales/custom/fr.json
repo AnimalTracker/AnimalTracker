@@ -111,7 +111,9 @@
       "animals_number": "Nombre d'animaux",
       "species": "Espèces",
       "sex": "Sexe",
-      "severity": "Sévérité"
+      "severity": "Sévérité",
+      "actual_rat_number": "Nombre de rats effectif",
+      "actual_mus_number": "Nombre de souris effectif"
     },
     "option": {
       "species": {

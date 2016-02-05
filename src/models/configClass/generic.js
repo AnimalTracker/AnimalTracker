@@ -45,6 +45,43 @@ exports.populate = function(configClass) {
     return record;
   };
 
+  configClass.genericSelectParams = function() {
+    var result = {
+      select : ['*'],
+      variables: []
+    };
+
+    var i = 1;
+
+    this.forEachProperty(function(property) {
+      if(property.type !== 'computed')
+        return;
+
+      if(property.subtype === 'reverse-reference') {
+        result.select.push('$' + i + '[0].count as ' + property.name);
+        result.variables.push({
+          id: '$' + i,
+          value: '(select count(*) from ' + property.reference_from + ' where '
+            + property.property + ' = $parent.$current)'});
+        i++;
+      }
+    });
+
+    if(result.select.length > 1)
+      result.select = result.select.join(', ');
+    else
+      result.select = undefined;
+
+    /*if(result.variables.length > 0)
+      result.variables = result.variables.join(', ');
+    else
+      result.variables = undefined;
+    */
+    console.log(result);
+
+    return result;
+  };
+
   // -- Data Access Methods --
 
   // Creation Methods --
@@ -84,14 +121,32 @@ exports.populate = function(configClass) {
   // Reading Methods --
 
   configClass.getByRid = function(rid, options) {
-    return db.select().from(this.name).where({'@rid': rid, active: true}).one()
+    var params = this.specificSelectParams();
+
+    var request = db.select(params.select).from(this.name).where({'@rid': rid, active: true});
+
+    // Add a let entry for each variable --
+    for(var variable of params.variables) {
+      request.let(variable.id, variable.value);
+    }
+
+    return request.one()
       .then((item) => {
+        console.log(item);
         return this.transformRecordsIntoObjects(item, options);
       });
   };
 
   configClass.getAll = function(options) {
-    return db.select().from(this.name).where({active: true}).all()
+    var params = this.specificSelectParams();
+    var request = db.select(params.select).from(this.name).where({active: true});
+
+    // Add a let entry for each variable --
+    for(var variable of params.variables) {
+      request.let(variable.id, variable.value);
+    }
+
+    return request.all()
       .then((item) => {
         return this.transformRecordsIntoObjects(item, options);
       });
@@ -102,17 +157,25 @@ exports.populate = function(configClass) {
   };
 
   configClass.getAllWithReferences = function(options) {
-    var select = ['*'];
+    var params = this.specificSelectParams();
 
     // If no references, use simple getAll instead --
     if(!this.references)
       return this.getAll(options);
 
+    params.select = [params.select];
     this.references.forEach(function(ref) {
-      select.push(ref.name + '.*');
+      params.select.push(ref.name + '.*');
     });
 
-    return db.select(select.join(', ')).from(this.name).where({active: true}).all()
+    var request = db.select(params.select.join(', ')).from(this.name).where({active: true});
+
+    // Add a let entry for each variable --
+    for(var variable of params.variables) {
+      request.let(variable.id, variable.value);
+    }
+
+    return request.all()
       .then((item) => {
         return this.transformRecordsIntoObjects(item, options);
       });

@@ -23,4 +23,8 @@ exports.populate = function(Other) {
 
     return record;
   };
+
+  Other.specificSelectParams = function() {
+    return Other.genericSelectParams();
+  };
 };

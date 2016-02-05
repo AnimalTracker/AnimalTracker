@@ -233,6 +233,16 @@ data_schema:
               unit: years
         - name: animals_number
           type: number
+        - name: actual_rat_number
+          type: computed
+          subtype: reverse-reference
+          reference_from: Rat
+          property: project
+        - name: actual_mus_number
+          type: computed
+          subtype: reverse-reference
+          reference_from: Mus
+          property: project
         - name: species
           type: list
           list:

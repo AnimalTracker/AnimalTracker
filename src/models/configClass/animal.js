@@ -23,4 +23,8 @@ exports.populate = function(Animal) {
 
     return record;
   };
+
+  Animal.specificSelectParams = function() {
+    return Animal.genericSelectParams();
+  };
 };

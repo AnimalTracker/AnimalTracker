@@ -38,6 +38,9 @@ helper.createDbClassAndProperties = function(configClass, name) {
       var toCreate = [];
 
       configClass.forEachProperty(function(property) {
+        if(property.type === 'computed')
+          return;
+
         toCreate.push({name: property.name, type: helper.getPropertyFromType(property)});
       });
 
