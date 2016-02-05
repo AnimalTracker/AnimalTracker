@@ -113,8 +113,15 @@ router.param('rid', function (req, res, next, rid) {
   req.params.rid = db.helper.unsimplifyRid(rid);
   var configClass = req.params.configClass;
 
-  if(configClass.type === 'user' && !(req.user.role == 'admin' || req.params.rid == req.user.rid))
-    return responseInsufficientRights(req, res);
+  if(configClass.type === 'user' && req.user.role !== 'admin' ) {
+    if(rid === req.user.rid) {
+      req.editBypass = true;
+      req.userEditSituation = true;
+    }
+    else {
+      return responseInsufficientRights(req, res);
+    }
+  }
 
   next();
 });
@@ -130,8 +137,12 @@ router.get('/:configClass/:rid', function(req, res) {
 
 // Edition --
 router.put('/:configClass/:rid', function(req, res) {
-  if(req.user.role === 'viewer')
+  if(req.user.role === 'viewer' && !req.editBypass)
     return responseInsufficientRights(req, res);
+
+  if(req.userEditSituation) {
+    req.body['role'] = undefined;
+  }
 
   var configClass = req.params.configClass;
   configClass.updateFromReqBody(req.params.rid, req.body)
@@ -146,7 +157,7 @@ router.put('/:configClass/:rid', function(req, res) {
 
 // Removal --
 router.delete('/:configClass/:rid', function(req, res) {
-  if(req.user.role === 'viewer')
+  if(req.user.role === 'viewer' || req.editBypass)
     return responseInsufficientRights(req, res);
 
   var configClass = req.params.configClass;

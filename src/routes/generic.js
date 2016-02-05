@@ -158,11 +158,16 @@ router.get('/:configClass/:rid', function(req, res, next) {
   if(!configClass) return next();
 
   // Check rights --
+  var rightOptions = {};
   if (!req.isAuthenticated())
     return res.redirect('/login');
 
-  if(configClass.type === 'user' && !(req.user.role == 'admin' || req.params.rid == req.user.rid))
-    return res.redirect('/');
+  if(configClass.type === 'user' && req.user.role != 'admin' ){
+    if(req.params.rid == req.user.rid)
+      rightOptions.editBypass = true;
+    else
+      return res.redirect('/');
+  }
 
   req.i18n.changeLanguage(req.user.language);
 
@@ -192,7 +197,7 @@ router.get('/:configClass/:rid', function(req, res, next) {
   // Final rendering --
   res.render('layouts/form', {
     title: title,
-    rights: schema.user.populateRights(req),
+    rights: schema.user.populateRights(req, rightOptions),
     page: {
       header: title,
       lang: lang

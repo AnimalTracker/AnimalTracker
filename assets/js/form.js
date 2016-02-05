@@ -77,6 +77,10 @@ var initForm = function() {
 
         // Activate the delete button --
         $('#generated-delete').removeClass('hide');
+      })
+      .error(function(err) {
+        var data = err.responseJSON;
+        toastr.error(data.message, data.title);
       });
   }
 

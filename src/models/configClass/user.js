@@ -68,9 +68,15 @@ exports.populate = function(User) {
 
   // -- Rights locals for views --
 
-  User.populateRights = function(req) {
+  User.populateRights = function(req, options) {
+    /* Require the following options format:
+     * { editBypass: true|false }
+     */
+    options = options || {};
+
+    // Boolean containing whether each level is reached or not --
     var admin = req.user.role === 'admin';
-    var project_manager = admin || req.user.role === 'project_manager';
+    var project_manager = admin || req.user.role === 'project_manager' || options.editBypass;
     var viewer = admin || project_manager;
 
     return {
