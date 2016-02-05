@@ -110,6 +110,7 @@ data_schema:
           property_to_display: [ id_apafis ]
         - name: lot_number
           type: text
+          display_datatable: true
 
     - name: Mus
       type: animal
