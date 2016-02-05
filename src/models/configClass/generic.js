@@ -72,13 +72,6 @@ exports.populate = function(configClass) {
     else
       result.select = undefined;
 
-    /*if(result.variables.length > 0)
-      result.variables = result.variables.join(', ');
-    else
-      result.variables = undefined;
-    */
-    console.log(result);
-
     return result;
   };
 
@@ -132,7 +125,6 @@ exports.populate = function(configClass) {
 
     return request.one()
       .then((item) => {
-        console.log(item);
         return this.transformRecordsIntoObjects(item, options);
       });
   };
