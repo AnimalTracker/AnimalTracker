@@ -48,6 +48,11 @@
         "beheaded_bio_mol": "Decapitation (molecular biology)",
         "found_dead": "Animal found dead"
       }
+    },
+    "error": {
+      "project": {
+        "accept_only": "You don't own this APAFIS project."
+      }
     }
   },
   "Mus": {
@@ -97,6 +102,11 @@
         "post_surgery": "Post-surgery death",
         "beheaded_bio_mol": "Decapitation (molecular biology)",
         "found_dead": "Animal found dead"
+      }
+    },
+    "error": {
+      "project": {
+        "accept_only": "You don't own this APAFIS project."
       }
     }
   },

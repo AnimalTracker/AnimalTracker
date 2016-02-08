@@ -1,5 +1,6 @@
 // Generic Config Class initialisation --
 
+var Promise = require('bluebird');
 var db = require('../../modules/database');
 
 // -- Add members to the configClass --
@@ -13,7 +14,7 @@ exports.populate = function(configClass) {
 
     // Config driven properties --
     configClass.forEachProperty(function(property) {
-      property.recordToObject(record, obj, options.req);
+      property.recordToObject(record, obj, options);
     });
 
     // Other properties --
@@ -36,7 +37,9 @@ exports.populate = function(configClass) {
 
     // Config driven properties --
     this.forEachProperty(function(property) {
-      property.objectToRecord(obj, record);
+      var promise = property.objectToRecord(obj, record, options);
+      if(promise && options.promises)
+        options.promises.push(promise);
     });
 
     // Other properties --
@@ -95,28 +98,38 @@ exports.populate = function(configClass) {
     return this.createRecordsInDb(records);
   };
 
-  configClass.createFromReqBody = function(body) {
-    var records = [],
-      nbToAdd = body.nb_to_add || 1;
+  configClass.createFromReq = function(req) {
+    var records = [];
+    var nbToAdd = req.body.nb_to_add || 1;
+    var options = {req: req, promises: []};
 
     for (var i = 0; i < nbToAdd; i++) {
-      records.push(this.specificObjectToRecord(body, { active: true }));
+      records.push(this.specificObjectToRecord(req.body, { active: true }, options));
     }
 
-    return this.createRecordsInDb(records);
+    return Promise.all(options.promises).then(() => {
+      return this.createRecordsInDb(records);
+    });
   };
 
-  configClass.updateFromReqBody = function(rid, body) {
-    var record = this.specificObjectToRecord(body, {});
-    return db.update(this.name).set(record).where({'@rid': rid, active: true}).one();
+  configClass.updateFromReq = function(rid, req) {
+    var options = {req: req, promises: []};
+    var record = this.specificObjectToRecord(req.body, {}, options);
+    return Promise.all(options.promises).then(() => {
+      return db.update(this.name).set(record).where({'@rid': rid, active: true}).one();
+    });
   };
 
   // Reading Methods --
 
   configClass.getByRid = function(rid, options) {
     var params = this.specificSelectParams();
+    var where = options ? options.where ? options.where : {} : {} || {};
 
-    var request = db.select(params.select).from(this.name).where({'@rid': rid, active: true});
+    where['@rid'] = rid;
+    where.active = true;
+
+    var request = db.select(params.select).from(this.name).where(where);
 
     // Add a let entry for each variable --
     for(var variable of params.variables) {

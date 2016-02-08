@@ -22,6 +22,15 @@ var responseInsufficientRights = function(req, res) {
   });
 };
 
+var responseCatchError = function(e, req, res) {
+  console.log('error', e);
+  res.status(401).json({
+    title: req.t('Error'),
+    message: e.property ? e.property.getErrorLabel(e.type, req) : e,
+    status: 'error'
+  });
+};
+
 // -- Auth system (API methods below are protected) --
 
 router.use(function (req, res, next) {
@@ -68,8 +77,8 @@ router.param('configClass', function (req, res, next, configClass) {
 router.get('/:configClass', function(req, res) {
   var configClass = req.params.configClass;
 
-  if(configClass.type === 'user' && req.user.role != 'admin')
-    return responseInsufficientRights(req, res);
+  // if(configClass.type === 'user' && req.user.role != 'admin')
+  //   return responseInsufficientRights(req, res);
 
   configClass.getAllWithReferences({req: req})
     .then(function (items) {
@@ -89,7 +98,7 @@ router.post('/:configClass', function(req, res) {
   if(configClass.type === 'user' && req.user.role != 'admin')
     return responseInsufficientRights(req, res);
 
-  configClass.createFromReqBody(req.body)
+  configClass.createFromReq(req)
     .then(function (items) {
       var result = {
         title: req.t('Created'),
@@ -104,8 +113,9 @@ router.post('/:configClass', function(req, res) {
         result.rid = items.rid;
         result.message= req.t('Created_description', {type: configClass.getLabel(req)});
       }
-      res.status(201).json(result);
-    });
+      return res.status(201).json(result);
+    })
+    .catch((e) => { responseCatchError(e, req, res); });
 });
 
 // Rid parameter --
@@ -145,14 +155,15 @@ router.put('/:configClass/:rid', function(req, res) {
   }
 
   var configClass = req.params.configClass;
-  configClass.updateFromReqBody(req.params.rid, req.body)
+  configClass.updateFromReq(req.params.rid, req)
     .then(function () {
-      res.status(201).json({
+      return res.status(201).json({
         title: req.t('Edited'),
         message: req.t('Edited_description', {type: configClass.getLabel(req)}),
         status: 'success'
       });
-    });
+    })
+    .catch((e) => { responseCatchError(e, req, res); });
 });
 
 // Removal --

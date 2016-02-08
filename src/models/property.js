@@ -40,6 +40,11 @@ exports.populate = function(property, configClass, schema) {
     return ref.t('custom:' + configClass.name + '.property.' + this.name, options);
   };
 
+  property.getErrorLabel = function(error, req, options) {
+    var ref = req || i18n;
+    return ref.t('custom:' + configClass.name + '.error.' + this.name + '.' + error, options);
+  };
+
   // Generate hash on property name --
   property.hash = helper.hash(property.name);
 

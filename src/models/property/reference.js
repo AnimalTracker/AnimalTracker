@@ -21,7 +21,7 @@ exports.init = function(property, configClass, schema) {
   else if(!Array.isArray(this.property_to_display))
     console.error('[schema] Property.property_to_display must be an array in ' +
       configClass.name + '.' + property.name);
-}
+};
 
 exports.recordToObject = function (record,  obj) {
   obj[this.name] = db.helper.simplifyRid(record[this.name]);
@@ -42,8 +42,38 @@ exports.recordToObject = function (record,  obj) {
   obj[this.name + '_label'] = label.join(' - ');
 };
 
-exports.objectToRecord = function (obj,  record) {
+exports.objectToRecord = function (obj,  record, options) {
   record[this.name] = db.helper.unsimplifyAndRecordifyRid(obj[this.name]);
+
+  if(!this.accept_only)
+    return;
+
+  options = options || {};
+  var user = options.req ? options.req.user : undefined;
+  if(!user) {
+    throw new Error('No user');
+  }
+
+  var where = {};
+  this.accept_only.forEach((condition) => {
+
+    // Exception system --
+    if(condition.role_exception && condition.role_exception === user.role) {
+        return;
+    }
+
+    where[condition.id] = condition.value === '$user' ? db.helper.unsimplifyAndRecordifyRid(user.rid) : condition.value;
+  });
+
+  return this.reference.getByRid(record[this.name], { where: where }).then((refObjects) => {
+    console.log(refObjects, where);
+    if(!refObjects || !refObjects.rid) {
+      var e = new Error('Accept conditions not fullfiled for ' + this.name);
+      e.type = 'accept_only';
+      e.property = this;
+      throw e;
+    }
+  });
 };
 
 // Datatable JS options --

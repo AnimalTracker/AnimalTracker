@@ -76,6 +76,10 @@ data_schema:
           reference_to: Project
           display_datatable: true
           property_to_display: [ id_apafis ]
+          accept_only:
+            - id: creator
+              value: $user
+              role_exception: admin
         - name: date_enter
           type: date
           apply:
@@ -158,6 +162,10 @@ data_schema:
           type: reference
           reference_to: Project
           property_to_display: [ id_apafis ]
+          accept_only:
+            - id: creator
+              value: $user
+              role_exception: admin
         - name: date_enter
           type: date
           apply:

@@ -29,8 +29,8 @@ exports.init = function (property, configClass) {
 
 // -- Transformation methods --
 
-exports.recordToObject = function (record,  obj, req) {
-  obj[this.name + '_label'] = this.getOptionLabel(record[this.name], req);
+exports.recordToObject = function (record,  obj, options) {
+  obj[this.name + '_label'] = this.getOptionLabel(record[this.name], options.req);
   obj[this.name] = record[this.name];
 };
 

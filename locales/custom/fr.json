@@ -46,6 +46,11 @@
         "beheaded_bio_mol": "Décapitation (biologie moléculaire)",
         "found_dead": "Animal retrouvé mort"
       }
+    },
+    "error": {
+      "project": {
+        "accept_only": "Le projet APAFIS ne vous appartient pas."
+      }
     }
   },
   "Mus": {
@@ -95,6 +100,11 @@
         "post_surgery": "Mort post-chirurgie",
         "beheaded_bio_mol": "Décapitation (biologie moléculaire)",
         "found_dead": "Animal retrouvé mort"
+      }
+    },
+    "error": {
+      "project": {
+        "accept_only": "Le projet APAFIS ne vous appartient pas."
       }
     }
   },
