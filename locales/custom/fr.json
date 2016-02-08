@@ -104,6 +104,7 @@
     "property": {
       "id_apafis": "Référence APAFIS",
       "creator": "Concepteur du projet",
+      "collaborator": "Collaborateur",
       "title": "Titre du projet",
       "date_begin": "Date de début",
       "date_end": "Date de fin",
