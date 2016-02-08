@@ -11,7 +11,7 @@ database:
   port: 2424
   username: 'root'
   password: 'yourpassword'
-  dbname: 'genetracker'
+  dbname: 'animaltracker'
 
 i18n:
   - id: fr
@@ -221,6 +221,8 @@ data_schema:
           reference_to: User
           display_datatable: true
           property_to_display: [ first_name, last_name ]
+        - name: collaborator
+          type: text
         - name: date_begin
           type: date
           apply:

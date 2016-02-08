@@ -114,6 +114,7 @@
     "property": {
       "id_apafis": "Référence APAFIS",
       "creator": "Concepteur du projet",
+      "collaborator": "Collaborateur",
       "title": "Titre du projet",
       "date_begin": "Date de début",
       "date_end": "Date de fin",
@@ -134,7 +135,7 @@
       "sex": {
         "male": "Mâles",
         "female": "Femelles",
-        "both": "Mâles and femelles"
+        "both": "Mâles et femelles"
       },
       "severity": {
         "absence": "Niveau 0 - Absence",

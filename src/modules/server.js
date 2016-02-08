@@ -59,7 +59,7 @@ var startExpressServer = function(app) {
     var host = server.address().address;
     var port = server.address().port;
 
-    console.log('[app] GeneTracker listening at http://%s:%s', host, port);
+    console.log('[app] AnimalTracker listening at http://%s:%s', host, port);
   });
 };
 

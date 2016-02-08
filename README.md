@@ -1,4 +1,4 @@
-# GeneTracker
+# AnimalTracker
 ## Getting started
 ### Development
 Dependencies:
@@ -23,7 +23,7 @@ npm start
 node util create-database
 
 # (optional) Remove the database
-node util delete-database --db genetracker [--exec]
+node util delete-database --db animaltracker [--exec]
 ```
 
 ### Production

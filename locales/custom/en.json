@@ -116,6 +116,7 @@
     "property": {
       "id_apafis": "APAFIS reference",
       "creator": "Project creator",
+      "collaborator": "Collaborator",
       "title": "Project title",
       "date_begin": "Start date",
       "date_end": "End date",
