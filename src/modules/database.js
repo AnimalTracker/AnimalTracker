@@ -26,7 +26,7 @@ var server = OrientDB({
   enableRIDBags: false
 });
 
-var dbname = getParam('dbname',  'genetracker');
+var dbname = getParam('dbname',  'animaltracker');
 var db = server.use(dbname);
 
 // -- Notify methods --

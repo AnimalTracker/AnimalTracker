@@ -73,7 +73,7 @@ var createDatabase = function() {
   console.info('[util] Begin the creation of the database');
 
   return server.create({
-    name:     getParam('dbname',    'genetracker'),
+    name:     getParam('dbname',    'animaltracker'),
     type: 'graph',
     storage: 'plocal'
   }).then(function(db) {

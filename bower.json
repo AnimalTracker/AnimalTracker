@@ -1,5 +1,5 @@
 {
-  "name": "genetracker",
+  "name": "animaltracker",
   "description": "Web application storing data about genetic strain for laboratories",
   "main": "app.js",
   "authors": [
