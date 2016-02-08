@@ -18,8 +18,11 @@ exports.populate = function(User) {
     User.genericRecordToObject(record, obj, options);
 
     // Test the password --
+    var password_hidden = obj.password_hidden;
+    obj.password_hidden = false;
+
     obj.test = function(password) {
-      return helper.hash(password) === this.password_hidden;
+      return helper.hash(password) === password_hidden;
     };
 
     // Add the token --

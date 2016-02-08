@@ -66,7 +66,6 @@ exports.objectToRecord = function (obj,  record, options) {
   });
 
   return this.reference.getByRid(record[this.name], { where: where }).then((refObjects) => {
-    console.log(refObjects, where);
     if(!refObjects || !refObjects.rid) {
       var e = new Error('Accept conditions not fullfiled for ' + this.name);
       e.type = 'accept_only';
