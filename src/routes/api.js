@@ -23,7 +23,6 @@ var responseInsufficientRights = function(req, res) {
 };
 
 var responseCatchError = function(e, req, res) {
-  console.log('error', e);
   res.status(401).json({
     title: req.t('Error'),
     message: e.property ? e.property.getErrorLabel(e.type, req) : e,
