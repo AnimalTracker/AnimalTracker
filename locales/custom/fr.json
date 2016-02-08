@@ -125,7 +125,7 @@
       "sex": {
         "male": "Mâles",
         "female": "Femelles",
-        "both": "Mâles and femelles"
+        "both": "Mâles et femelles"
       },
       "severity": {
         "absence": "Niveau 0 - Absence",
