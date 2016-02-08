@@ -7,7 +7,7 @@ exports.recordToObject = function (record,  obj) {
     obj[this.name] = record[this.name];
 };
 
-exports.objectToRecord = function (obj,  record) {};
+exports.objectToRecord = function () {};
 
 // -- Datatable methods --
 
@@ -38,4 +38,4 @@ exports.generateFormInputs = function(inputs, req) {
   });
 };
 
-exports.generateFormOptions = function(options) {};
+exports.generateFormOptions = function() {};
