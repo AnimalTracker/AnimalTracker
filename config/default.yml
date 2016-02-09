@@ -32,7 +32,6 @@ data_schema:
     - name: Rat
       type: animal
       path: rats
-      path_base: animals
       datatable:
         toggle:
           - name: alive
@@ -121,7 +120,6 @@ data_schema:
     - name: Mus
       type: animal
       path: mice
-      path_base: animals
       datatable:
         toggle:
           - name: alive
@@ -214,7 +212,6 @@ data_schema:
     - name: Project
       type: other
       path: projects
-      path_base: others
       property:
         - name: id_apafis
           type: text
@@ -281,7 +278,6 @@ data_schema:
     - name: User
       type: user
       path: users
-      path_base:
       property:
         - name: username
           type: text
