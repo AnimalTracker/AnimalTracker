@@ -17,6 +17,7 @@ var getParam = function(id, defaultValue) {
 };
 
 // -- Fields --
+// All seconds parameters are fallbacks is the property is not found in the file
 
 var server = OrientDB({
   host:     getParam('host',      'localhost'),
