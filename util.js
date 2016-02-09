@@ -19,7 +19,6 @@ var getParam = function(id, defaultValue) {
 
 const cli = commandLineCommands([
   { name: 'check-server'},
-  { name: 'list-database'},
   { name: 'create-database'},
   { name: 'delete-database', definitions: [
     { name: 'db', type: String },
@@ -42,22 +41,6 @@ var checkServer = function() {
   db.ready.then(function() {
     db.close();
   });
-};
-
-var listDatabase = function() {
-  var db = require('./src/modules/database');
-
-  db.srv.list()
-    .then(function(dbs) {
-      console.log('[util] There are ' + dbs.length + ' databases on the server:');
-
-      for(db of dbs) {
-        console.log('[util]  - ' + db.name);
-      }
-    })
-    .then(function() {
-      db.close();
-    });
 };
 
 var createDatabase = function() {
@@ -152,7 +135,6 @@ var deleteDatabase = function(command) {
 const command = cli.parse();
 switch (command.name) {
   case 'check-server':    checkServer();            break;
-  case 'list-database':   listDatabase();           break;
   case 'create-database': createDatabase();         break;
   case 'delete-database': deleteDatabase(command);  break;
 
