@@ -8,10 +8,9 @@ block wrapper
           a.btn.btn-primary.pull-right(href=page.newHref)
             i.fa.fa-plus.btn-icon
             = t('New element')
-  .row.toggle-row
-    .col-lg-12
-      each item in toggle
-        input(checked=item.checked, id='toggle-' + item.name, type="checkbox")
+  span#toggle-row
+    each item in toggle
+      input(checked=item.checked, id='toggle-' + item.name, type="checkbox")
   .row
     .col-lg-12
       table#datatable.dataTable.table.table-striped.table-hover.display.responsive.no-wrap(style='width:100%')

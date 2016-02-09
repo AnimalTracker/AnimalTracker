@@ -43,6 +43,11 @@ $(document).ready(function() {
     }
   });
 
+  // Change the layout --
+  options.fnInitComplete = function() {
+    $('#toggle-row').prependTo('#datatable_length');
+  };
+
   // Add the error callback --
   options.ajax.error = function(err) {
     var data = err.responseJSON;
@@ -50,6 +55,7 @@ $(document).ready(function() {
   };
 
   var table = $('#datatable').DataTable(options);
+
 
   // Toggle updates --
   options.toggle.forEach(function(toggle) {
