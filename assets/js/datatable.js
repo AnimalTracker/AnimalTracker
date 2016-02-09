@@ -3,6 +3,25 @@
 $(document).ready(function() {
   var options = datatableOptions;
 
+  // Process toggle buttons --
+  var rawSource = options.ajax.url;
+  var getSource = function() {
+    var result = rawSource;
+    options.toggle.forEach(function(toggle) {
+      result += $('#toggle-' + toggle.name).prop('checked') ? toggle.on : toggle.off;
+    });
+    return result;
+  };
+
+  options.toggle.forEach(function(toggle) {
+    $('#toggle-' + toggle.name).bootstrapToggle({
+      on: pageOptions.t[toggle.labelPath + '_on'],
+      off: pageOptions.t[toggle.labelPath + '_off']
+    });
+  });
+
+  options.ajax.url = getSource();
+
   // Process the render functions as strings
   options.columnDefs.forEach(function(col) {
     if(col.type === 'reference')
@@ -30,5 +49,12 @@ $(document).ready(function() {
     toastr.error(data.message, data.title);
   };
 
-  $('#datatable').dataTable(options);
+  var table = $('#datatable').DataTable(options);
+
+  // Toggle updates --
+  options.toggle.forEach(function(toggle) {
+    $('#toggle-' + toggle.name).change(function() {
+      table.ajax.url(getSource()).load();
+    });
+  });
 });

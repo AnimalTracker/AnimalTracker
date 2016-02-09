@@ -75,11 +75,18 @@ router.param('configClass', function (req, res, next, configClass) {
 // Listing --
 router.get('/:configClass', function(req, res) {
   var configClass = req.params.configClass;
+  var options = {req: req, where: {}};
 
   // if(configClass.type === 'user' && req.user.role != 'admin')
   //   return responseInsufficientRights(req, res);
 
-  configClass.getAllWithReferences({req: req})
+  configClass.forEachProperty(function(property) {
+    if(req.query.hasOwnProperty(property.name)) {
+      options.where[property.name] = req.query[property.name];
+    }
+  });
+
+  configClass.getAllWithReferences(options)
     .then(function (items) {
       var result = {};
       result[configClass.path] = items ? items : [];

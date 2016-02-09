@@ -124,7 +124,7 @@ exports.populate = function(configClass) {
 
   configClass.getByRid = function(rid, options) {
     var params = this.specificSelectParams();
-    var where = options ? options.where ? options.where : {} : {} || {};
+    var where = options && options.where ? options.where : {};
 
     where['@rid'] = rid;
     where.active = true;
@@ -163,6 +163,9 @@ exports.populate = function(configClass) {
 
   configClass.getAllWithReferences = function(options) {
     var params = this.specificSelectParams();
+    var where = options && options.where ? options.where : {};
+
+    where.active = true;
 
     // If no references, use simple getAll instead --
     if(!this.references)
@@ -173,7 +176,7 @@ exports.populate = function(configClass) {
       params.select.push(ref.name + '.*');
     });
 
-    var request = db.select(params.select.join(', ')).from(this.name).where({active: true});
+    var request = db.select(params.select.join(', ')).from(this.name).where(where);
 
     // Add a let entry for each variable --
     for(var variable of params.variables) {
@@ -192,4 +195,31 @@ exports.populate = function(configClass) {
     return db.update(this.name).set({active: false}).where({'@rid': rid}).one();
   };
 
+
+  // Toggle processing --
+  if(!configClass.datatable)
+    configClass.datatable = {};
+
+  if(!configClass.datatable.toggle)
+    configClass.datatable.toggle = [];
+
+  configClass.datatable.toggle_labels = [];
+  var labels = configClass.datatable.toggle_labels;
+
+  configClass.datatable.toggle.forEach(function(toggle) {
+
+    if(!toggle.on)
+      toggle.on = '';
+    if(!toggle.off)
+      toggle.off = '';
+
+    // Label --
+    var labelPath = 'custom:'+ configClass.name + '.toggle.' + toggle.name;
+    labels.push(labelPath + '_on');
+    labels.push(labelPath + '_off');
+
+    toggle.labelPath = labelPath;
+    toggle.checked = toggle.default === 'on';
+    delete toggle.default;
+  });
 };

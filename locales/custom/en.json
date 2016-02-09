@@ -53,6 +53,10 @@
       "project": {
         "accept_only": "You don't own this APAFIS project."
       }
+    },
+    "toggle": {
+      "alive_on": "Alive only",
+      "alive_off": "All"
     }
   },
   "Mus": {
@@ -108,6 +112,10 @@
       "project": {
         "accept_only": "You don't own this APAFIS project."
       }
+    },
+    "toggle": {
+      "alive_on": "Alive only",
+      "alive_off": "All"
     }
   },
   "Project": {

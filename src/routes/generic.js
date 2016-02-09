@@ -6,8 +6,6 @@ var schema = require('../modules/schema');
 // -- I18n --
 
 var i18n = require('../modules/i18n');
-var datatableTranslation = [
-];
 var formTranslation = [
   'swal.delete.title',
   'swal.delete.text',
@@ -52,7 +50,8 @@ router.get('/:configClass', function(req, res, next) {
         headers: {'Authorization': 'JWT ' + req.user.apitoken},
         dataSrc: configClass.path
       },
-      columnDefs: []
+      columnDefs: [],
+      toggle: configClass.datatable.toggle
     }
   };
 
@@ -69,13 +68,14 @@ router.get('/:configClass', function(req, res, next) {
   res.render('layouts/datatable', {
     title: title,
     rights: schema.user.populateRights(req),
+    toggle: configClass.datatable.toggle,
     page: {
       header: title,
       newHref: '/' + configClass.path +'/new',
       options: JSON.stringify({
         viewRoute: '/' + configClass.path + '/',
         editLabel: req.t('Edit'),
-        t: i18n.generateTranslations(datatableTranslation, req)
+        t: i18n.generateTranslations(configClass.datatable.toggle_labels, req)
       })
     },
     datatable: locals

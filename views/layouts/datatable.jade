@@ -8,6 +8,10 @@ block wrapper
           a.btn.btn-primary.pull-right(href=page.newHref)
             i.fa.fa-plus.btn-icon
             = t('New element')
+  .row.toggle-row
+    .col-lg-12
+      each item in toggle
+        input(checked=item.checked, id='toggle-' + item.name, type="checkbox")
   .row
     .col-lg-12
       table#datatable.dataTable.table.table-striped.table-hover.display.responsive.no-wrap(style='width:100%')
@@ -20,6 +24,7 @@ block wrapper
 block append scripts
   script(src=resPath + 'vendors/datatables/media/js/jquery.dataTables.min.js')
   script(src=resPath + 'vendors/datatables/media/js/dataTables.bootstrap.min.js')
+  script(src=resPath + 'vendors/bootstrap-toggle/js/bootstrap-toggle.min.js')
   //script(src=resPath + 'vendors/datatables-responsive/js/dataTables.responsive.js')
   //script(src=resPath + 'vendors/datatables-responsive/js/responsive.bootstrap.js')
   script(src=resPath + 'js/datatable.js')

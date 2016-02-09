@@ -37,6 +37,7 @@
         "other": "Autre provenance"
       },
       "death": {
+        "not_dead": "En vie",
         "pentobarbital_end_project": "Injection létale de Pentobarbital (fin de projet)",
         "pentobarbital_tissue_sample": "Injection létale de Pentobarbital (prélèvements tissus)",
         "pentobarbital_suffering": "Injection létale Pentobarbital (animal en souffrance)",
@@ -51,6 +52,10 @@
       "project": {
         "accept_only": "Le projet APAFIS ne vous appartient pas."
       }
+    },
+    "toggle": {
+      "alive_on": "En vie",
+      "alive_off": "Tous"
     }
   },
   "Mus": {
@@ -88,6 +93,7 @@
         "other": "Autre provenance"
       },
       "death": {
+        "not_dead": "En vie",
         "dislocation_end_project": "Dislocation cervicale (fin de projet)",
         "dislocation_tissue_sample": "Dislocation cervicale (prélèvement tissus)",
         "dislocation_suffering": "Dislocation cervicale (animal en souffrance)",
@@ -106,6 +112,10 @@
       "project": {
         "accept_only": "Le projet APAFIS ne vous appartient pas."
       }
+    },
+    "toggle": {
+      "alive_on": "En vie",
+      "alive_off": "Tous"
     }
   },
   "Project": {

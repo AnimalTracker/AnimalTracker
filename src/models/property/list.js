@@ -66,13 +66,6 @@ exports.generateFormInputs = function(inputs, req) {
     options:  []
   };
 
-  if(this.allow_empty) {
-    input.options.push({
-      value: '',
-      text: ''
-    });
-  }
-
   this.forEachOption(function(option) {
     input.options.push({
       value: option.id,
