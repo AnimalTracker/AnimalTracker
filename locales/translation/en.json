@@ -41,5 +41,10 @@
   "Error": "Error",
   "Insufficient rights": "Insufficient rights.",
   "Unauthorized": "Unauthorized.",
-  "Route not found": "Route not found."
+  "Route not found": "Route not found.",
+  "Reports": "Reports",
+  "Type": "Type",
+  "Reports_type" : {
+    "register" : "Register"
+  }
 }

@@ -1,0 +1,18 @@
+extends ../layouts/layout
+
+block wrapper
+  .row
+    .col-lg-12
+      h1.page-header= page.header
+  .row
+    .col-lg-12
+      table.table.table-striped.table-hover.responsive.no-wrap(style='width:100%')
+        thead
+          tr
+            th= t('Reports')
+            th= t('Type')
+          each report in reports
+            tr
+              td
+                a(href=report.href)= report.title
+              td= report.type

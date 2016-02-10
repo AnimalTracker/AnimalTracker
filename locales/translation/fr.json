@@ -42,5 +42,10 @@
   "Error": "Erreur",
   "Insufficient rights": "Droits insuffisants.",
   "Unauthorized": "Non autorisé.",
-  "Route not found": "Aucune route n'a été trouvée."
+  "Route not found": "Aucune route n'a été trouvée.",
+  "Reports": "Rapports",
+  "Type": "Type",
+  "Reports_type" : {
+    "register" : "Registre"
+  }
 }

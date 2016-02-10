@@ -30,6 +30,7 @@ reports.list.forEach(function(report){
   // Register reports
   if(report.type === 'register') {
     reports.registers[report.path] = report;
+    report.href = '/reports/registers/' + report.path;
   }
 
   // Headers --
@@ -54,7 +55,35 @@ reports.list.forEach(function(report){
   report.property = _.map(report.property, value => value.replace(':', '_'));
 });
 
-// -- Register report --
+// -- Report list --
+
+router.get('/', function(req, res) {
+  // Check rights --
+  if (!req.isAuthenticated())
+    return res.redirect('/login');
+
+  // Locale --
+  req.i18n.changeLanguage(req.user.language);
+  var title = req.t('Reports');
+
+  res.render('pages/reports', {
+    title: title,
+    rights: schema.user.populateRights(req),
+    page: {
+      header: title
+    },
+    reports: forEachApply(reports.list, [], function(a, report) {
+      a.push({
+        href: report.href,
+        title: req.t('custom:report.' +  report.type + '.' + report.path),
+        type: req.t('Reports_type.' + report.type)
+      });
+    })
+  });
+});
+
+
+// -- "Register" report --
 
 router.get('/registers/:report', function(req, res) {
   if(!reports.registers.hasOwnProperty(req.params.report))
