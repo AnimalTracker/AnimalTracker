@@ -1,5 +1,6 @@
 // Extends from property --
 var db = require('../../modules/database');
+var _ = require('lodash');
 var sprintf = require("sprintf-js").sprintf;
 
 exports.init = function(property, configClass, schema) {
@@ -23,9 +24,28 @@ exports.init = function(property, configClass, schema) {
       configClass.name + '.' + property.name);
 };
 
-exports.recordToObject = function (record,  obj) {
+exports.recordToObject = function (record,  obj, options) {
   obj[this.name] = db.helper.simplifyRid(record[this.name]);
   obj[this.name + '_label'] = obj[this.name];
+
+  // Deep transformation system --
+  if(options && options.getCompleteReference) {
+
+    var inputPrefix = this.name + '__';
+    var outputPrefix = this.name + '.';
+
+    var objSlice = {};
+    var recordSlice = _.chain(record)
+      .pickBy((value, index) => _.startsWith(index, inputPrefix))
+      .mapKeys((value, key) => key.replace(inputPrefix, ''))
+      .value();
+
+    this.reference.forEachProperty((property) => {
+      property.recordToObject(recordSlice, objSlice, _.omit(options, 'getCompleteReference'));
+    });
+
+    _.merge(obj, _.mapKeys(objSlice, (value, key) => outputPrefix + key));
+  }
 
   // Build the label --
   if(!this.property_to_display)
@@ -34,7 +54,7 @@ exports.recordToObject = function (record,  obj) {
   var label = [];
 
   this.property_to_display.forEach((prop) => {
-    var value = record[this.name + prop];
+    var value = record[this.name + '__' + prop];
     if(value)
       label.push(value);
   });

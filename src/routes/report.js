@@ -29,13 +29,28 @@ reports.list.forEach(function(report){
   // Register reports
   if(report.type === 'register') {
     reports.registers[report.path] = report;
-
-    // Replace property items by the property in the model --
-    report.property = forEachApply(report.property, [], function(a, item) {
-      if(configClass.propertyAlias.hasOwnProperty(item))
-        a.push(configClass.propertyAlias[item]);
-    });
   }
+
+  // Headers --
+  report.headers = forEachApply(report.property, [], function(a, propertyPath) {
+    var propLevel = propertyPath.split(':')[0].split('.');
+    var property = configClass.propertyAlias[_.head(propLevel)];
+
+    _.tail(propLevel).forEach((level) => {
+      if(!property || property.type !== 'reference') {
+        property = null;
+        return console.error('[report] Invalid property ' + propertyPath + ' in ' + report.path);
+      }
+
+      property = property.reference.propertyAlias[level];
+    });
+
+    if(property)
+      a.push(property);
+  });
+
+  // Transform for later usability --
+  report.property = _.map(report.property, value => value.replace(':', '_'));
 });
 
 // -- Register report --
@@ -72,21 +87,15 @@ router.get('/registers/:report', function(req, res) {
       date: date
     },
     data: {
-      headers: forEachApply(report.property, [], function(a, property) {
-        a.push(property.getLabel(req));
-      }),
+      headers: _.map(report.headers, property => property.getLabel(req)),
       rows: []
     }
   };
 
-  configClass.getAllWithReferences({req: req}).each(function(row) {
+  configClass.getAllWithReferences({req: req, getCompleteReference: true}).each(function(row) {
     locals.data.rows.push(forEachApply(report.property, [], function(a, property) {
-      var label = property.name;
-
-      if(property.type === 'list')
-        label += '_label';
-
-      a.push(row[label]);
+      console.log(property);
+      a.push(row[property]);
     }));
   })
   .then(function() {

@@ -309,15 +309,28 @@ reports:
     model: Rat
     logo: /logo.lnca.gif
     property:
+      - strain:label
+      - date_enter
+      - age_at_enter
+    # - weight
       - id
-      - lot_number
-      - sex
+      - origin:label
+      - project.id_apafis
+      - date_death
+      - death:label
+      - date_exit
 
   - type: register
     path: mice_v1
-    model: Rat
+    model: Mus
     logo: /logo.lnca.gif
     property:
       - id
-      - lot_number
       - sex
+      - strain
+      - lineage
+      - date_enter
+      - date_birth
+      - date_exit
+      - date_death
+      - project.id_apafis

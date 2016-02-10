@@ -173,7 +173,7 @@ exports.populate = function(configClass) {
 
     params.select = [params.select];
     this.references.forEach(function(ref) {
-      params.select.push(ref.name + '.*');
+      params.select.push(ref.name + '.* as ' + ref.name  + '__');
     });
 
     var request = db.select(params.select.join(', ')).from(this.name).where(where);
