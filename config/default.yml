@@ -307,13 +307,16 @@ reports:
   - type: register
     path: rats_v1
     model: Rat
+    logo: /logo.lnca.gif
     property:
       - id
       - lot_number
       - sex
+
   - type: register
     path: mice_v1
     model: Rat
+    logo: /logo.lnca.gif
     property:
       - id
       - lot_number

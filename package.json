@@ -37,6 +37,8 @@
     "jade": "^1.11.0",
     "js-yaml": "^3.4.6",
     "jwt-simple": "^0.4.1",
+    "lodash": "^4.3.0",
+    "moment": "^2.11.2",
     "orientjs": "^2.1.0",
     "passport": "^0.3.2",
     "passport-jwt": "^1.2.1",

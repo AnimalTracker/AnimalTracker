@@ -2,9 +2,14 @@ extends ../layouts/report
 
 block content
 
-  h1= page.header
+  if page.logo
+    .pull-right
+      img(src=page.logo)
 
-  table.table
+  h1= page.header
+  .date= page.date
+
+  table.table.table-bordered.table-hover
     tr
       each cell in data.headers
         th= cell

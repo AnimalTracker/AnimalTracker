@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 
 var config = require('config');
+var moment = require('moment');
+var _ = require('lodash');
 var schema = require('../modules/schema');
 var forEachApply = require('../helpers/misc').forEachApply;
 
@@ -53,13 +55,21 @@ router.get('/registers/:report', function(req, res) {
     return res.redirect('/');
 
   req.i18n.changeLanguage(req.user.language);
+  var localMoment = moment();
+  localMoment.locale(req.user.language);
+
+  var date = localMoment.format('LLLL');
+  if(req.user.language === 'fr')
+    date = _.upperFirst(date);
 
   // Process the register --
 
   var locals = {
     title: configClass.getLabelPlural(req),
     page: {
-      header: req.t('custom:report.register.' + report.path)
+      header: req.t('custom:report.register.' + report.path),
+      logo: report.logo,
+      date: date
     },
     data: {
       headers: forEachApply(report.property, [], function(a, property) {
