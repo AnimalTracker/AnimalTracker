@@ -53,7 +53,7 @@ var populate = function(configClassName, number, fn) {
   }
 
   var configClass = schema.getConfigClass(configClassName);
-  return configClass.createRecordsInDb(configClass.transformObjectsIntoRecords(items));
+  return configClass.createRecordsInDb(configClass.transformObjectsIntoRecords(items, {noRights: true}));
 };
 
 var fakeData = function() {

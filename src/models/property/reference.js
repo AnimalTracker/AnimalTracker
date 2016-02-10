@@ -45,7 +45,7 @@ exports.recordToObject = function (record,  obj) {
 exports.objectToRecord = function (obj,  record, options) {
   record[this.name] = db.helper.unsimplifyAndRecordifyRid(obj[this.name]);
 
-  if(!this.accept_only)
+  if(!this.accept_only || (options && options.noRights))
     return;
 
   options = options || {};
