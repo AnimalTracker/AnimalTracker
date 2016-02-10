@@ -5,6 +5,7 @@ var config = require('config');
 var moment = require('moment');
 var _ = require('lodash');
 var schema = require('../modules/schema');
+var db = require('../modules/database');
 var forEachApply = require('../helpers/misc').forEachApply;
 
 // -- Config preparation --
@@ -69,6 +70,7 @@ router.get('/registers/:report', function(req, res) {
   if (configClass.type === 'user' && req.user.role != 'admin')
     return res.redirect('/');
 
+  // Locale --
   req.i18n.changeLanguage(req.user.language);
   var localMoment = moment();
   localMoment.locale(req.user.language);
@@ -92,7 +94,24 @@ router.get('/registers/:report', function(req, res) {
     }
   };
 
-  configClass.getAllWithReferences({req: req, getCompleteReference: true}).each(function(row) {
+  // Query params --
+  var options = {
+    req: req,
+    getCompleteReference: true,
+    where: []
+  };
+  configClass.forEachProperty(function(property) {
+    if(req.query.hasOwnProperty(property.name)) {
+      var queryValue = req.query[property.name];
+
+      if(property.type === 'reference')
+        queryValue = db.helper.unsimplifyAndRecordifyRid(queryValue);
+
+      options.where[property.name] = queryValue;
+    }
+  });
+
+  configClass.getAllWithReferences(options).each(function(row) {
     locals.data.rows.push(forEachApply(report.property, [], function(a, property) {
       console.log(property);
       a.push(row[property]);
