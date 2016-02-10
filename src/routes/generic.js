@@ -10,7 +10,11 @@ var formTranslation = [
   'swal.delete.title',
   'swal.delete.text',
   'swal.delete.cancel',
-  'swal.delete.confirm'
+  'swal.delete.confirm',
+  'swal.submit.title',
+  'swal.submit.text',
+  'swal.submit.cancel',
+  'swal.submit.confirm'
 ];
 
 // -- ConfigClass Parameter --

@@ -18,10 +18,16 @@
   "Login": "Login",
   "swal" : {
     "delete" : {
-      "title": "Are you sure ?",
-      "text": "The deletion is permanent",
+      "title": "Are you sure?",
+      "text": "The deletion is permanent.",
       "cancel": "Cancel",
       "confirm": "Delete"
+    },
+    "submit": {
+      "title": "Are you sure?",
+      "text": "You asked to create many elements.",
+      "cancel": "Cancel",
+      "confirm": "Create"
     }
   },
   "Incorrect username": "Incorrect username.",

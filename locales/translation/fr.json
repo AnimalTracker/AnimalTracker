@@ -18,10 +18,16 @@
   "Login": "Se connecter",
   "swal": {
     "delete": {
-      "title": "Êtes vous sûr ?",
+      "title": "Êtes vous sûr(e) ?",
       "text": "La suppression est définitive.",
       "cancel": "Annuler",
       "confirm": "Supprimer"
+    },
+    "submit": {
+      "title": "Êtes vous sûr(e) ?",
+      "text": "Vous avez demandé un grand nombre d'éléments.",
+      "cancel": "Annuler",
+      "confirm": "Créer"
     }
   },
   "Incorrect username": "Cet utilisateur n'existe pas.",

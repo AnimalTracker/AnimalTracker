@@ -124,7 +124,7 @@ var initForm = function() {
   }
 
   // Submit button --
-  $('#generated-submit').click(function() {
+  var onSubmit = function() {
     $.ajax({
         type: action.edit ? 'PUT' : 'POST',
         url: options.target,
@@ -149,6 +149,26 @@ var initForm = function() {
       .error(function(err) {
         var data = err.responseJSON;
         toastr.error(data.message, data.title);
+      });
+  };
+
+  $('#generated-submit').click(function() {
+    var nbToAddSelector = $('#generated-form [name=nb_to_add]');
+    if(nbToAddSelector.length != 1 || nbToAddSelector.val() < 10)
+      return onSubmit();
+
+    swal({
+        title: options.t['swal.submit.title'],
+        text: options.t['swal.submit.text'],
+        type: "warning",
+        showCancelButton: true,
+        cancelButtonText: options.t['swal.submit.cancel'],
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: options.t['swal.submit.confirm'],
+        closeOnConfirm: true
+      },
+      function(){
+        onSubmit();
       });
   });
 
