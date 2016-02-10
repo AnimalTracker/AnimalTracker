@@ -101,7 +101,7 @@ exports.populate = function(configClass) {
   configClass.createFromReq = function(req) {
     var records = [];
     var nbToAdd = req.body.nb_to_add || 1;
-    var options = {req: req, promises: []};
+    var options = {req: req, promises: [], autoNumbering: true};
 
     for (var i = 0; i < nbToAdd; i++) {
       records.push(this.specificObjectToRecord(req.body, { active: true }, options));

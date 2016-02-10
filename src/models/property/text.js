@@ -1,13 +1,34 @@
 // Extends from property --
 
+var _ = require('lodash');
+
 // -- Transformation methods --
 
 exports.recordToObject = function (record,  obj) {
   obj[this.name] = record[this.name];
 };
 
-exports.objectToRecord = function (obj,  record) {
-  record[this.name] = obj[this.name] === '' ? null : obj[this.name];
+var regex = /<(\d*)>/g;
+exports.objectToRecord = function (obj,  record, options) {
+  var value = obj[this.name];
+  record[this.name] = value === '' ? null : value;
+
+  // Auto numbering system --
+  if(value != null) {
+    var match;
+
+    // For each match --
+    while(match = regex.exec(value)) {
+      var nb = _.parseInt(match[1]);
+
+      // Modify the current item (remove < & >) --
+      record[this.name] = record[this.name].replace(match[0], nb);
+
+      // If autoNumbering is active, increase the number --
+      if(options && options.autoNumbering)
+        obj[this.name] = obj[this.name].replace(match[0], '<' + (nb+1) + '>');
+    }
+  }
 };
 
 // -- Datatable methods --
