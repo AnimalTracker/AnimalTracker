@@ -141,7 +141,7 @@ schema.getConfigClassByPath = function(path) {
 // -- For Each Methods --
 
 schema.forEachConfigClass = function(fn) {
-  var i = 0
+  var i = 0;
   for(var item of schema.getConfigClasses()) {
     i++;
     fn(item, i);

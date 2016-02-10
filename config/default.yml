@@ -302,3 +302,19 @@ data_schema:
         - name: last_name
           type: text
           display_datatable: true
+
+reports:
+  - type: register
+    path: rats_v1
+    model: Rat
+    property:
+      - id
+      - lot_number
+      - sex
+  - type: register
+    path: mice_v1
+    model: Rat
+    property:
+      - id
+      - lot_number
+      - sex

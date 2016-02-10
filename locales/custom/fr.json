@@ -177,5 +177,11 @@
         "en": "Anglais"
       }
     }
+  },
+  "report": {
+    "register": {
+      "rats_v1": "Registre rat",
+      "mice_v1": "Registre souris"
+    }
   }
 }

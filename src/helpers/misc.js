@@ -15,3 +15,10 @@ exports.arrayifyFunction = function(array, fn) {
   else
     return null;
 };
+
+exports.forEachApply = function(fromArray, toArray, fn) {
+  fromArray.forEach((item) => {
+    fn(toArray, item);
+  });
+  return toArray;
+};

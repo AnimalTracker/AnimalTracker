@@ -3,11 +3,6 @@ var express = require('express');
 var path = require('path');
 
 var app = express();
-var route = {
-  index:    require('./src/routes/index'),
-  generic:  require('./src/routes/generic'),
-  api:      require('./src/routes/api')
-};
 var module = {
   server:   require('./src/modules/server'),
   database: require('./src/modules/database'),
@@ -28,20 +23,19 @@ module.database.init(app);
 module.schema.init(app);
 module.schema.ready.then(function() {
 
+  // Secondary modules --
   module.auth = require('./src/modules/auth');
   module.auth.init(app);
   module.view.init(app);
 
-  // -- Routes --
+  // Routes --
+  app.use('/',        require('./src/routes/index'));
+  app.use('/api/v1',  require('./src/routes/api'));
+  app.use('/reports', require('./src/routes/report'));
+  app.use('/',        require('./src/routes/generic'));
 
-  app.use('/',        route.index);
-  app.use('/api/v1',  route.api);
-  app.use('/',        route.generic);
-
-  // -- Modules --
-
+  // Start the server --
   module.server.init(app);
-
 });
 
 // -- System events --

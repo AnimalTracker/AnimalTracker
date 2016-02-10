@@ -1,0 +1,15 @@
+extends ../layouts/report
+
+block content
+
+  h1= page.header
+
+  table.table
+    tr
+      each cell in data.headers
+        th= cell
+    each row in data.rows
+      tr
+        each cell in row
+          td= cell
+

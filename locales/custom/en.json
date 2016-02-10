@@ -175,5 +175,11 @@
         "en": "English"
       }
     }
+  },
+  "report": {
+    "register": {
+      "rats_v1": "Rats register",
+      "mice_v1": "Mice register"
+    }
   }
 }
