@@ -15,10 +15,10 @@ exports.objectToRecord = function (obj,  record, options) {
 
   // Auto numbering system --
   if(value != null) {
-    var match;
 
     // For each match --
-    while(match = regex.exec(value)) {
+    var match = regex.exec(value);
+    while(match) {
       var nb = _.parseInt(match[1]);
 
       // Modify the current item (remove < & >) --
@@ -27,6 +27,8 @@ exports.objectToRecord = function (obj,  record, options) {
       // If autoNumbering is active, increase the number --
       if(options && options.autoNumbering)
         obj[this.name] = obj[this.name].replace(match[0], '<' + (nb+1) + '>');
+
+      match = regex.exec(value);
     }
   }
 };
