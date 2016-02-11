@@ -18,7 +18,8 @@
       "lot_number": "Numéro de lot",
       "other_strain": "Autre souche",
       "other_origin": "Autre provenance",
-      "age_at_enter": "Âge à l'entrée (en semaines)"
+      "age_at_enter": "Âge à l'entrée (en semaines)",
+      "weight": "Poids"
     },
     "option": {
       "strain": {

@@ -20,7 +20,8 @@
       "lot_number": "Lot number",
       "age_at_enter": "Age at arrival (in weeks)",
       "actual_rat_number": "Actual rats number",
-      "actual_mus_number": "Actual mice number"
+      "actual_mus_number": "Actual mice number",
+      "weight": "Weight"
     },
     "option": {
       "strain": {

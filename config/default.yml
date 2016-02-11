@@ -45,6 +45,8 @@ data_schema:
         - name: lot_number
           type: text
           display_datatable: true
+        - name: weight
+          type: text
         - name: sex
           type: list
           list:
@@ -312,7 +314,7 @@ reports:
       - strain:label
       - date_enter
       - age_at_enter
-    # - weight
+      - weight
       - id
       - origin:label
       - project.id_apafis
