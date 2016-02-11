@@ -141,6 +141,7 @@ data_schema:
           display_datatable: true
         - name: lot_number
           type: text
+          display_datatable: true
         - name: strain
           type: text
           display_datatable: true
@@ -176,18 +177,21 @@ data_schema:
             - id: creator
               value: $user
               role_exception: admin
+          display_datatable: true
         - name: date_enter
           type: date
           apply:
             - on: date_birth
               value: date_enter - age_at_enter
               unit: weeks
+          display_datatable: true
         - name: date_birth
           type: date
           apply:
             - on: age_at_enter
               value: date_enter - date_birth
               unit: weeks
+          display_datatable: true
         - name: age_at_enter
           type: number
           apply:
