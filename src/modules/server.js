@@ -48,6 +48,17 @@ var startLiveReloadServer = function() {
 };
 
 var startExpressServer = function(app) {
+  app.use(function(err, req, res, next) {
+    // Do logging and user-friendly error message display
+    if(err.stack) {
+      console.error(err.stack);
+      res.status(500).send({status:500, message: 'internal error', type:'internal'});
+    }
+    else {
+      next();
+    }
+  });
+
   // 404 Error --
   app.use(function(req, res) {
     console.error('404: ' + req.url);
