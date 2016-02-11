@@ -99,8 +99,10 @@ var fakeData = function() {
           strain:   randItem(options.Rat.strain).id,
           sex:      randItem(options.Rat.sex).id,
           id:       'RAT#' + faker.random.number(),
+          lot_number: '',
           origin:   randItem(options.Rat.origin).id,
-          project:  randItem(records.projects).rid
+          project:  randItem(records.projects).rid,
+          death:    randItem(options.Rat.death).id
         };
       }),
       populate('Mus', rand(500, 1100), () => {
@@ -108,11 +110,13 @@ var fakeData = function() {
           strain: '',
           lineage: '',
           genotype: '',
+          lot_number: '',
           sex:      randItem(options.Mus.sex).id,
           id:       'MOUSE#' + faker.random.number(),
           chip:     'CHIP#' + faker.random.number(),
           origin:   randItem(options.Mus.origin).id,
-          project:  randItem(records.projects).rid
+          project:  randItem(records.projects).rid,
+          death:    randItem(options.Mus.death).id
         };
       })
     );
