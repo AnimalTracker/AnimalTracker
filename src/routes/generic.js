@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var _ = require('lodash');
 
 var schema = require('../modules/schema');
 
@@ -16,6 +17,33 @@ var formTranslation = [
   'swal.submit.cancel',
   'swal.submit.confirm'
 ];
+
+// -- Reports processing --
+
+var processDatatableReports = function(req, configClass) {
+  var reports = _.cloneDeep(_.get(configClass, ['datatable', 'reports']));
+  if(!reports)
+    return reports;
+
+  return _.map(reports, item => {
+    item.label = req.t('custom:report.' + item.id);
+    item.path = item.path + (item.path.indexOf('?') ? '&' : '?' ) + 'report_id=' + item.id;
+    return item;
+  });
+};
+
+var processFormReports = function(req, configClass) {
+  var reports = _.cloneDeep(_.get(configClass, ['form', 'reports']));
+  if(!reports)
+    return reports;
+
+  return _.map(reports, item => {
+    item.label = req.t('custom:report.' + item.id);
+    item.path = item.path.replace('<rid>', req.params.rid)
+      + (item.path.indexOf('?') ? '&' : '?' ) + 'report_id=' + item.id;
+    return item;
+  });
+};
 
 // -- ConfigClass Parameter --
 
@@ -76,6 +104,7 @@ router.get('/:configClass', function(req, res, next) {
     page: {
       header: title,
       newHref: '/' + configClass.path +'/new',
+      reports: processDatatableReports(req, configClass),
       options: JSON.stringify({
         viewRoute: '/' + configClass.path + '/',
         editLabel: req.t('Edit'),
@@ -204,7 +233,8 @@ router.get('/:configClass/:rid', function(req, res, next) {
     rights: schema.user.populateRights(req, rightOptions),
     page: {
       header: title,
-      lang: lang
+      lang: lang,
+      reports: processFormReports(req, configClass)
     },
     form: {
       header: req.t('Edition'),

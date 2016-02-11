@@ -33,6 +33,8 @@ data_schema:
       type: animal
       path: rats
       datatable:
+        reports:
+          - { id: rats_v1_alive, path: /registers/rats_v1?death=not_dead }
         toggle:
           - name: alive
             on: ?death=not_dead
@@ -123,6 +125,8 @@ data_schema:
       type: animal
       path: mice
       datatable:
+        reports:
+          - { id: mice_v1_alive, path: /registers/mice_v1?death=not_dead }
         toggle:
           - name: alive
             on: ?death=not_dead
@@ -214,6 +218,10 @@ data_schema:
     - name: Project
       type: other
       path: projects
+      form:
+        reports:
+          - { id: rats_v1_by_apafis, path: /registers/rats_v1?project=<rid> }
+          - { id: mice_v1_by_apafis, path: /registers/mice_v1?project=<rid> }
       property:
         - name: id_apafis
           type: text
@@ -310,6 +318,8 @@ reports:
     path: rats_v1
     model: Rat
     logo: /logo.lnca.gif
+    param: ?death=not_dead
+    id: rats_v1_alive
     property:
       - strain:label
       - date_enter
@@ -326,6 +336,8 @@ reports:
     path: mice_v1
     model: Mus
     logo: /logo.lnca.gif
+    param: ?death=not_dead
+    id: mice_v1_alive
     property:
       - id
       - sex

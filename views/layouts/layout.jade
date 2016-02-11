@@ -13,7 +13,6 @@ block content
           span.icon-bar
         a.navbar-brand(href='/')
           img(alt="AnimalTracker", src=resPath + "logo.png")
-      // /.navbar-header
       ul.nav.navbar-top-links.navbar-right
         li.dropdown
           a.dropdown-toggle(data-toggle='dropdown', href='#')
@@ -31,7 +30,18 @@ block content
               a(href='/logout')
                 i.fa.fa-sign-out.fa-fw
                 |  #{t('Logout')}
-
+      if page && page.reports
+        ul.nav.navbar-top-links.navbar-right
+          li.dropdown
+            a.dropdown-toggle(data-toggle='dropdown', href='#')
+              i.fa.fa-file-text.fa-fw
+              i.fa.fa-caret-down
+            ul.dropdown-menu
+              each report in page.reports
+                li
+                  a(target='_blank', href='/reports' + report.path)
+                    i.fa.fa-file-text-o.fa-fw
+                    |  #{report.label}
       .navbar-default.sidebar(role='navigation')
         .sidebar-nav.navbar-collapse
           ul#side-menu.nav

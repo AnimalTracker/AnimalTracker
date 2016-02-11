@@ -178,9 +178,9 @@
     }
   },
   "report": {
-    "register": {
-      "rats_v1": "Rats register",
-      "mice_v1": "Mice register"
-    }
+    "rats_v1_alive": "Rats register",
+    "rats_v1_by_apafis": "Rats register by project",
+    "mice_v1_alive": "Mice register",
+    "mice_v1_by_apafis": "Mice register by project"
   }
 }

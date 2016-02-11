@@ -180,9 +180,9 @@
     }
   },
   "report": {
-    "register": {
-      "rats_v1": "Registre rat",
-      "mice_v1": "Registre souris"
-    }
+    "rats_v1_alive": "Registre rat",
+    "rats_v1_by_apafis": "Registre rat par projet",
+    "mice_v1_alive": "Registre souris",
+    "mice_v1_by_apafis": "Registre souris par projet"
   }
 }

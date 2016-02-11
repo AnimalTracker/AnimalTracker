@@ -30,7 +30,7 @@ reports.list.forEach(function(report){
   // Register reports
   if(report.type === 'register') {
     reports.registers[report.path] = report;
-    report.href = '/reports/registers/' + report.path;
+    report.href = '/reports/registers/' + report.path + report.param;
   }
 
   // Headers --
@@ -75,7 +75,7 @@ router.get('/', function(req, res) {
     reports: forEachApply(reports.list, [], function(a, report) {
       a.push({
         href: report.href,
-        title: req.t('custom:report.' +  report.type + '.' + report.path),
+        title: req.t('custom:report.' + report.id),
         type: req.t('Reports_type.' + report.type)
       });
     })
@@ -109,11 +109,12 @@ router.get('/registers/:report', function(req, res) {
     date = _.upperFirst(date);
 
   // Process the register --
+  var id = req.query.report_id || report.id;
 
   var locals = {
     title: configClass.getLabelPlural(req),
     page: {
-      header: req.t('custom:report.register.' + report.path),
+      header: req.t('custom:report.' + id),
       logo: report.logo,
       date: date
     },
