@@ -46,5 +46,7 @@
   "Type": "Type",
   "Reports_type" : {
     "register" : "Register"
-  }
+  },
+  "There is x record": "{{count}} record",
+  "There is x record_plural": "{{count}} records"
 }

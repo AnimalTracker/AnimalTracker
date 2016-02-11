@@ -45,7 +45,9 @@
   "Route not found": "Aucune route n'a été trouvée.",
   "Reports": "Rapports",
   "Type": "Type",
-  "Reports_type" : {
-    "register" : "Registre"
-  }
+  "Reports_type": {
+    "register": "Registre"
+  },
+  "There is x record": "{{count}} enregistrement",
+  "There is x record_plural": "{{count}} enregistrements"
 }
