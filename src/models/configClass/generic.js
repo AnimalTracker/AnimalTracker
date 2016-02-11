@@ -157,8 +157,14 @@ exports.populate = function(configClass) {
       });
   };
 
-  configClass.countAll = function() {
-    return db.select('count(*)').from(this.name).where({active: true}).scalar();
+  configClass.countAll = function(options) {
+    options = options || { };
+
+    if(!options.where)
+      options.where = {};
+
+    options.where.active = true;
+    return db.select('count(*)').from(this.name).where(options.where).scalar();
   };
 
   configClass.getAllWithReferences = function(options) {

@@ -16,7 +16,15 @@ router.get('/', function(req, res) {
   var promisesMetadata = [];
 
   schema.forEachConfigClass((configClass) => {
-    promises.push(configClass.countAll());
+    var options = {
+      where: {}
+    };
+
+    if(configClass.type === 'animal') {
+      options.where.death = 'not_dead';
+    }
+
+    promises.push(configClass.countAll(options));
     promisesMetadata.push({
       label: configClass.getLabelPlural(req),
       type: configClass.type === 'animal' ? 'primary' : configClass.type === 'other' ? 'green' : 'yellow',

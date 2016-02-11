@@ -143,7 +143,6 @@ router.get('/registers/:report', function(req, res) {
 
   configClass.getAllWithReferences(options).each(function(row) {
     locals.data.rows.push(forEachApply(report.property, [], function(a, property) {
-      console.log(property);
       a.push(row[property]);
     }));
   })
