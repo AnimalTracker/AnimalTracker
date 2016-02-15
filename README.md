@@ -196,4 +196,4 @@ node util check-server
 ```
 
 ## License
-See LICENSE.
+See [LICENSE](https://github.com/AnimalTracker/AnimalTracker/blob/master/LICENSE).
