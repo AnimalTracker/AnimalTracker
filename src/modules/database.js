@@ -90,13 +90,43 @@ for(var variable of variables) {
 
 // -- Test query --
 
-db.ready = server.list()
-  .then(function() {
-    console.info('[orientjs] Access to server: OK.');
-  })
-  .then(db.select().from('OUser').all()).then(function () {
-    console.info('[orientjs] Access to database: ' + dbname);
-  });
+var testOrientDB = function() {
+  return server.list()
+    .catch(function(e) {
+        console.error('[orientjs] Unreachable orientdb: ' + e.message);
+    })
+    .then(function(result) {
+      if(result) {
+        console.info('[orientjs] Access to server: OK');
+        return true;
+      }
+      else {
+        console.error('[orientjs] Access to server: Fail');
+        return false;
+      }
+    });
+};
+
+var testDatabase = function() {
+  return db.select().from('OUser').all()
+    .catch(function(e) {
+      console.error('[orientjs] Unreachable database: ' + e.message);
+    })
+    .then(function(result) {
+      if(result) {
+        console.info('[orientjs] Access to database '+ dbname +': OK');
+        return true;
+      }
+      else {
+        console.error('[orientjs] Access to database '+ dbname +': Fail');
+        return false;
+      }
+    });
+};
+
+db.ready = testOrientDB().then(function(ready) {
+  return ready ? testDatabase() : false;
+});
 
 // -- Module requirements --
 
