@@ -30,6 +30,9 @@ npm install
 # Setup client-side dependencies
 bower install
 
+# Build CSS classes
+gulp build
+
 # Create the database
 node util create-database
 
@@ -49,6 +52,9 @@ npm install --production
 
 # Setup client-side dependencies
 bower install
+
+# Build CSS classes
+gulp build
 
 # Create the database
 node util create-database
@@ -190,4 +196,4 @@ node util check-server
 ```
 
 ## License
-See LICENSE.
+See [LICENSE](https://github.com/AnimalTracker/AnimalTracker/blob/master/LICENSE).
