@@ -33,7 +33,7 @@ passport.use(new LocalStrategy(
           // Not matching --
           return done(null, false, { error: 'Incorrect credentials' });
         }
-      }, function(e) {
+      }, function() {
         done(null, false, { error: 'The database does not respond' });
       });
   }
@@ -55,7 +55,7 @@ passport.use(new JwtStrategy(opts, function(jwt_payload, done) {
       // Success --
       return done(null, user);
     }
-    }, function(e) {
+    }, function() {
       done(null, false, { error: 'The database does not respond' });
     });
 }));
@@ -68,7 +68,7 @@ passport.serializeUser(function(user, done) {
 passport.deserializeUser(function(id, done) {
   return User.getByRid(db.helper.unsimplifyRid(id)).then(function (user){
     done(user ? null : 'User not found', user);
-  }, function(e) {
+  }, function() {
     done('Database error', null);
   });
 });

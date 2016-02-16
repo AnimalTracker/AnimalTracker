@@ -6,8 +6,7 @@
   "scripts": {
     "start": "export NODE_ENV=production && pm2 start app.js",
     "start:dev": "nodemon -L -e js,yml,json -w src -w locales -w config app.js ",
-    "watch": "gulp watch",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "watch": "gulp watch"
   },
   "repository": {
     "type": "git",
