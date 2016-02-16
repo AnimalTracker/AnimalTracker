@@ -79,13 +79,14 @@ helper.createRecords = function(className, arg) {
 };
 
 // -- Error helpers --
-helper.onError = function(e) {
-  console.error('[orientjs] Database error: ' + e.message);
-  throw e;
+helper.onErrorEnd = function(e, location) {
+  location = ' ' + location || '';
+  console.error('[orientjs] Database error'+ location +': ' + e.message);
 };
 
-helper.onErrorEnd = function(e) {
-  console.error('[orientjs] Database error: ' + e.message);
+helper.onError = function(e, location) {
+  helper.onErrorEnd(e,location);
+  throw e;
 };
 
 // -- Check that no one of our variable will override db's ones --

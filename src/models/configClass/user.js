@@ -5,6 +5,7 @@ var db      = require('../../modules/database');
 var jwt     = require('jwt-simple');
 var Promise = require('bluebird');
 var secret  = require('config').get('secret_token');
+var _       = require('lodash');
 
 // -- Add members to the user configClass --
 
@@ -65,7 +66,7 @@ exports.populate = function(User) {
 
   User.getByUsername = function(username, options) {
     return db.select().from(this.name).where({active: true, username: username}).one()
-      .catch(db.helper.onError)
+      .catch(_.partialRight(db.helper.onError, 'on User.getByUsername'))
       .then((item) => {
         return this.transformRecordsIntoObjects(item, options);
       });

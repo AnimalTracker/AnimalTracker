@@ -2,10 +2,13 @@
 
 var Promise = require('bluebird');
 var db = require('../../modules/database');
+var _ = require('lodash');
 
 // -- Add members to the configClass --
 
 exports.populate = function(configClass) {
+
+  var errPrefix = 'on ' + configClass.name + '.';
 
   // -- DB to View --
 
@@ -25,7 +28,7 @@ exports.populate = function(configClass) {
       var record = {};
       configClass.specificObjectToRecord(this, record);
       return db.helper.createRecords(this.name, record)
-        .catch(db.helper.onErrorEnd);
+        .catch(_.partialRight(db.helper.onErrorEnd, errPrefix + 'save'));
     };
 
     return obj;
@@ -85,7 +88,7 @@ exports.populate = function(configClass) {
 
   configClass.createRecordsInDb = function(records) {
     return db.helper.createRecords(this.name, records)
-      .catch(db.helper.onError)
+      .catch(_.partialRight(db.helper.onError, errPrefix + 'createRecordInDb'))
       .then(function(results) {
       if(configClass.postCreate) {
         console.log('[orientjs] Trigger ' + configClass.name + '.postUpdate hook');
@@ -120,7 +123,7 @@ exports.populate = function(configClass) {
     var record = this.specificObjectToRecord(req.body, {}, options);
     return Promise.all(options.promises).then(() => {
       return db.update(this.name).set(record).where({'@rid': rid, active: true}).one()
-        .catch(db.helper.onError);
+        .catch(_.partialRight(db.helper.onError, errPrefix + 'updateFromReq'));
     });
   };
 
@@ -141,7 +144,7 @@ exports.populate = function(configClass) {
     }
 
     return request.one()
-      .catch(db.helper.onError)
+      .catch(_.partialRight(db.helper.onError, errPrefix + 'getByRid'))
       .then((item) => {
         return this.transformRecordsIntoObjects(item, options);
       });
@@ -157,7 +160,7 @@ exports.populate = function(configClass) {
     }
 
     return request.all()
-      .catch(db.helper.onError)
+      .catch(_.partialRight(db.helper.onError, errPrefix + 'getAll'))
       .then((item) => {
         return this.transformRecordsIntoObjects(item, options);
       });
@@ -196,7 +199,7 @@ exports.populate = function(configClass) {
     }
 
     return request.all()
-      .catch(db.helper.onError)
+      .catch(_.partialRight(db.helper.onError, errPrefix + 'getAllWithReferences'))
       .then((item) => {
         return this.transformRecordsIntoObjects(item, options);
       });
@@ -206,7 +209,7 @@ exports.populate = function(configClass) {
 
   configClass.deleteByRid = function(rid) {
     return db.update(this.name).set({active: false}).where({'@rid': rid}).one()
-      .catch(db.helper.onError);
+      .catch(_.partialRight(db.helper.onError, errPrefix + 'deleteByRid'));
   };
 
   // Toggle processing --
