@@ -1,6 +1,7 @@
 // Generic view helpers --
 
 var schema = require('../modules/schema');
+var config = require('config');
 var view = {};
 
 view.init  = function(app) {
@@ -42,6 +43,10 @@ view.init  = function(app) {
 
     // For local for resources href --
     app.locals.resPath = '/';
+
+    // Static reload client side --
+    if(config.get('server.live_reload'))
+      app.locals.liveReload = true;
   }
 };
 
