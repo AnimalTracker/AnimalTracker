@@ -51,8 +51,12 @@ var startExpressServer = function(app) {
   app.use(function(err, req, res, next) {
     // Do logging and user-friendly error message display
     if(err.stack) {
-      console.error(err.stack);
-      res.status(500).send({status:500, message: 'internal error', type:'internal'});
+      console.error('[app] ' + err.stack);
+      res.status(500).render('pages/error', {
+        code:500,
+        message: req.t('Internal error'),
+        description: req.t('Internal error_description')
+      });
     }
     else {
       next();
@@ -61,8 +65,12 @@ var startExpressServer = function(app) {
 
   // 404 Error --
   app.use(function(req, res) {
-    console.error('404: ' + req.url);
-    res.status(404).send('Not Found');
+    console.error('[server] 404: ' + req.url);
+    res.status(404).render('pages/error', {
+      code:404,
+      message: req.t('Not found'),
+      description: req.t('Not found_description')
+    });
   });
 
   // Start the app --

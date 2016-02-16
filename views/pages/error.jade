@@ -1,6 +1,13 @@
-extends ../layouts/layout
+extends ../layouts/root
 
 block content
-  h1= message
-  h2= error.status
-  pre #{error.stack}
+  .container
+    .row
+      .col-md-4.col-md-offset-4
+        img#loginLogo(src=resPath + 'logo.large.png')
+    .row
+      .col-md-4.col-md-offset-4
+        .login-panel.panel.panel-default
+          .panel-heading= code + ' - ' + message
+          .panel-body
+            p= description
