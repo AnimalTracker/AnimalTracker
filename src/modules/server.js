@@ -79,6 +79,7 @@ var startExpressServer = function(app) {
     var port = server.address().port;
 
     console.log('[app] AnimalTracker listening at http://%s:%s', host, port);
+    console.log('[app] Mode: %s', process.env.NODE_ENV);
   });
 };
 

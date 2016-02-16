@@ -40,6 +40,13 @@ module.schema.ready.then(function() {
 
 // -- System events --
 
-process.on('exit', function() {
+var onExit = function() {
+  console.log('[app] Stopping ');
   module.database.close();
+};
+
+// Handle PM2 stop signal --
+process.on('SIGINT', function() {
+  onExit();
+  setTimeout(function() { process.exit(0); }, 300);
 });

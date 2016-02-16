@@ -48,6 +48,7 @@ git clone https://github.com/AnimalTracker/AnimalTracker
 cd AnimalTracker
 
 # Setup NodeJS dependencies
+sudo npm install -g gulp bower pm2
 npm install --production
 
 # Setup client-side dependencies

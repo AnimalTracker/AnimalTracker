@@ -4,4 +4,4 @@
 server:
   port: 3000
   static: true
-  liveReload: false
+  live_reload: false
