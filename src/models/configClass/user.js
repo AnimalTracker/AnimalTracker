@@ -54,7 +54,8 @@ exports.populate = function(User) {
       var update = {};
       update.apitoken = jwt.encode({ rid: record.rid }, secret);
 
-      promises.push(db.update(this.name).set(update).where({'@rid': record['@rid']}).one());
+      promises.push(db.update(this.name).set(update).where({'@rid': record['@rid']}).one()
+        .catch(db.helper.onError));
     }
 
     return Promise.all(promises).then(() => { return results; });
@@ -64,6 +65,7 @@ exports.populate = function(User) {
 
   User.getByUsername = function(username, options) {
     return db.select().from(this.name).where({active: true, username: username}).one()
+      .catch(db.helper.onError)
       .then((item) => {
         return this.transformRecordsIntoObjects(item, options);
       });

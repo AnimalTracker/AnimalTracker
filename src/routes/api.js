@@ -23,11 +23,22 @@ var responseInsufficientRights = function(req, res) {
 };
 
 var responseCatchError = function(e, req, res) {
-  res.status(401).json({
-    title: req.t('Error'),
-    message: e.property ? e.property.getErrorLabel(e.type, req) : e,
-    status: 'error'
-  });
+  // Error on property --
+  if(e.property) {
+    return res.status(401).json({
+      title: req.t('Error'),
+      message: e.property.getErrorLabel(e.type, req),
+      status: 'error'
+    });
+  }
+  // Other errors (Database) --
+  else {
+    return res.status(500).json({
+      title: req.t('Error'),
+      message: req.t('Internal error'),
+      status: 'error'
+    });
+  }
 };
 
 // -- Auth system (API methods below are protected) --
@@ -91,7 +102,7 @@ router.get('/:configClass', function(req, res) {
       var result = {};
       result[configClass.path] = items ? items : [];
       res.status(200).json(result);
-    });
+    }, (e) => responseCatchError(e, req, res));
 });
 
 // Creation --
@@ -120,8 +131,7 @@ router.post('/:configClass', function(req, res) {
         result.message= req.t('Created_description', {type: configClass.getLabel(req)});
       }
       return res.status(201).json(result);
-    })
-    .catch((e) => { responseCatchError(e, req, res); });
+    }, (e) => responseCatchError(e, req, res));
 });
 
 // Rid parameter --
@@ -148,7 +158,7 @@ router.get('/:configClass/:rid', function(req, res) {
   configClass.getByRid(req.params.rid, {req: req})
     .then(function (item) {
       res.status(200).json(item);
-    });
+    }, (e) => responseCatchError(e, req, res));
 });
 
 // Edition --
@@ -168,8 +178,7 @@ router.put('/:configClass/:rid', function(req, res) {
         message: req.t('Edited_description', {type: configClass.getLabel(req)}),
         status: 'success'
       });
-    })
-    .catch((e) => { responseCatchError(e, req, res); });
+    }, (e) => responseCatchError(e, req, res));
 });
 
 // Removal --
@@ -185,7 +194,7 @@ router.delete('/:configClass/:rid', function(req, res) {
         message: req.t('Deleted_description', {type: configClass.getLabel(req)}),
         status: 'success'
       });
-    });
+    }, (e) => responseCatchError(e, req, res));
 });
 
 router.use(function(req, res) {

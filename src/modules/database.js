@@ -54,7 +54,6 @@ helper.error = function(err) {
 
 // -- Records methods --
 
-
 helper.recordifyRid = function(rid) {
   return OrientDB.RID(rid);
 };
@@ -79,6 +78,16 @@ helper.createRecords = function(className, arg) {
   });
 };
 
+// -- Error helpers --
+helper.onError = function(e) {
+  console.error('[orientjs] Database error: ' + e.message);
+  throw e;
+};
+
+helper.onErrorEnd = function(e) {
+  console.error('[orientjs] Database error: ' + e.message);
+};
+
 // -- Check that no one of our variable will override db's ones --
 
 var variables = ["ready", "init", "close", "srv", "helper"];
@@ -88,7 +97,7 @@ for(var variable of variables) {
   }
 }
 
-// -- Test query --
+// -- Test queries --
 
 var testOrientDB = function() {
   return server.list()

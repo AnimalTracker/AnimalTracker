@@ -24,7 +24,8 @@ exports.populate = function(configClass) {
     obj.save = function() {
       var record = {};
       configClass.specificObjectToRecord(this, record);
-      return db.helper.createRecords(this.name, record);
+      return db.helper.createRecords(this.name, record)
+        .catch(db.helper.onErrorEnd);
     };
 
     return obj;
@@ -83,7 +84,9 @@ exports.populate = function(configClass) {
   // Creation Methods --
 
   configClass.createRecordsInDb = function(records) {
-    return db.helper.createRecords(this.name, records).then(function(results) {
+    return db.helper.createRecords(this.name, records)
+      .catch(db.helper.onError)
+      .then(function(results) {
       if(configClass.postCreate) {
         console.log('[orientjs] Trigger ' + configClass.name + '.postUpdate hook');
         return configClass.postCreate(results);
@@ -116,7 +119,8 @@ exports.populate = function(configClass) {
     var options = {req: req, promises: []};
     var record = this.specificObjectToRecord(req.body, {}, options);
     return Promise.all(options.promises).then(() => {
-      return db.update(this.name).set(record).where({'@rid': rid, active: true}).one();
+      return db.update(this.name).set(record).where({'@rid': rid, active: true}).one()
+        .catch(db.helper.onError);
     });
   };
 
@@ -137,6 +141,7 @@ exports.populate = function(configClass) {
     }
 
     return request.one()
+      .catch(db.helper.onError)
       .then((item) => {
         return this.transformRecordsIntoObjects(item, options);
       });
@@ -152,6 +157,7 @@ exports.populate = function(configClass) {
     }
 
     return request.all()
+      .catch(db.helper.onError)
       .then((item) => {
         return this.transformRecordsIntoObjects(item, options);
       });
@@ -190,6 +196,7 @@ exports.populate = function(configClass) {
     }
 
     return request.all()
+      .catch(db.helper.onError)
       .then((item) => {
         return this.transformRecordsIntoObjects(item, options);
       });
@@ -198,9 +205,9 @@ exports.populate = function(configClass) {
   // Delete Methods --
 
   configClass.deleteByRid = function(rid) {
-    return db.update(this.name).set({active: false}).where({'@rid': rid}).one();
+    return db.update(this.name).set({active: false}).where({'@rid': rid}).one()
+      .catch(db.helper.onError);
   };
-
 
   // Toggle processing --
   if(!configClass.datatable)

@@ -30,8 +30,9 @@
       "confirm": "Créer"
     }
   },
-  "Incorrect username": "Cet utilisateur n'existe pas.",
-  "Incorrect password": "Mot de passe incorrect.",
+  "Incorrect credentials": "Données de connexion erronées.",
+  "The database does not respond": "La base de données ne répond pas.",
+  "Internal error": "Erreur interne au serveur.",
   "Deleted": "Supprimé",
   "Deleted_description": "L'enregistrement de type {{type}} a bien été supprimé.",
   "Edited": "Edité",

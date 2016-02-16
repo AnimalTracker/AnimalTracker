@@ -30,8 +30,9 @@
       "confirm": "Create"
     }
   },
-  "Incorrect username": "Incorrect username.",
-  "Incorrect password": "Incorrect password.",
+  "Incorrect credentials": "Incorrect credentials.",
+  "The database does not respond": "The database does not respond.",
+  "Internal error": "Internal error",
   "Deleted": "Deleted",
   "Deleted_description": "The {{type}} record has been deleted.",
   "Edited": "Edited",
