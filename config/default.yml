@@ -317,6 +317,31 @@ data_schema:
           type: text
           display_datatable: true
 
+    - name: Cage
+      type: other
+      path: cages
+      property:
+        - name: week
+          type: text
+          display_datatable: true
+        - name: researcher
+          type: reference
+          reference_to: User
+          display_datatable: true
+          property_to_display: [ first_name, last_name ]
+        - name: type_a
+          type: number
+          display_datatable: true
+        - name: type_b
+          type: number
+          display_datatable: true
+        - name: type_c
+          type: number
+          display_datatable: true
+        - name: type_d
+          type: number
+          display_datatable: true
+
 reports:
   - type: register
     path: rats_v1

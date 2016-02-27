@@ -179,6 +179,18 @@
       }
     }
   },
+  "Cage": {
+    "name": "Cage",
+    "name_plural": "Cages",
+    "property": {
+      "week": "Semaine",
+      "researcher": "Chercheur",
+      "type_a": "Cages A",
+      "type_b": "Cages B",
+      "type_c": "Cages C",
+      "type_d": "Cages D"
+    }
+  },
   "report": {
     "rats_v1_alive": "Registre rat",
     "rats_v1_by_apafis": "Registre rat par projet",

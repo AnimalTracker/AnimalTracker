@@ -177,6 +177,18 @@
       }
     }
   },
+  "Cage": {
+    "name": "Cage",
+    "name_plural": "Cages",
+    "property": {
+      "week": "Week",
+      "researcher": "Researcher",
+      "type_a": "A Cages",
+      "type_b": "B Cages",
+      "type_c": "C Cages",
+      "type_d": "D Cages"
+    }
+  },
   "report": {
     "rats_v1_alive": "Rats register",
     "rats_v1_by_apafis": "Rats register by project",
