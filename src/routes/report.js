@@ -147,7 +147,21 @@ router.get('/registers/:report', function(req, res) {
     }));
   })
   .then(function() {
-    res.render('pages/register', locals);
+    if(req.query.format === 'csv') {
+
+      // Compute the CSV --
+      var result = locals.page.header + ';' + locals.page.date + '\n';
+      result += locals.data.headers.join(';') + '\n';
+      result += _.map(locals.data.rows, (array) => array.join(';')).join('\n');
+
+      // Send the CSV --
+      res.setHeader('Content-disposition', 'attachment; filename='+ _.kebabCase(locals.page.header) +'.csv');
+      res.set('Content-Type', 'text/csv');
+      res.status(200).send(result);
+    }
+    else {
+      res.render('pages/register', locals);
+    }
   });
 });
 

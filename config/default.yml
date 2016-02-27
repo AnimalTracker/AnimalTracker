@@ -322,7 +322,7 @@ reports:
     path: rats_v1
     model: Rat
     logo: /logo.lnca.gif
-    param: ?death=not_dead
+    param: ?death=not_dead&format=csv
     id: rats_v1_alive
     property:
       - strain:label
@@ -340,7 +340,7 @@ reports:
     path: mice_v1
     model: Mus
     logo: /logo.lnca.gif
-    param: ?death=not_dead
+    param: ?death=not_dead&format=csv
     id: mice_v1_alive
     property:
       - id
