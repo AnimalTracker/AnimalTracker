@@ -96,13 +96,17 @@ var fakeData = function() {
     return Promise.join(
       populate('Rat', rand(500, 1100), () => {
         return {
-          strain:   randItem(options.Rat.strain).id,
-          sex:      randItem(options.Rat.sex).id,
-          id:       'RAT#' + faker.random.number(),
+          strain:     randItem(options.Rat.strain).id,
+          sex:        randItem(options.Rat.sex).id,
+          id:         'RAT#' + faker.random.number(),
           lot_number: '',
-          origin:   randItem(options.Rat.origin).id,
-          project:  randItem(records.projects).rid,
-          death:    randItem(options.Rat.death).id
+          origin:     randItem(options.Rat.origin).id,
+          project:    randItem(records.projects).rid,
+          death:      randItem(options.Rat.death).id,
+          date_enter: '',
+          date_exit:  '',
+          date_birth: '',
+          date_death: ''
         };
       }),
       populate('Mus', rand(500, 1100), () => {
@@ -116,7 +120,11 @@ var fakeData = function() {
           chip:     'CHIP#' + faker.random.number(),
           origin:   randItem(options.Mus.origin).id,
           project:  randItem(records.projects).rid,
-          death:    randItem(options.Mus.death).id
+          death:    randItem(options.Mus.death).id,
+          date_enter: '',
+          date_exit:  '',
+          date_birth: '',
+          date_death: ''
         };
       })
     );
